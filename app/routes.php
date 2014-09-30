@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +12,6 @@
 */
 
 Route::controller('/account','AccountController');
-Route::resource('snippet','SnippetController');
+Route::resource('/snippet','SnippetController');
 Route::get('/snippet/search','SnippetController@search');
-
 
