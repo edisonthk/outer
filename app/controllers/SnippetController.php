@@ -1,17 +1,14 @@
 <?php
 
-class SnippetController extends \BaseController {
+class SnippetController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
 	 *
 	 * @return Response
 	 */
-	public function index()
-	{
-		$snippets = Snippet::all();
-		return View::make('index')->with("snippets",$snippets);
-		//
+	public function index(){
+		return View::make('snippets.index')->with("snippets",Snippet::all());
 	}	
 
 	/**
@@ -22,7 +19,7 @@ class SnippetController extends \BaseController {
 	public function create()
 	{
 		//
-		return View::make("create");
+		return View::make("snippets.create");
 	}
 
 
@@ -60,7 +57,7 @@ class SnippetController extends \BaseController {
 
 			// redirect
 			Session::flash('message', 'Successfully created Snippet!');
-			return Redirect::to('snippet');
+			return Redirect::to('/snippet');
 		}
 	}
 
@@ -76,7 +73,7 @@ class SnippetController extends \BaseController {
 		//
 		$snippet= Snippet::find($id);
 
-		return View::make("show",$snippet)-> with("snippet",$snippet);
+		return View::make("snippets.show",$snippet)->with("snippet",$snippet);
 
 	}
 
@@ -94,7 +91,7 @@ class SnippetController extends \BaseController {
 		$snippet = Snippet::find($id);
 
 		// show the edit form and pass the shop
-		return View::make('edit')
+		return View::make('snippets.edit')
 			->with('snippet', $snippet);
 	}
 
@@ -154,6 +151,5 @@ class SnippetController extends \BaseController {
 		Session::flash('message', 'Successfully deleted the nerd!');
 		return Redirect::to('snippet');
 	}
-
 
 }

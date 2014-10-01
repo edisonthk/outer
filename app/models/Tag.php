@@ -1,5 +1,6 @@
 <?php
-class Tag extends Eloquent  {
+
+class Tag extends Eloquent {
 
 
 

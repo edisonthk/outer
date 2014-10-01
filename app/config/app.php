@@ -1,5 +1,4 @@
 <?php
-
 return array(
 
 	/*
@@ -39,8 +38,7 @@ return array(
 	|
 	*/
 
-	/* 'timezone' => 'UTC', */
-	'timezone' => 'Asia/Tokyo',
+	'timezone' => 'UTC',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -79,7 +77,7 @@ return array(
 	|
 	*/
 
-	'key' => 'mvKSl1AeAcDfG328REpQVIBIXj93L3Ux',
+	'key' => 'DFPN15TmbXKnGgZHMgIZrjNK5uI2kVP0',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 

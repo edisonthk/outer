@@ -1,7 +1,6 @@
-﻿<?php
-class Snippet extends Eloquent  {
+<?php
 
-
+class Snippet extends Eloquent {
 
 	/**
 	 * The database table used by the model.
@@ -11,6 +10,5 @@ class Snippet extends Eloquent  {
 	protected $table = 'snippet_table';
 	
 	public $timestamps = true;
-
 
 }
