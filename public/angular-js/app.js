@@ -1,5 +1,5 @@
 
-var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','snippetContollers','snippetServices']);
+var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','ngTagsInput','snippetContollers','snippetServices']);
 
 codegarageApp.config(['$locationProvider','$routeProvider',
 	function($locationProvider,$routeProvider) {
@@ -9,12 +9,32 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 				controller: 'snippetListCtrl',
 				reloadOnSearch: false,
 			}).
+			when('/snippet/create', {
+				templateUrl: '/angular-html/modify.html',
+				controller: 'snippetModifyCtrl',
+				reloadOnSearch: false,
+			}).
+			when('/snippet/:snippet/edit', {
+				templateUrl: '/angular-html/modify.html',
+				controller: 'snippetModifyCtrl',
+				reloadOnSearch: false,
+			}).
 			otherwise({
 				redirectTo: '/snippets',
 			});
 
 		$locationProvider.html5Mode(true).hashPrefix('!');
 	}]);
+
+codegarageApp.directive('articleBlock', function() {
+    return {
+    	scope: true,
+    	link: function (scope,element, attrs){
+    		
+    		console.log(element.html());
+    	}
+    }
+});
 
 function resizedDoneAction(){
     

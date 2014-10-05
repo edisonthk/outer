@@ -13,16 +13,26 @@ class Tag extends Eloquent {
 	
 	public $timestamps = true;
 
-	public static function onlyName(){
+	public static function onlyName($search = null){
 
 		$results = array();
 
-		$tags = self::all(array("name"));
-		foreach ($tags as $key => $value) {
-			$name = $value->name;
-			array_push($results, $name);
-		}
+		if(is_null($search)){
+			// search is null, it means searching is not requested. 
+			// When searching is not requested, all available tags (tags stored in tag table) is returned
+			$tags = self::all(array("name"));
+			foreach ($tags as $key => $value) {
+				$name = $value->name;
+				array_push($results, $name);
+			}
 
+		}else{
+			// searching is requested
+			// get the result from $search
+			$results = self::where("name","like","%".$search."%")->get();
+
+		}
+		
 		return $results;
 	}
 

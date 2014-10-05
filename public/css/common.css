@@ -75,6 +75,21 @@ div,a,p,h1,h2,h3,h4,h5 {
 	height: 100%;
 	overflow-y: scroll;
 }
+#snippets .snippet-tools li{
+	margin-left: 0;
+	margin-right: 0;
+	cursor: pointer;
+	border: 2px solid #555;
+	display: inline-block;
+	width: 50px;
+	text-align: center;
+}
+#snippets .snippet-tools li a{
+	height: 100%;
+	width: 100%;
+	display: block;
+	padding: 5px 6px;
+}
 #snippets .snippet-padding{
 	padding:5px 10px;
 }
@@ -100,7 +115,6 @@ div,a,p,h1,h2,h3,h4,h5 {
 #snippets .article-block{
 	margin: 20px;
 }
-
 #snippets .single-snippet:hover{
 	background-color: rgba(120,120,120,0.5);
 }
@@ -206,6 +220,26 @@ div,a,p,h1,h2,h3,h4,h5 {
 	min-height: 200px;
 }
 
+/* =================================== */
+/* #editor　　   */
+/* =================================== */
+
+#editor-snippet form {
+	margin-top: 20px;
+}
+
+#editor-snippet form div,
+#editor-snippet form a,
+#editor-snippet form p,
+#editor-snippet form span,
+#editor-snippet form input,
+#editor-snippet form textarea{
+	color:#555;
+}
+
+#editor-snippet form textarea {
+	height: 350px;
+}
 
 /* =================================== */
 /* #single-snippet　シングルスニペット   */

@@ -5,6 +5,12 @@ Route::resource('/json/snippet','SnippetController');
 
 Route::get('/json/search','SnippetController@search');
 
+Route::get("/snippet/create",function(){
+	return View::make("base");
+});
+Route::get("/snippet/{snippet}/edit",function(){
+	return View::make("base");
+});
 Route::get("/snippets/{snippet?}",function(){
 	return View::make("base");
 });

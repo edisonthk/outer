@@ -14,6 +14,10 @@
 		<script type="text/javascript" src="/angular-libs/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-resource.min.js"></script>
 
+		<!-- Plugins -->
+		<script type="text/javascript" src="/plugins/ngTagsInput/ng-tags-input.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/plugins/ngTagsInput/ng-tags-input.min.css">
+
 		<!-- Angularjs Application -->
 		<script type="text/javascript" src="/angular-js/app.js"></script>
 		<script type="text/javascript" src="/angular-js/services.js"></script>

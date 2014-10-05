@@ -1,8 +1,14 @@
 
-<div snippetContollers id="snippets" class="container">
+<div snippetContollers id="snippets" class="container" ng-style="menuStyle">
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
+			<ul class="snippet-tools">
+				<li><a href="/snippet/create"><i class="fa fa-plus"></i></a></li>
 
+				<li ng-if="article != null"><a href="/snippet/{{article.id}}/edit"><i class="fa fa-edit"></i></a></li>
+				<li ng-if="article != null"><a href="/snippet/{{article.id}}/delete"><i class="fa fa-trash"></i></a></li>
+				
+			</ul>
 			<div class="search-form form-group">
 				<div class="snippet-padding">
 					<input type="text" 
@@ -56,7 +62,7 @@
 				<div class="article-tag">
 					<span ng-repeat="tag in article.tags" class="tag">{{tag.name}}</span>
 				</div>
-				<div class="article-content" ng-bind-html="article.content"></div>
+				<div class="article-content" article-block ng-bind-html="article.content"></div>
 			</div>
 		</div>
 	</div>
