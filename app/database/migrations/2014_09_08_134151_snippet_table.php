@@ -18,7 +18,6 @@ class SnippetTable extends Migration {
 			$table->increments('id');
 			$table->string('title');
 			$table->text('content');
-			$table->integer('tags_id');
 			$table->timestamps();
 		});
 	}

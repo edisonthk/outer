@@ -1,0 +1,65 @@
+
+<div snippetContollers id="snippets" class="container">
+	<div class="row">
+		<div class="col-xs-4 gray-bg">
+
+			<div class="search-form form-group">
+				<div class="snippet-padding">
+					<input type="text" 
+						class="form-control" 
+						ng-model="search_keywords" 
+						ng-keyup="searchEvent()" 
+						placeholder="Searching snippets ....">
+				</div>
+			</div>
+			<div class="snippet-list-subtitle">
+				<p class="snippet-padding">{{subtitle}}</p>
+			</div>
+			<div class="snippet-list">
+				<div ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
+					<a href="/snippets/{{snippet.id}}">
+						<div class="snippet-padding">
+							<div class="title">
+								<p>{{snippet.title}}</p>
+							</div>
+							<div class="meta">
+								<div class="tags-group">
+									<span ng-repeat="tag in snippet.tags" class="tag">{{tag.name}}</span>
+								</div>
+								<div class="datetime">Updated at {{snippet.updated_at}} </div>
+							</div>	
+						</div>
+					</a>		
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div ng-if="article == null" id="empty-board">
+	<!-- Layout when article is not selected -->
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-7 col-xs-offset-5">
+				<h1>Choose the article</h1>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-if="article != null" id="article" class="container">
+	<!-- Layout when article is selected -->
+	<div class="row">
+		<div class="col-xs-8 col-xs-offset-4">
+			<h1 class="artitle-title"><i class="fa pull-left fa-quote-left"></i>{{article.title}}<i class="fa pull-right fa-quote-right"></i></h1>
+			<div class="gray-bg article-block">
+				<div class="article-tag">
+					<span ng-repeat="tag in article.tags" class="tag">{{tag.name}}</span>
+				</div>
+				<div class="article-content" ng-bind-html="article.content"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

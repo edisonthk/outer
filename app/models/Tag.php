@@ -13,5 +13,18 @@ class Tag extends Eloquent {
 	
 	public $timestamps = true;
 
+	public static function onlyName(){
+
+		$results = array();
+
+		$tags = self::all(array("name"));
+		foreach ($tags as $key => $value) {
+			$name = $value->name;
+			array_push($results, $name);
+		}
+
+		return $results;
+	}
+
 
 }

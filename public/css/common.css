@@ -1,3 +1,262 @@
+body, html {
+	height: 100%;
+	min-height: 100%;
+	width: 100%;
+}
+body {
+	background: #fdfdfd url(/img/bg.jpg) no-repeat;
+	background-size: cover;
+}
+nav {
+	background-color: rgba(20,20,20,0.6);
+	display: block;
+	height: 57px;
+}
+div,a,p,h1,h2,h3,h4,h5 {
+	color:#EEE;
+}
+.wrapper{
+	height: calc(100% - 57px);
+}
+.wrapper #content{
+	padding-top:15px;
+	height: 100%;
+}
 .nav-bar {
-	background-color:black;
+	background-color:rgb(107, 106, 106);
+}
+.nav-bar .navbar-form {
+	border-top: 0px;
+	border-bottom: 0px;
+	border-left: 0px;
+	border-right: 0px;
+	box-shadow: none;
+}
+#logo {
+	display:block;
+	height: 57px;
+	line-height: 57px;
+	font-size: 20px;
+	vertical-align: middle;
+}
+#logo:hover {
+	text-decoration: none;
+	color:inherit;
+}
+.gray-bg{
+	background-color: rgba(30,30,30,0.5);
+}
+
+/* ============================== */
+/* #snippets フロントページのスニペット一覧   */
+/* ============================== */
+#snippets.container{
+	position: fixed;
+	top:57px;
+	height: calc(100% - 57px);  /* 高さを調整する際に、topとheightも調整しないと */
+	left: 0px;
+	width: 100%;
+}
+#snippets .search-form {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-bottom: 0;
+
+}
+#snippets .row{
+	height: 100%;
+} 
+#snippets .row .col-xs-4,
+#snippets .row .col-xs-5,
+#snippets .row .col-xs-6,
+#snippets .row .col-xs-7 {
+	padding-left: 0;
+	padding-right: 0;
+	height: 100%;
+	overflow-y: scroll;
+}
+#snippets .snippet-padding{
+	padding:5px 10px;
+}
+#snippets .search-form input[type=text]{
+	background-color: #333;
+	color:#ccc;
+	border:0;
+}
+#snippets .snippet-list-subtitle {
+	width:100%;
+	border-bottom: 0;
+	background-color:#444;
+}
+#snippets .snippet-list-subtitle .snippet-padding{
+	margin-bottom:0;	
+}
+#snippets .snippet-list {
+	overflow-y: scroll;
+}
+#snippets .single-snippet {
+	border-bottom: 2px solid #555;
+}
+#snippets .article-block{
+	margin: 20px;
+}
+
+#snippets .single-snippet:hover{
+	background-color: rgba(120,120,120,0.5);
+}
+#snippets .single-snippet.active{
+	background-color: rgba(100,100,100,0.5);
+}
+
+#snippets .single-snippet .title {
+	font-size: 160%;
+}
+
+#snippets .single-snippet .datetime {
+
+}
+#snippets .meta .datetime {
+	float: right;
+}	
+#empty-board {
+	position: fixed;
+	width: 100%;
+	top:57px;
+	height: calc(100% - 57px);  /* 高さを調整する際に、topとheightも調整しないと */
+	z-index: -1;
+}
+#empty-board .container,#empty-board .row,
+#empty-board .row .col-xs-4,
+#empty-board .row .col-xs-5,
+#empty-board .row .col-xs-6,
+#empty-board .row .col-xs-7
+{
+	height: 100%;
+}
+#empty-board .row .col-xs-4,
+#empty-board .row .col-xs-5,
+#empty-board .row .col-xs-6,
+#empty-board .row .col-xs-7{
+	display: table;
+	text-align: center;
+}
+#empty-board .row .col-xs-4 h1,
+#empty-board .row .col-xs-5 h1,
+#empty-board .row .col-xs-6 h1,
+#empty-board .row .col-xs-7 h1{
+	display: table-cell;
+	vertical-align: middle;
+}
+#empty-board .row .col-xs-6
+.side-menu-widget {
+	margin-bottom: 20px;
+}
+
+.side-menu-widget .btn.btn-create {
+	display: block;
+	width: 100%;
+	background: #f1f1f1;
+	border-bottom: 1px solid #e8e8e8;
+	margin: 0;
+	padding: 20px 40px 20px 30px;
+	font-size: 130%;
+}
+
+.side-menu-widget .tags-widget label {
+	width: 100%;
+}
+/*  =================================== 
+ *  .tag　							
+ *  =================================== 
+ */
+.tags-group {
+	margin-top:5px;
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+.tag{
+	background: #f0f0f0;
+	border: 0;
+	line-height: 1.4;
+	padding: 3px 4px;
+	margin: 2px 2px 2px 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #666;
+	font-size: 100%;
+}
+
+
+/* =================================== */
+/* #single-snippet　の　   */
+/* =================================== */
+#article .artitle-title {
+	display: inline-block;
+}
+#article .article-block {
+	margin: 10px 5px;
+}
+#article .article-block .article-tag {
+	border-bottom: 1px solid #CCC;
+}
+#article .article-block .article-content {
+	padding: 5px;
+	min-height: 200px;
+}
+
+
+/* =================================== */
+/* #single-snippet　シングルスニペット   */
+/* =================================== */
+#single-snippet .meta .tags-group {
+	display: inline-block;
+}
+
+#single-snippet .meta .tags-group .tag{
+	background: #f0f0f0;
+	border: 1px solid #e7e7e7;
+	line-height: 22px;
+	padding: 1px 6px 0;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	border-radius: 2px;
+	color: #666;
+	font-size: 100%;
+}
+
+#single-snippet .meta .datetime {
+	float: right;
+}
+#single-snippet .toolbar {
+	text-align: right;
+}
+#single-snippet .btn-group {
+	display: inline-block;
+}	
+#single-snippet .btn.btn-edit {
+	display: inline-block;
+	background: #f1f1f1;
+	width: 130px;
+	height: 47px;
+	line-height: 47px;
+	border-bottom: 1px solid #e8e8e8;
+	margin: 0 10px;
+	padding: 0 10px;
+	vertical-align: middle;
+	font-size: 130%;
+}
+#single-snippet form {
+	display: inline-block;
+}
+#single-snippet .btn.btn-delete {
+	display: inline-block;
+	height: 47px;
+	line-height: 47px;
+	width: 130px;
+	margin: 0;
+	padding: 0 10px;
+	vertical-align: middle;
+	font-size: 130%;
 }

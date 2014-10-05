@@ -29,7 +29,7 @@ class TagTable extends Migration {
 	public function down()
 	{
 		//
-		Schema::create('tag_table');
+		Schema::drop('tag_table');
 	}
 
 }

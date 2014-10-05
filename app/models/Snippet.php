@@ -11,4 +11,8 @@ class Snippet extends Eloquent {
 	
 	public $timestamps = true;
 
+	public function tags(){
+		return $this->belongsToMany('Tag','snippet_tag','snippet_id','tag_id');
+	}
+
 }

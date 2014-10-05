@@ -7,20 +7,24 @@
 @section('content')
 	<div id="snippets">
 		@foreach($snippets as $snippet)
-		<div>
-			<div>
+		<div class="single-snippet">
+			<div class="title">
 				<p><a href="/snippet/{{$snippet->id}}">{{$snippet->title}}</a></p>
-				<p>
+				{{-- <p>
 					<a href="/snippet/{{$snippet->id}}/edit">Edit</a>
 					{{ Form::open(array('method'=>'delete','url' => '/snippet/'.$snippet->id)) }}
 						<input type="submit" value="Delete">
 					{{ Form::close() }}
-				</p>
+				</p> --}}
 			</div>
-			<div>
-				<p>tag {{$snippet->tags_id}} </p>
-				<p>created at {{$snippet->updated_at}} </p>
-			</div>
+			<div class="meta">
+				<div class="tags-group">
+					@foreach($snippet->tags()->getResults() as $tag)
+						<span class="tag">{{$tag->name}}</span>
+					@endforeach
+				</div>
+				<div class="datetime">created at {{$snippet->updated_at}} </div>
+			</div>			
 		</div>
 		@endforeach
 	</div>
