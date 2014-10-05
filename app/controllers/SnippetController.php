@@ -46,7 +46,7 @@ class SnippetController extends BaseController {
 		$validator = $this->validate($inputs);
 
 		if ($validator->fails()) {
-			return Response::json($validator)
+			return Response::json($validator);
 		} else {
 			// store
 			$snippet = new Snippet;
@@ -132,7 +132,6 @@ class SnippetController extends BaseController {
 		$validator = $this->validate(Input::all());
 		// process the login
 		if ($validator->fails()) {
-			
 			return Response::json($validator);
 		/*
 			return Redirect::to('snippet/create')
