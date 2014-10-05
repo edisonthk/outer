@@ -28,7 +28,7 @@ class SnippetController extends BaseController {
 	public function create()
 	{
 		//
-		return View::make("snippets.create");
+		return Response::json("snippets.create");
 	}
 
 
@@ -46,9 +46,7 @@ class SnippetController extends BaseController {
 		$validator = $this->validate($inputs);
 
 		if ($validator->fails()) {
-			return Redirect::to('/snippet/create')
-				->withErrors($validator)
-				->withInput(Input::all());
+			return Response::json($validator)
 		} else {
 			// store
 			$snippet = new Snippet;
@@ -70,7 +68,7 @@ class SnippetController extends BaseController {
 
 			
 			Session::flash('message', 'Successfully created Snippet!');
-			return Redirect::to('/snippet');
+			return Response::json('/snippet');
 		}
 	}
 
@@ -107,7 +105,7 @@ class SnippetController extends BaseController {
 		$snippet = Snippet::find($id);
 
 		// show the edit form and pass the shop
-		return View::make('snippets.edit')
+		return Response::json('snippets.edit')
 			->with('snippet', $snippet);
 	}
 
@@ -123,18 +121,24 @@ class SnippetController extends BaseController {
 		//
 		// validate
 		// read more on validation at http://laravel.com/docs/validation
+		/*
 		$rules = array(
 			'title'       => 'required',
 			'content'      => 'required',
 			'tags_id'      => 'required'
 		);
 		$validator = Validator::make(Input::all(), $rules);
-
+*/
+		$validator = $this->validate(Input::all());
 		// process the login
 		if ($validator->fails()) {
+			
+			return Response::json($validator);
+		/*
 			return Redirect::to('snippet/create')
 				->withErrors($validator)
-				->withInput(Input::except('password'));
+				->withInput(Input::except('password')); */
+				
 		} else {
 			// store
 			$snippet = Snippet::find($id);
@@ -147,7 +151,7 @@ class SnippetController extends BaseController {
 
 			// redirect
 			Session::flash('message', 'Successfully created snippet!');
-			return Redirect::to('snippet');
+			return Response::json('snippet');
 		}
 	}
 
@@ -165,7 +169,7 @@ class SnippetController extends BaseController {
 		$snippet->delete();
 
 		Session::flash('message', 'Successfully deleted the nerd!');
-		return Redirect::to('snippet');
+		return Response::json('snippet');
 	}
 
 	public function search()
@@ -176,6 +180,7 @@ class SnippetController extends BaseController {
 
 			$snippets = array();
 			foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
+			
 				$temp = $snippet->toArray();
 				$temp["tags"] = $snippet->tags()->getResults()->toArray();
 
