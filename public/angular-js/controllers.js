@@ -32,6 +32,10 @@ snippetContollers.controller('snippetListCtrl', ['$rootScope','$scope','$window'
     	}
 	});
 
+	angular.element($window).bind('keydown', function() {
+
+	});
+
 
 	$scope.article = null;
 
@@ -112,12 +116,24 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				content: $scope.article.content,
 				tags: newTags
 			};
-			Snippet.save({snippetId: $routeParams.snippet}, postData, function(){
-				// success
-			}, function(e){
-				// error
-				console.log(e);
-			});
+			if(typeof $routeParams.snippet === "string"){
+				// update
+				Snippet.update({snippetId: $routeParams.snippet}, postData, function(){
+					// success
+				}, function(e){
+					// error
+					console.log(e);
+				});
+			}else{
+				// create
+				Snippet.create( {}, postData, function(){
+					// success
+				}, function(e){
+					// error
+					console.log(e);
+				});
+			}
+			
 		}
 		
 		if(typeof $routeParams.snippet === "string"){

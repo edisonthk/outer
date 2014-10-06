@@ -32,9 +32,12 @@ nav {
 .wrapper{
 	height: calc(100% - 44px);
 }
-.wrapper #content{
+.wrapper #content {
 	padding-top:15px;
 	height: 100%;
+}
+.prettyprint {
+	border:0;
 }
 .nav-bar {
 	background-color:rgb(107, 106, 106);
