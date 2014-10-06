@@ -1,22 +1,36 @@
+* {
+	font-family:"Helvetica", sans-serif;
+	letter-spacing: 0;
+}
 body, html {
 	height: 100%;
 	min-height: 100%;
 	width: 100%;
 }
 body {
-	background: #fdfdfd url(/img/bg.jpg) no-repeat;
+	background: #fdfdfd url(/img/bg.jpg) fixed no-repeat;
 	background-size: cover;
-}
-nav {
-	background-color: rgba(20,20,20,0.6);
-	display: block;
-	height: 57px;
 }
 div,a,p,h1,h2,h3,h4,h5 {
 	color:#EEE;
 }
+/* 高さを調整する際に、調整しなければ行けないところは６点があります。
+
+1) nav		height
+2) .wrapper	height
+3) #logo 	height
+4) #logo 	line-height
+5) #snippets.container	height
+6) #snippets.container	line-height
+
+*/
+nav {
+	background-color: rgba(20,20,20,0.6);
+	display: block;
+	height: 44px;
+}
 .wrapper{
-	height: calc(100% - 57px);
+	height: calc(100% - 44px);
 }
 .wrapper #content{
 	padding-top:15px;
@@ -34,8 +48,8 @@ div,a,p,h1,h2,h3,h4,h5 {
 }
 #logo {
 	display:block;
-	height: 57px;
-	line-height: 57px;
+	height: 44px;
+	line-height: 44px;
 	font-size: 20px;
 	vertical-align: middle;
 }
@@ -52,8 +66,8 @@ div,a,p,h1,h2,h3,h4,h5 {
 /* ============================== */
 #snippets.container{
 	position: fixed;
-	top:57px;
-	height: calc(100% - 57px);  /* 高さを調整する際に、topとheightも調整しないと */
+	top:44px;
+	height: calc(100% - 44px);  
 	left: 0px;
 	width: 100%;
 }
@@ -75,21 +89,7 @@ div,a,p,h1,h2,h3,h4,h5 {
 	height: 100%;
 	overflow-y: scroll;
 }
-#snippets .snippet-tools li{
-	margin-left: 0;
-	margin-right: 0;
-	cursor: pointer;
-	border: 2px solid #555;
-	display: inline-block;
-	width: 50px;
-	text-align: center;
-}
-#snippets .snippet-tools li a{
-	height: 100%;
-	width: 100%;
-	display: block;
-	padding: 5px 6px;
-}
+
 #snippets .snippet-padding{
 	padding:5px 10px;
 }
@@ -123,7 +123,8 @@ div,a,p,h1,h2,h3,h4,h5 {
 }
 
 #snippets .single-snippet .title {
-	font-size: 160%;
+	font-size: 120%;
+	font-weight: 0;
 }
 
 #snippets .single-snippet .datetime {
@@ -190,15 +191,15 @@ div,a,p,h1,h2,h3,h4,h5 {
 }
 
 .tag{
-	background: #f0f0f0;
+	background-color: #444;
 	border: 0;
 	line-height: 1.4;
 	padding: 3px 4px;
-	margin: 2px 2px 2px 0;
+	margin: 2px 10px 2px 0;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
-	color: #666;
+	color: #CCC;
 	font-size: 100%;
 }
 
@@ -209,17 +210,42 @@ div,a,p,h1,h2,h3,h4,h5 {
 #article .artitle-title {
 	display: inline-block;
 }
-#article .article-block {
-	margin: 10px 5px;
-}
-#article .article-block .article-tag {
-	border-bottom: 1px solid #CCC;
-}
 #article .article-block .article-content {
-	padding: 5px;
+	padding: 13px 20px;
 	min-height: 200px;
 }
-
+#article .snippet-tools {
+	border-bottom:1px solid #555;
+	margin: 0;
+	padding-left: 0;
+}
+#article .snippet-tools li{
+	margin-left: 0;
+	margin-right: 0;
+	cursor: pointer;
+	width: auto;
+	padding: 0 20px;
+	text-align: center;
+	height: 50px;
+	border-right:1px solid #555;
+	float:left;
+	list-style-type: none;
+}
+#article .snippet-tools li a{
+	height: 100%;
+	width: 100%;
+	line-height: 50px;
+	display: block;
+	vertical-align: middle;
+}
+#article .gray-bg {
+	margin-top:20px;
+}
+#article .article-tag{
+	padding-left:20px;
+	padding-top: 13px;
+	padding-bottom: 20px;
+}
 /* =================================== */
 /* #editor　　   */
 /* =================================== */

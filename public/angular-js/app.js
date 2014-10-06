@@ -1,5 +1,5 @@
 
-var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','ngTagsInput','snippetContollers','snippetServices']);
+var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','ngTagsInput','ui.markdown','snippetContollers','snippetServices']);
 
 codegarageApp.config(['$locationProvider','$routeProvider',
 	function($locationProvider,$routeProvider) {
@@ -36,11 +36,15 @@ codegarageApp.directive('articleBlock', function() {
     }
 });
 
-function resizedDoneAction(){
-    
+function configElementSize(){
+    var w  = window.innerWidth || document.documentElement.clientWidth,
+    	h = window.innerHeight || document.documentElement.clientHeight;
+
+
 }
 var doit;
+configElementSize();
 window.onresize = function(){
   clearTimeout(doit);
-  doit = setTimeout(resizedDoneAction, 300);
+  doit = setTimeout(configElementSize, 300);
 };

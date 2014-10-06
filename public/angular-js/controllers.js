@@ -47,6 +47,7 @@ snippetContollers.controller('snippetListCtrl', ['$rootScope','$scope','$window'
 				$scope.subtitle = default_subtitle;
 				$scope.snippet_selected = snippet_id;
 				Snippet.get({snippetId: snippet_id}, function(article) {
+					article.content = filterContent(article.content);
 					$scope.article = article;
 				});
 			}
@@ -90,6 +91,10 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 			{text: "aa"}
 		];
 
+		$scope.editorOptions = {
+
+		}
+
 		$scope.loadTags = function(query) {
 
 			return $http.get('/json/tag/?q='+query);
@@ -97,18 +102,39 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 
 		$scope.submit = function()
 		{
-			console.log("submit");
+			var tempTags = $scope.tags;
+			var newTags = [];
+			for (var i = 0; i < tempTags.length; i++) {
+				newTags.push(tempTags[i].text);
+			};
+			postData = {
+				title: $scope.article.title, 
+				content: $scope.article.content,
+				tags: newTags
+			};
+			Snippet.save({snippetId: $routeParams.snippet}, postData, function(){
+				// success
+			}, function(e){
+				// error
+				console.log(e);
+			});
 		}
-
-
 		
 		if(typeof $routeParams.snippet === "string"){
 
 			Snippet.get({snippetId: $routeParams.snippet}, function(article)
 			{
+				article.content = filterContent(article.content);
+				
 				$scope.article = article;
 			})
 
 		}
 	
 }]);
+
+function filterContent(content)
+{
+	content = content.replace(/\\n/g,"\n");	
+	return content;
+}

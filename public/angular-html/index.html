@@ -2,13 +2,6 @@
 <div snippetContollers id="snippets" class="container" ng-style="menuStyle">
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
-			<ul class="snippet-tools">
-				<li><a href="/snippet/create"><i class="fa fa-plus"></i></a></li>
-
-				<li ng-if="article != null"><a href="/snippet/{{article.id}}/edit"><i class="fa fa-edit"></i></a></li>
-				<li ng-if="article != null"><a href="/snippet/{{article.id}}/delete"><i class="fa fa-trash"></i></a></li>
-				
-			</ul>
 			<div class="search-form form-group">
 				<div class="snippet-padding">
 					<input type="text" 
@@ -28,7 +21,7 @@
 							<div class="title">
 								<p>{{snippet.title}}</p>
 							</div>
-							<div class="meta">
+							<div class="meta clearfix">
 								<div class="tags-group">
 									<span ng-repeat="tag in snippet.tags" class="tag">{{tag.name}}</span>
 								</div>
@@ -58,11 +51,25 @@
 	<div class="row">
 		<div class="col-xs-8 col-xs-offset-4">
 			<h1 class="artitle-title"><i class="fa pull-left fa-quote-left"></i>{{article.title}}<i class="fa pull-right fa-quote-right"></i></h1>
+
+			
+
 			<div class="gray-bg article-block">
+				<ul class="snippet-tools clearfix">
+					<li>
+						<a href="/snippet/create"><i class="fa fa-plus fa-lg"></i>&nbsp;<span>create</span></a>
+					</li>
+					<li ng-if="article != null">
+						<a href="/snippet/{{article.id}}/edit"><i class="fa fa-edit fa-lg"></i>&nbsp;<span>modify</span></a>
+					</li>
+					<li ng-if="article != null">
+						<a href="/snippet/{{article.id}}/delete"><i class="fa fa-trash fa-lg"></i>&nbsp;<span>delete</span></a>
+					</li>
+				</ul>
 				<div class="article-tag">
 					<span ng-repeat="tag in article.tags" class="tag">{{tag.name}}</span>
 				</div>
-				<div class="article-content" article-block ng-bind-html="article.content"></div>
+				<div class="article-content" article-block ng-bind-markdown="article.content"></div>
 			</div>
 		</div>
 	</div>

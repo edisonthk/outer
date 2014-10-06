@@ -15,9 +15,21 @@
 		<script type="text/javascript" src="/angular-libs/angular-resource.min.js"></script>
 
 		<!-- Plugins -->
-		<script type="text/javascript" src="/plugins/ngTagsInput/ng-tags-input.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="/plugins/ngTagsInput/ng-tags-input.min.css">
+		<link rel="stylesheet" type="text/css" href="/plugins/codemirror/codemirror.css">
+		<link rel="stylesheet" type="text/css" href="/plugins/prettify/prettify.css">
+		<link rel="stylesheet" type="text/css" href="/plugins/ngMarkdownEditor/angular-markdown-editor.min.css">
 
+		<script type="text/javascript" src="/plugins/ngTagsInput/ng-tags-input.min.js"></script>
+		<script type="text/javascript" src="/plugins/codemirror/codemirror.js"></script>
+		<script type="text/javascript" src="/plugins/codemirror/gfm.js"></script>
+		<script type="text/javascript" src="/plugins/codemirror/markdown.js"></script>
+		<script type="text/javascript" src="/plugins/codemirror/overlay.js"></script>
+		<script type="text/javascript" src="/plugins/showdown/showdown.js"></script>
+		<script type="text/javascript" src="/plugins/prettify/prettify.min.js"></script>
+		<script type="text/javascript" src="/plugins/ngMarkdownEditor/angular-markdown-editor.js"></script>
+
+		
 		<!-- Angularjs Application -->
 		<script type="text/javascript" src="/angular-js/app.js"></script>
 		<script type="text/javascript" src="/angular-js/services.js"></script>
