@@ -93,6 +93,7 @@ return array(
 	*/
 
 	'providers' => array(
+		'Edisonthk\GoogleOAuth\GoogleOAuthServiceProvider',
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
@@ -148,6 +149,7 @@ return array(
 	*/
 
 	'aliases' => array(
+		'GoogleOAuth'   => 'Edisonthk\GoogleOAuth\Facade\GoogleOAuth',
 
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',

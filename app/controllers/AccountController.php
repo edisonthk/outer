@@ -20,4 +20,9 @@ class AccountController extends BaseController {
 		return View::make('/account/logout');
 	}
 
+	public function getOauth2callback()
+	{
+		
+	}
+
 }

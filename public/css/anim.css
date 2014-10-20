@@ -1,0 +1,49 @@
+/*
+	menu item animation in index.html
+*/
+.single-snippet.ng-enter, 
+.single-snippet.ng-leave
+{ 
+  -webkit-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 400ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
+} 
+
+.single-snippet.ng-enter.ng-enter-active, 
+.single-snippet.ng-leave 
+{
+  opacity: 1;
+  left: 0;
+}
+ 
+.single-snippet.ng-leave.ng-leave-active,
+.single-snippet.ng-enter
+{
+  opacity: 0;
+  left: -50px;
+  
+}
+
+/*
+	article block in index.html
+*/
+#article.ng-enter,
+#article.ng-leave
+{
+	-webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+  	transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+}
+#article.ng-leave,
+#article.ng-enter.ng-enter-active 
+{
+	opacity: 1;
+}
+#article.ng-leave.ng-leave-active,
+#article.ng-enter
+{
+	opacity: 0;
+}

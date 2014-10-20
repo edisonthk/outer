@@ -1,10 +1,10 @@
 
-<div snippetContollers id="snippets" class="container" ng-style="menuStyle">
+<div snippetContollers side-menu-scrolling-event id="snippets" class="container" >
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
 			<div class="search-form form-group">
 				<div class="snippet-padding">
-					<input type="text" 
+					<input id="searchText" type="text" 
 						class="form-control" 
 						ng-model="search_keywords" 
 						ng-keyup="searchEvent()" 
@@ -16,10 +16,11 @@
 			</div>
 			<div class="snippet-list">
 				<div ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
+
 					<a href="/snippets/{{snippet.id}}">
 						<div class="snippet-padding">
 							<div class="title">
-								<p>{{snippet.title}}</p>
+								<p>{{$index + 1}}&nbsp;{{snippet.title}}</p>
 							</div>
 							<div class="meta clearfix">
 								<div class="tags-group">
@@ -36,7 +37,7 @@
 </div>
 
 
-<div ng-if="article == null" id="empty-board">
+<div ng-if="article == null &amp;&amp; !loading" id="empty-board">
 	<!-- Layout when article is not selected -->
 	<div class="container">
 		<div class="row">
@@ -46,7 +47,7 @@
 		</div>
 	</div>
 </div>
-<div ng-if="article != null" id="article" class="container">
+<div ng-if="article != null &amp;&amp; !loading" id="article" class="container">
 	<!-- Layout when article is selected -->
 	<div class="row">
 		<div class="col-xs-8 col-xs-offset-4">
@@ -54,7 +55,7 @@
 
 			
 
-			<div class="gray-bg article-block">
+			<div class="gray-bg article-block" >
 				<ul class="snippet-tools clearfix">
 					<li>
 						<a href="/snippet/create"><i class="fa fa-plus fa-lg"></i>&nbsp;<span>create</span></a>

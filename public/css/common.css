@@ -22,12 +22,25 @@ div,a,p,h1,h2,h3,h4,h5 {
 4) #logo 	line-height
 5) #snippets.container	height
 6) #snippets.container	line-height
+7) nav .topbar-menu-item height
 
 */
 nav {
 	background-color: rgba(20,20,20,0.6);
 	display: block;
 	height: 44px;
+}
+nav .topbar-menu-item {
+	font-size: 15px;
+	height: 44px;
+	width: 70px;
+	text-align: center;
+	line-height: 44px;
+	display: inline-block;
+	vertical-align: middle;
+}
+nav .topbar-menu-item:hover {
+	background-color: rgba(120,120,120,0.5);
 }
 .wrapper{
 	height: calc(100% - 44px);
@@ -50,13 +63,13 @@ nav {
 	box-shadow: none;
 }
 #logo {
-	display:block;
+	display: inline-block;
 	height: 44px;
 	line-height: 44px;
 	font-size: 20px;
 	vertical-align: middle;
 }
-#logo:hover {
+a:hover {
 	text-decoration: none;
 	color:inherit;
 }
@@ -113,6 +126,7 @@ nav {
 	overflow-y: scroll;
 }
 #snippets .single-snippet {
+	position: relative;
 	border-bottom: 2px solid #555;
 }
 #snippets .article-block{
@@ -122,7 +136,7 @@ nav {
 	background-color: rgba(120,120,120,0.5);
 }
 #snippets .single-snippet.active{
-	background-color: rgba(100,100,100,0.5);
+	background-color: rgba(43,43,43,0.5);
 }
 
 #snippets .single-snippet .title {
@@ -135,6 +149,7 @@ nav {
 }
 #snippets .meta .datetime {
 	float: right;
+	font-size: 13px;
 }	
 #empty-board {
 	position: fixed;
@@ -233,6 +248,9 @@ nav {
 	border-right:1px solid #555;
 	float:left;
 	list-style-type: none;
+}
+#article .snippet-tools li:hover {
+	background-color: rgba(120,120,120,0.5);
 }
 #article .snippet-tools li a{
 	height: 100%;

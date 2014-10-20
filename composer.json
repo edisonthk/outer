@@ -4,7 +4,8 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.2.*"
+		"laravel/framework": "4.2.*",
+		"edisonthk/google-oauth-laravel4": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

@@ -1,7 +1,7 @@
 var snippetContollers = angular.module('snippetContollers', ['ngSanitize']);
 
-snippetContollers.controller('snippetListCtrl', ['$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
-	function($rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
+snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
+	function($route, $rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
 
 	$scope.snippet_selected = -1;
 
@@ -9,54 +9,11 @@ snippetContollers.controller('snippetListCtrl', ['$rootScope','$scope','$window'
 		$rootScope.snippets = Snippet.query();	
 	}
 
-	var navHeight = document.getElementsByTagName("nav")[0].offsetHeight;
-	var menuElement = document.getElementById("snippets");
-	menuElement.style.top = navHeight + "px";
-
-	// Handle height and offsetTop of the side menu at left hand side
-	angular.element($window).bind('scroll', function () {
-		;
-		var top  = window.pageYOffset || document.documentElement.scrollTop,
-    		left = window.pageXOffset || document.documentElement.scrollLeft;
-
-    	var menuTop = navHeight - top;
-    	if(menuTop <= navHeight){
-    		
-    		if(menuTop > 0){
-    			menuElement.style.top = menuTop + "px";	
-    			menuElement.style.height = (window.innerHeight-menuTop)+"px";
-    		}else{
-    			menuElement.style.top = 0;	
-    			menuElement.style.height = window.innerHeight + "px";
-    		}
-    	}
-	});
-
-	angular.element($window).bind('keydown', function() {
-
-	});
-
-
 	$scope.article = null;
 
 	var default_subtitle = 	"Snippets list";
 	$scope.subtitle = default_subtitle;
 
-	$scope.$watch('$routeUpdate', function() { 
-		var path = ($location.path() + '').split('/');
-		
-		if(typeof path[2] == "string"){
-			var snippet_id = parseInt(path[2])
-			if(!isNaN(snippet_id)){
-				$scope.subtitle = default_subtitle;
-				$scope.snippet_selected = snippet_id;
-				Snippet.get({snippetId: snippet_id}, function(article) {
-					article.content = filterContent(article.content);
-					$scope.article = article;
-				});
-			}
-		}
-	});
 	
 
 	$scope.searchEvent = function(){
@@ -74,15 +31,68 @@ snippetContollers.controller('snippetListCtrl', ['$rootScope','$scope','$window'
 					$rootScope.snippets = data;
 				});
 
+			}else if($scope.search_keywords.match(/^[0-9]+$/g)){
+				// only number
+				if(typeof $rootScope.snippets !== "undefined"){
+					var temp_snippet_selected = $rootScope.snippets[parseInt($scope.search_keywords)-1];
+
+					$location.path("/snippets/"+temp_snippet_selected.id);
+				}
 			}else{
 				$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
 					$rootScope.snippets = data;
+					$scope.search_keywords = "";
 				});
 
 			}
 		}
 		// 
 	}
+
+	
+	$scope.locationUpdate = function(){
+
+		var path = ($location.path() + '').split('/');
+		
+		if(typeof path[2] == "string"){
+			var snippet_id = parseInt(path[2])
+			if(!isNaN(snippet_id)){
+				$scope.subtitle = default_subtitle;
+				$scope.snippet_selected = snippet_id;
+				Snippet.get({snippetId: snippet_id}, function(article) {
+					article.content = filterContent(article.content);
+					$scope.article = article;
+				});
+			}
+		}
+	}
+
+	$scope.locationUpdate();
+
+	$scope.loading = false;
+	$scope.$on('$routeChangeStart', function(next, current) { 
+	   $scope.article = null;
+	   $scope.loading = true;
+
+	}); 
+
+	// 
+	var lastRoute = $route.current;
+    $scope.$on('$locationChangeSuccess', function(event) {
+
+    	// event when location Changed success
+    	$scope.locationUpdate();
+    	$scope.loading = false;
+    	
+
+		// To prevent controller reloading
+		if(/^\/snippet$/.test($location.path()) && 
+			/^\/snippet\/[0-9]+$/.test($location.path()) ){
+			
+			$route.current = lastRoute;
+		}
+		
+    });
 
 }]);
 
@@ -92,7 +102,7 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 
 		$scope.tags = [
 			{text: "rails"},
-			{text: "aa"}
+			
 		];
 
 		$scope.editorOptions = {

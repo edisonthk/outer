@@ -7,12 +7,14 @@
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/common.css">
+		<link rel="stylesheet" type="text/css" href="/css/anim.css">
 
 		<!-- Angularjs library -->
 		<script type="text/javascript" src="/angular-libs/angular.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-route.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-resource.min.js"></script>
+		<script type="text/javascript" src="/angular-libs/angular-animate.min.js"></script>
 
 		<!-- Plugins -->
 		<link rel="stylesheet" type="text/css" href="/plugins/ngTagsInput/ng-tags-input.min.css">
@@ -44,8 +46,17 @@
 			
 				<div class="container">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-xs-4">
 							<a id="logo" href="/"><i class="fa fa-code fa-lg"></i>&nbsp;CodeGarage</a>
+						</div>
+						<div class="col-xs-8">
+							<?php if(Session::has("user")): ?>
+								<a class="topbar-menu-item" href="/account/about/<?= Session::get("user")["id"] ?>"><?= Session::get("user")["name"] ?></a>
+								<a class="topbar-menu-item" href="/account/signout/">Signout</a>
+							<?php else: ?>
+								<a class="topbar-menu-item" href="/account/login">Sign In</a>
+								<a class="topbar-menu-item" href="/aboutsite">Help&nbsp;<i class="fa fa-question"></i></a>
+							<?php endif;?>
 						</div>
 					</div>
 				</div>
