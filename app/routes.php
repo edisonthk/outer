@@ -5,6 +5,8 @@ Route::resource('/json/snippet','SnippetController');
 
 Route::get('/json/search','SnippetController@search');
 
+Route::controller('/html','HtmlController');
+
 Route::get("/snippet/create",function(){
 	return View::make("base");
 });
