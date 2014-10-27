@@ -55,13 +55,8 @@ codegarageApp.directive('pagedownAdmin', function ($compile, $timeout) {
         template: '<div class="pagedown-bootstrap-editor"></div>',
         link: function (scope, iElement, attrs, ngModel) {
 
-            var editorUniqueId;
+            var editorUniqueId = "0";
 
-            if (attrs.id == null) {
-                editorUniqueId = nextId++;
-            } else {
-                editorUniqueId = attrs.id;
-            }
 
             var newElement = $compile(
                 '<div>' +
