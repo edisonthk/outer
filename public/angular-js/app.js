@@ -22,17 +22,17 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 				redirectTo:'/snippets',
 			}).
 			when('/snippets/:snippet?', {
-				templateUrl: '/angular-html/index.html',
+				templateUrl: '/html/snippet/',
 				controller: 'snippetListCtrl',
 				reloadOnSearch: false,
 			}).
 			when('/snippet/create', {
-				templateUrl: '/angular-html/modify.html',
+				templateUrl: '/html/snippet/create',
 				controller: 'snippetModifyCtrl',
 				reloadOnSearch: false,
 			}).
 			when('/snippet/:snippet/edit', {
-				templateUrl: '/angular-html/modify.html',
+				templateUrl: '/html/snippet/modify',
 				controller: 'snippetModifyCtrl',
 				reloadOnSearch: false,
 			});

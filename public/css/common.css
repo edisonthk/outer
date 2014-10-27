@@ -1,4 +1,4 @@
-* {
+﻿* {
 	font-family:"Helvetica", sans-serif;
 	letter-spacing: 0;
 }
@@ -30,6 +30,9 @@ nav {
 	display: block;
 	height: 44px;
 }
+.container {
+	width:100%;
+}
 nav .topbar-menu-item {
 	font-size: 15px;
 	height: 44px;
@@ -38,6 +41,12 @@ nav .topbar-menu-item {
 	line-height: 44px;
 	display: inline-block;
 	vertical-align: middle;
+	border-right: 1px solid #EEE;
+	margin: 0px 0px 0px 0px ;
+	float: left;
+}
+.topbar-menu-item:first-child{
+	border-left: 1px solid #EEE;
 }
 nav .topbar-menu-item:hover {
 	background-color: rgba(120,120,120,0.5);
@@ -122,9 +131,7 @@ a:hover {
 #snippets .snippet-list-subtitle .snippet-padding{
 	margin-bottom:0;	
 }
-#snippets .snippet-list {
-	overflow-y: scroll;
-}
+
 #snippets .single-snippet {
 	position: relative;
 	border-bottom: 2px solid #555;
