@@ -51,8 +51,12 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 	
 	$scope.locationUpdate = function(){
+		
 
 		var path = ($location.path() + '').split('/');
+		if(typeof path[1] == "string" && path[1] == "account"){
+			$window.location.href = $location.path();
+		}
 		
 		if(typeof path[2] == "string"){
 			var snippet_id = parseInt(path[2])
@@ -100,9 +104,8 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http','$routeParams','$location','Snippet',
 	function($rootScope, $scope, $http,$routeParams,$location,Snippet){
 
+		$scope.article = {title: "", content: "", tags: []};
 		$scope.tags = [
-			{text: "rails"},
-			
 		];
 
 		$scope.editorOptions = {
@@ -121,6 +124,7 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 			for (var i = 0; i < tempTags.length; i++) {
 				newTags.push(tempTags[i].text);
 			};
+
 			postData = {
 				title: $scope.article.title, 
 				content: $scope.article.content,
@@ -130,17 +134,37 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				// update
 				Snippet.update({snippetId: $routeParams.snippet}, postData, function(){
 					// success
+					$scope.errorMessage = false;
+					$scope.success = true;
+
 				}, function(e){
-					// error
-					console.log(e);
+					errorMessage = [];
+					for(var key in e.data.error){
+						errorMessage.push(e.data.error[key]);
+					}
+					$scope.errorMessage = errorMessage;
+					$scope.success = false;
 				});
 			}else{
 				// create
-				Snippet.create( {}, postData, function(){
+				Snippet.create( {}, postData, function(result){
 					// success
+					$location.path("/snippet/"+result.id+"/edit");
+					$scope.success = true;
+					$scope.errorMessage = false;
 				}, function(e){
 					// error
-					console.log(e);
+					errorMessage = [];
+					for(var key in e.data.error){
+						if(e.data.error[key] instanceof Array){
+							errorMessage.push(e.data.error[key][0]);	
+						}else{
+							errorMessage.push(e.data.error[key]);	
+						}
+					}
+					
+					$scope.errorMessage = errorMessage;
+					$scope.success = false;
 				});
 			}
 			
@@ -153,6 +177,12 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				article.content = filterContent(article.content);
 				
 				$scope.article = article;
+
+				var tags = [];
+				for(var i =0;i<article.tags.length;i++){
+					tags.push({"text":article.tags[i].name});
+				}
+				$scope.tags = tags;
 			})
 
 		}

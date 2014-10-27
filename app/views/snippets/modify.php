@@ -1,6 +1,15 @@
 <div snippetContollers id="editor-snippet" class="container">
 	<div class="row">
 		<div class="col-xs-6">
+			<div ng-if="errorMessage" class="alert alert-danger">
+				<p>Failed to update.</p>
+				<ul ng-repeat="e in errorMessage">
+					<li>{{e}}</li>
+				</ul>
+			</div>
+			<div ng-if="success" class="alert alert-success">
+				Updated
+			</div>
 			<form>
 				<div class="form-group">
 					<input type="text" class="form-control" ng-model="article.title" />

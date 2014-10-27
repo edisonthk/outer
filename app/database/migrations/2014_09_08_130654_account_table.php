@@ -17,8 +17,11 @@ class AccountTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name');
-			$table->integer('facebook_id');
-			$table->integer('permit');
+			$table->string('email');
+			$table->tinyInteger('level')->default(0);
+			$table->string('locate');
+			$table->string('lang');
+			$table->string('google_id')->nullable();
 			$table->timestamps();
 		});
 	}

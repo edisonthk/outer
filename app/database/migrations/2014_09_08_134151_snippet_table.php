@@ -18,6 +18,9 @@ class SnippetTable extends Migration {
 			$table->increments('id');
 			$table->string('title');
 			$table->text('content');
+			$table->string('lang');
+			$table->integer('account_id')->unsigned()->nullable();
+			$table->foreign('account_id')->references('id')->on('account_table')->onDelete('set null');
 			$table->timestamps();
 		});
 	}

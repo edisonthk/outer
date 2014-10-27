@@ -2,6 +2,10 @@
 
 class SnippetController extends BaseController {
 
+	public function __constructor() {
+		 $this->beforeFilter('auth', array('except' => array('index','create','show','search')));
+	}
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -39,36 +43,27 @@ class SnippetController extends BaseController {
 	 */
 	public function store()
 	{
-		
 		// process the login
 		$inputs = Input::all();
-		$inputs["tags"] = json_decode($inputs["tags"],true);
 		$validator = $this->validate($inputs);
 
 		if ($validator->fails()) {
-			return Response::json($validator);
+			return Response::json(["error"=>$validator->messages()],400);
 		} else {
 			// store
 			$snippet = new Snippet;
-			$snippet->title       = Input::get('title');
-			$snippet->content     = Input::get('content');
-			$snippet->timestamps=true;
+			$snippet->title       	= Input::get('title');
+			$snippet->content     	= Input::get('content');
+			$snippet->timestamps 	= true;
+			$snippet->lang 			= "jp";
+			$snippet->account_id 	= Session::get("user")["account_id"];
 
 			$snippet->save();
 
-			$tags = array();
-			foreach ($inputs["tags"] as $value) {
-				$t = Tag::where("name","=",$value)->first();
-				if(!is_null($t)){
-					$snippet->tags()->save($t);	
-				}
-			}
+			$snippet->tagsave($inputs["tags"]);
 
-			
-
-			
-			Session::flash('message', 'Successfully created Snippet!');
-			return Response::json('/snippet');
+		
+			return Response::json($snippet->toArray());
 		}
 	}
 
@@ -86,6 +81,13 @@ class SnippetController extends BaseController {
 
 		$result = $snippet->toArray();
 		$result["tags"] = $snippet->tags()->getResults()->toArray();
+		$result["creator_name"] = $snippet->getCreatorName();
+
+		unset($result["account_id"]);
+
+		// ユーザの編集権限
+		$result["editable"] = (Session::has("user") && Session::get("user")["account_id"] == $snippet->account_id);
+		
 
 		return Response::json($result);
 
@@ -132,7 +134,8 @@ class SnippetController extends BaseController {
 		$validator = $this->validate(Input::all());
 		// process the login
 		if ($validator->fails()) {
-			return Response::json($validator);
+
+			return Response::json(["error"=>$validator->messages()], 400);
 		/*
 			return Redirect::to('snippet/create')
 				->withErrors($validator)
@@ -141,13 +144,13 @@ class SnippetController extends BaseController {
 		} else {
 			// store
 			$snippet = Snippet::find($id);
-			$snippet->title       = Input::get('title');
-			$snippet->content     = Input::get('content');
-			$snippet->tags_id     = Input::get('tags_id');
-			$snippet->timestamps=true;
-
+			$snippet->title       	= Input::get('title');
+			$snippet->content    	= Input::get('content');
+			$snippet->timestamps 	=true;
+			$snippet->lang 			= "jp";
 			$snippet->save();
-			$snippet->tagsave($tags);
+
+			$snippet->tagsave(Input::get('tags'));
 
 			// redirect
 			Session::flash('message', 'Successfully created snippet!');
@@ -215,7 +218,7 @@ class SnippetController extends BaseController {
 		$rules = array(
 			'title'       => 'required',
 			'content'      => 'required',
-			'tags'      => 'required|tag_exists'
+			'tags'      => 'required'
 		);
 
 		return Validator::make($inputs, $rules);

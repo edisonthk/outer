@@ -57,14 +57,14 @@
 
 			<div class="gray-bg article-block" >
 				<ul class="snippet-tools clearfix">
-					<li>
-						<a href="/snippet/create"><i class="fa fa-plus fa-lg"></i>&nbsp;<span>create</span></a>
-					</li>
-					<li ng-if="article != null">
+					<li ng-if="article.editable">
 						<a href="/snippet/{{article.id}}/edit"><i class="fa fa-edit fa-lg"></i>&nbsp;<span>modify</span></a>
 					</li>
-					<li ng-if="article != null">
+					<li ng-if="article.editable">
 						<a href="/snippet/{{article.id}}/delete"><i class="fa fa-trash fa-lg"></i>&nbsp;<span>delete</span></a>
+					</li>
+					<li ng-if="!article.editable">
+						<a><i class="fa fa-edit fa-lg"></i>&nbsp;<span>Created by {{article.creator_name}}</span></a>
 					</li>
 				</ul>
 				<div class="article-tag">

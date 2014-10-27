@@ -51,10 +51,14 @@
 						</div>
 						<div class="col-xs-8">
 							<?php if(Session::has("user")): ?>
-								<a class="topbar-menu-item" href="/account/about/<?= Session::get("user")["id"] ?>"><?= Session::get("user")["name"] ?></a>
+								<div class="topbar-menu-item">
+									<img src="<?= Session::get("user")["picture"] ?>" height="40px" width="40px" class="img-rounded" alt="avatar" />
+									<span><?= Session::get("user")["name"] ?></span>
+								</div>
+								<a class="topbar-menu-item" href="/snippet/create"><i class="fa fa-plus fa-lg"></i>&nbsp;<span>create</span></a>
 								<a class="topbar-menu-item" href="/account/signout/">Signout</a>
 							<?php else: ?>
-								<a class="topbar-menu-item" href="/account/login">Sign In</a>
+								<a class="topbar-menu-item" href="/account/signin">Sign In</a>
 								<a class="topbar-menu-item" href="/aboutsite">Help&nbsp;<i class="fa fa-question"></i></a>
 							<?php endif;?>
 						</div>

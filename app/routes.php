@@ -7,18 +7,12 @@ Route::get('/json/search','SnippetController@search');
 
 Route::controller('/html','HtmlController');
 
-Route::get("/snippet/create",function(){
-	return View::make("base");
-});
-Route::get("/snippet/{snippet}/edit",function(){
-	return View::make("base");
-});
-Route::get("/snippets/{snippet?}",function(){
-	return View::make("base");
-});
-Route::get("/",function(){
-	return View::make("base");
-});
+
+
+Route::get("/snippet/create",'HtmlController@angularJS');
+Route::get("/snippet/{snippet}/edit",'HtmlController@angularJS');
+Route::get("/snippets/{snippet?}",'HtmlController@angularJS');
+Route::get("/",'HtmlController@angularJS');
 
 // Route::get('/',function(){
 // 	echo "<html><head><link rel='stylesheet' href='/css/common.css'></head><body>";

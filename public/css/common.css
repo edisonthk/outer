@@ -36,17 +36,21 @@ nav {
 nav .topbar-menu-item {
 	font-size: 15px;
 	height: 44px;
-	width: 70px;
+	padding:0 8px;
 	text-align: center;
 	line-height: 44px;
 	display: inline-block;
 	vertical-align: middle;
 	border-right: 1px solid #EEE;
-	margin: 0px 0px 0px 0px ;
-	float: left;
 }
 .topbar-menu-item:first-child{
 	border-left: 1px solid #EEE;
+}
+.alert p{
+	color: inherit;
+}
+.alert {
+	margin-top: 20px;
 }
 nav .topbar-menu-item:hover {
 	background-color: rgba(120,120,120,0.5);
