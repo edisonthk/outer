@@ -147,6 +147,7 @@ class SnippetController extends BaseController {
 			$snippet->timestamps=true;
 
 			$snippet->save();
+			$snippet->tagsave($tags);
 
 			// redirect
 			Session::flash('message', 'Successfully created snippet!');
@@ -176,7 +177,7 @@ class SnippetController extends BaseController {
 		if(Input::has("kw")){
 
 			$kw = Input::get("kw");
-
+			
 			$snippets = array();
 			foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
 			
@@ -185,8 +186,8 @@ class SnippetController extends BaseController {
 
 				array_push($snippets, $temp); 
 			}
-
 			return Response::json($snippets);
+
 		}
 
 		App::abort(404);
