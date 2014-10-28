@@ -59,7 +59,7 @@ codegarageApp.directive('markdownEditor', ["$window","$compile",function($window
 				'<textarea class="input-textarea" ng-model="article.content"></textarea>'
                 )(scope);
 
-
+            
             scope.btnCoding = function(){
             	var _textarea = attrs["$$element"][0].getElementsByTagName("textarea")[0];
             	
@@ -137,8 +137,7 @@ codegarageApp.directive('markdownEditor', ["$window","$compile",function($window
 				}
 			}
 
-            iElement.html(newElement);
-
+			iElement.append(newElement);
         }
     }
 }]);

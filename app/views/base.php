@@ -11,7 +11,7 @@
 
 
 		<!-- jQuery -->
-		<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+		<!-- <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script> -->
 
 		<!-- Angularjs library -->
 		<script type="text/javascript" src="/angular-libs/angular.min.js"></script>

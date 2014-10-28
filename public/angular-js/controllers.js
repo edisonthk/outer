@@ -104,9 +104,9 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http','$routeParams','$location','Snippet',
 	function($rootScope, $scope, $http,$routeParams,$location,Snippet){
 
-		if(typeof $scope.article === "undefined" || typeof $scope.article.title === "undefined" || typeof $scope.article.content === "undefined" ){
-			// $scope.article = {title: "", content: "", tags: []};	
-		}
+		// if(typeof $scope.article === "undefined" || typeof $scope.article.title === "undefined" || typeof $scope.article.content === "undefined" ){
+		// 	$scope.article = {title: "", content: "", tags: []};
+		// }
 		
 		$scope.loadTags = function(query) {
 

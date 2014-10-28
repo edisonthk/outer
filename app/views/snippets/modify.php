@@ -19,7 +19,7 @@
 					
 				</div>
 				
-				<tags-input ng-model="tags">
+				<tags-input min-length="0" ng-model="tags">
 					<auto-complete source="loadTags($query)"></auto-complete>
 				</tags-input>
 				
