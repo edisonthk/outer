@@ -104,14 +104,10 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http','$routeParams','$location','Snippet',
 	function($rootScope, $scope, $http,$routeParams,$location,Snippet){
 
-		$scope.article = {title: "", content: "", tags: []};
-		$scope.tags = [
-		];
-
-		$scope.editorOptions = {
-
+		if(typeof $scope.article === "undefined" || typeof $scope.article.title === "undefined" || typeof $scope.article.content === "undefined" ){
+			// $scope.article = {title: "", content: "", tags: []};	
 		}
-
+		
 		$scope.loadTags = function(query) {
 
 			return $http.get('/json/tag/?q='+query);
@@ -149,9 +145,9 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				// create
 				Snippet.create( {}, postData, function(result){
 					// success
-					$location.path("/snippet/"+result.id+"/edit");
 					$scope.success = true;
 					$scope.errorMessage = false;
+					$location.path("/snippet/"+result.id+"/edit").replace();
 				}, function(e){
 					// error
 					errorMessage = [];

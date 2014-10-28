@@ -36,9 +36,9 @@
 		<script type="text/javascript" src="/plugins/ngMarkdownEditor/angular-markdown-editor.js"></script>
 
 		<!-- Markdown -->
-		<script type="text/javascript" src="/plugins/wmd-editor/Markdown.Converter.js"></script>
+	<!--	<script type="text/javascript" src="/plugins/wmd-editor/Markdown.Converter.js"></script>
 		<script type="text/javascript" src="/plugins/wmd-editor/Markdown.Sanitizer.js"></script>
-		<script type="text/javascript" src="/plugins/wmd-editor/Markdown.Editor.js"></script>
+		<script type="text/javascript" src="/plugins/wmd-editor/Markdown.Editor.js"></script> -->
 
 		
 		<!-- Angularjs Application -->

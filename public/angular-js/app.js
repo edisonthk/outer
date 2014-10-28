@@ -40,71 +40,108 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 		$locationProvider.html5Mode(true).hashPrefix('!');
 	}]);
 
-codegarageApp.directive('pagedownAdmin', function ($compile, $timeout) {
-    var nextId = 0;
-    var converter = Markdown.getSanitizingConverter();
-    converter.hooks.chain("preBlockGamut", function (text, rbg) {
-        return text.replace(/^ {0,3}""" *\n((?:.*?\n)+?) {0,3}""" *$/gm, function (whole, inner) {
-            return "<blockquote>" + rbg(inner) + "</blockquote>\n";
-        });
-    });
+codegarageApp.directive('markdownEditor', ["$window","$compile",function($window, $compile) {
     
     return {
+    	restrict: 'A',
         require: 'ngModel',
         replace: true,
-        template: '<div class="pagedown-bootstrap-editor"></div>',
-        link: function (scope, iElement, attrs, ngModel) {
+        link: function (scope, iElement, attrs, ctrl) {
 
-            var editorUniqueId = "0";
-
-
+        	// compile element to angularJS
             var newElement = $compile(
-                '<div>' +
-                   '<div class="wmd-panel">' +
-                      '<div id="wmd-button-bar-' + editorUniqueId + '"></div>' +
-                      '<textarea class="wmd-input" id="wmd-input-' + editorUniqueId + '">' +
-                      '</textarea>' +
-                   '</div>' +
-                '</div>')(scope);
+                '<div class="input-toolsbox">'+
+						'<a class="input-toolsbox-item" inputToolsboxItem="" ng-click="btnBold()"><i class="fa fa-bold"></i></a>'+
+						'<a class="input-toolsbox-item" inputToolsboxItem="" ng-click="btnItalic()"><i class="fa fa-italic"></i></a>'+
+						'<a class="input-toolsbox-item" inputToolsboxItem ng-click="btnImage()"><i class="fa fa-picture-o"></i></a>'+
+						'<a class="input-toolsbox-item" inputToolsboxItem ng-click="btnCoding()"><i class="fa fa-code"></i></a>'+
+					'</div>'+
+				'<textarea class="input-textarea" ng-model="article.content"></textarea>'
+                )(scope);
+
+
+            scope.btnCoding = function(){
+            	var _textarea = attrs["$$element"][0].getElementsByTagName("textarea")[0];
+            	
+            	var mTextHighlighted = TextHighlighted(_textarea);
+            	var textSelected = mTextHighlighted.getText
+		
+		
+				// setup begin
+				textSelected = '    ' + textSelected;
+			   	textSelected = textSelected.replace(/\n/g, '\n    ');
+			   	textSelected = textSelected.replace(/\s\s\s\s/g, '\n    ');
+			   	textSelected = textSelected.replace(/\n\n/g,'\n');
+			   	
+			   	var content = _textarea.value;
+			   	var b1 = content.substring(0, mTextHighlighted.getStart);
+			   	var b2 = content.substring(mTextHighlighted.getEnd , content.length);
+			   	
+		       	_textarea.value = b1 + "\n"+ textSelected +"\n" + b2;
+            	scope.article.content = _textarea.value;
+            }
+
+            scope.btnBold = function(){
+            	var _textarea = attrs["$$element"][0].getElementsByTagName("textarea")[0];
+            	
+            	var mTextHighlighted = TextHighlighted(_textarea);
+            	var textSelected = mTextHighlighted.getText
+		
+		
+				// setup begin
+				textSelected = '**' + textSelected +'**';
+			   	
+			   	
+			   	var content = _textarea.value;
+			   	var b1 = content.substring(0, mTextHighlighted.getStart);
+			   	var b2 = content.substring(mTextHighlighted.getEnd , content.length);
+			   	
+		       	_textarea.value = b1 + textSelected + b2;
+		       	scope.article.content = _textarea.value;
+            }
+            scope.btnItalic = function(){
+            	var _textarea = attrs["$$element"][0].getElementsByTagName("textarea")[0];
+            	
+            	var mTextHighlighted = TextHighlighted(_textarea);
+            	var textSelected = mTextHighlighted.getText
+		
+		
+				// setup begin
+				textSelected = '*' + textSelected +'*';
+			   	
+			   	
+			   	var content = _textarea.value;
+			   	var b1 = content.substring(0, mTextHighlighted.getStart);
+			   	var b2 = content.substring(mTextHighlighted.getEnd , content.length);
+			   	
+		       	_textarea.value = b1 + textSelected + b2;
+		       	scope.article.content = _textarea.value;
+            }
+
+
+
+            function TextHighlighted(_textarea){
+				var selStart = _textarea.selectionStart;
+				var selEnd = _textarea.selectionEnd;
+				var content = _textarea.value;
+				
+				// 
+				var wordsSel = "";
+				if(selStart != selEnd)
+					wordsSel = content.substring(selStart, selEnd);
+				
+				return {
+					getText : wordsSel,
+					getStart : selStart,
+					getEnd : selEnd
+				}
+			}
 
             iElement.html(newElement);
 
-            var help = function () {
-                alert("There is no help");
-            }
-
-            var editor = new Markdown.Editor(converter, "-" + editorUniqueId, {
-                handler: help,
-                imageDirectory: 'img/wmd/',
-            });
-
-            var $wmdInput = iElement.find('#wmd-input-' + editorUniqueId);
-
-            var init = false;
-
-            editor.hooks.chain("onPreviewRefresh", function () {
-              var val = $wmdInput.val();
-              if (init && val !== ngModel.$modelValue ) {
-                $timeout(function(){
-                  scope.$apply(function(){
-                    ngModel.$setViewValue(val);
-                    ngModel.$render();
-                  });
-                });
-              }              
-            });
-
-            ngModel.$formatters.push(function(value){
-              init = true;
-              $wmdInput.val(value);
-              editor.refreshPreview();
-              return value;
-            });
-
-            editor.run();
         }
     }
-});
+}]);
 
 codegarageApp.directive("sideMenuScrollingEvent", ["$window","$rootScope",function($window, $rootScope) {
 	return {
