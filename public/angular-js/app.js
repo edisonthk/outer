@@ -70,7 +70,6 @@ codegarageApp.directive('markdownEditor', ["$window","$compile",function($window
 				// setup begin
 				textSelected = '    ' + textSelected;
 			   	textSelected = textSelected.replace(/\n/g, '\n    ');
-			   	textSelected = textSelected.replace(/\s\s\s\s/g, '\n    ');
 			   	textSelected = textSelected.replace(/\n\n/g,'\n');
 			   	
 			   	var content = _textarea.value;
