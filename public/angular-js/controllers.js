@@ -1,11 +1,15 @@
 var snippetContollers = angular.module('snippetContollers', ['ngSanitize']);
 
+
 snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
 	function($route, $rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
 
 	$scope.snippet_selected = -1;
 
+
+
 	if(typeof $rootScope.snippets != "object"){
+		console.log("fdsf");
 		$rootScope.snippets = Snippet.query();	
 	}
 
@@ -41,6 +45,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 			}else{
 				$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
 					$rootScope.snippets = data;
+					$scope.last_searched_keywords = $scope.search_keywords;
 					$scope.search_keywords = "";
 				});
 
@@ -148,6 +153,7 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 					$scope.success = true;
 					$scope.errorMessage = false;
 					$location.path("/snippet/"+result.id+"/edit").replace();
+
 				}, function(e){
 					// error
 					errorMessage = [];
