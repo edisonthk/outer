@@ -61,7 +61,8 @@
 						<a href="/snippet/{{article.id}}/edit"><i class="fa fa-edit fa-lg"></i>&nbsp;<span>modify</span></a>
 					</li>
 					<li ng-if="article.editable">
-						<a href="/snippet/{{article.id}}/delete"><i class="fa fa-trash fa-lg"></i>&nbsp;<span>delete</span></a>
+						<!-- href="/snippet/{{article.id}}/delete" -->
+						<a ng-click="deleteButtonClicked(article);"><i class="fa fa-trash fa-lg"></i>&nbsp;<span>delete</span></a>
 					</li>
 					<li ng-if="!article.editable">
 						<a><i class="fa fa-edit fa-lg"></i>&nbsp;<span>Created by {{article.creator_name}}</span></a>

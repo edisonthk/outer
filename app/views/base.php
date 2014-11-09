@@ -51,7 +51,7 @@
 	<body ng-app="codegarageApp">
 		
 		<!-- static part -->
-		<nav>
+		<nav ng-class="{'dialog-open': dialogBox.show}">
 			
 				<div class="container">
 					<div class="row">
@@ -78,8 +78,21 @@
 		
 
 		<!-- dynamic part -->
-		<div class="wrapper">
+		<div class="wrapper" ng-class="{'dialog-open': dialogBox.show}">
 			<div class="table-cell" ng-view></div>
 		</div>
+
+		<!-- dialog -->
+		<dialog-box ng-if="dialogBox.show">
+			<div class="dialog-background"></div>
+			<div class="dialog">
+				<div class="dialog-message">
+					<h3 ng-bind-html="dialogBox.title"></h3>
+					<p ng-bind-html="dialogBox.message"></p>
+				</div>
+				<button class="btn {{dialogBox.okButtonClass}}" ng-click="dialogBox.okButtonClickEvent()">{{dialogBox.okButtonText}}</button>
+				<button class="btn {{dialogBox.noButtonClass}}" ng-click="dialogBox.noButtonClickEvent()">{{dialogBox.noButtonText}}</button>
+			</div>
+		</dialog-box>
 	</body>
 </html>

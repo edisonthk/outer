@@ -415,3 +415,63 @@ a:hover {
 	border-right: 0;
 	padding: 10px;
 }
+
+
+/* Dialog CSS */ 
+dialog-box .dialog-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: black;
+	z-index: 200;
+	opacity: 0.6;
+}
+
+.dialog-open {
+	/* Blur and de-color */
+  	-webkit-filter: blur(5px) grayscale(50%);
+}
+
+dialog-box .dialog-background {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 200;
+}
+
+dialog-box .dialog {
+	position: fixed;
+	padding: 10px 50px;
+	background: white;
+	border-radius: 5px;
+	min-width: 350px;
+	max-width: 50%;
+	min-height: 180px;
+	top: calc(50% - 90px);
+	left: 50%;
+	z-index: 201;
+	margin-left: -25%;
+}
+
+dialog-box .dialog * {
+	color: #333;
+}
+
+dialog-box .dialog .error-message {
+	color: red;
+}
+
+dialog-box .dialog .dialog-message {
+	height: 90px;
+}
+
+dialog-box .dialog button.btn {
+	text-align: center;
+	min-width: 80px;
+	margin-right: 10px;
+	color: #fff;
+}

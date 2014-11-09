@@ -53,6 +53,33 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		// 
 	}
 
+	$scope.deleteButtonClicked = function(article_clicked) {
+
+		$rootScope.dialogBox = {
+			show: true,
+			okButtonText: "削除",
+			noButtonText: "キャンセル",
+			title: "<i class='fa fa-trash'></i>&nbsp;削除",
+			message: "\""+article_clicked.title+"\"を削除しますか？この動作は戻せないのでご注意ください。",
+			okButtonClass: "btn-danger",
+			noButtonClass: "btn-primary",
+			okButtonClickEvent: function() {
+				Snippet.delete({snippetId: article_clicked.id}, {} , function(){
+					$rootScope.snippets = Snippet.query();	
+					$location.path("/snippets/").replace();
+					$rootScope.dialogBox.show = false;
+				}, function(e){
+					console.log(e);
+					$rootScope.dialogBox.title = "<span class='error-message'><i class='fa fa-close error-message'></i>&nbsp;削除失敗</span>"
+					$rootScope.dialogBox.message = "\""+article_clicked.title+"\"が削除できません。理由は"+e.data.error;
+				});
+			},
+			noButtonClickEvent: function() {
+				$rootScope.dialogBox.show = false;
+			},
+		}
+	}
+
 	
 	$scope.locationUpdate = function(){
 		

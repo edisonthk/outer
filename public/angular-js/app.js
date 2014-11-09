@@ -40,6 +40,53 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 		$locationProvider.html5Mode(true).hashPrefix('!');
 	}]);
 
+codegarageApp.directive('dialogBox',[ '$document',function($document) {
+	return {
+		restrict: 'E',
+		scope: true,
+		link: function(scope, element, attrs){
+
+			// $document.on('click', function(e){
+
+			// 	var _p = angular.element(e.target).parent();
+
+			// 	if(!_p.hasClass("dialog-message") && _p[0].localName !== "dialog-box" && e.target.localName !== "button" )
+			// 	{
+			// 		console.log("fdsfs");
+			// 	}
+
+
+
+			// 	// When the click event is fired, we need
+   //              // to invoke the AngularJS context again.
+   //              // As such, let's use the $apply() to make
+   //              // sure the $digest() method is called
+   //              // behind the scenes.
+   //              scope.$apply(function(){
+
+   //              });
+			// });
+
+			if(typeof scope.dialogBox === "undefined"){
+
+				scope.dialogBox = {
+					show: false,
+					okButtonText: "はい！",
+					noButtonText: "いいえ！",
+					title: "Dialog",
+					message: "This is dialog Hello",
+					okButtonClass: "",
+					noButtonClass: "",
+					okButtonClickEvent: function() {},
+					noButtonClickEvent: function() {},
+				}
+			}
+
+
+		}
+	}
+}]);
+
 codegarageApp.directive('markdownEditor', ["$window","$compile",function($window, $compile) {
     
     return {

@@ -10,7 +10,8 @@ snippetServices.factory('Snippet', ['$resource',
   	return $resource('/json/snippet/:snippetId', {}, {
       query: {method:'GET', params:{snippetId:''}, isArray:true},
       update: {method:'PUT'},
-      create: {method: 'POST', url:'/json/snippet/'}
+      create: {method: 'POST', url:'/json/snippet/'},
+      delete: {method: 'DELETE'}
     });
 
   }]);
