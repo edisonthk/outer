@@ -9,7 +9,6 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 
 	if(typeof $rootScope.snippets != "object"){
-		console.log("fdsf");
 		$rootScope.snippets = Snippet.query();	
 	}
 

@@ -248,6 +248,11 @@ a:hover {
 	padding: 13px 20px;
 	min-height: 200px;
 }
+#article .article-block .article-content p code {
+	background-color: #333;
+	margin: 0 3px;
+	color: #fff;
+}
 #article .article-block .article-content img {
 	width:100%;
 }
