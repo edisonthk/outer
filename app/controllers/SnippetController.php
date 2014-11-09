@@ -2,8 +2,8 @@
 
 class SnippetController extends BaseController {
 
-	public function __constructor() {
-		 $this->beforeFilter('auth', array('except' => array('index','create','show','search')));
+	public function __construct() {
+		 $this->beforeFilter('auth.login', array('except' => array('index','create','show','search')));
 	}
 
 	/**

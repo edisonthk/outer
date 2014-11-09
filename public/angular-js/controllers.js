@@ -155,12 +155,17 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				}, function(e){
 					// error
 					errorMessage = [];
-					for(var key in e.data.error){
-						if(e.data.error[key] instanceof Array){
-							errorMessage.push(e.data.error[key][0]);	
-						}else{
-							errorMessage.push(e.data.error[key]);	
+
+					if(typeof e.data.error === "object"){
+						for(var key in e.data.error){
+							if(e.data.error[key] instanceof Array){
+								errorMessage.push(e.data.error[key][0]);	
+							}else{
+								errorMessage.push(e.data.error[key]);	
+							}
 						}
+					}else{
+						errorMessage.push(e.data.error);
 					}
 					
 					$scope.errorMessage = errorMessage;

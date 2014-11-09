@@ -33,10 +33,14 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
+Route::filter('auth.login', function()
 {
-	if(!Session::has("user")){
-		return Redirect::to("/account/signin");
+	if(!Session::has("user") || !GoogleOAuth::hasAuthorized()){
+		if(Request::is("json/*")) {
+			return Response::json(array('error' => 'ユーザのセッションが無効状態なので、ログインし直してだくさい。'), 404);
+		}else{
+			return Redirect::to("/account/signin");
+		}
 	}
 });
 
