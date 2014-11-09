@@ -160,7 +160,7 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$rootScope",functi
 		    	var menuTop = navHeight - top;
 
 		    	if(menuTop <= navHeight){
-		    		
+
 		    		if(menuTop > 0){
 		    			menuElement.style.top = menuTop + "px";	
 		    			menuElement.style.height = (window.innerHeight-menuTop)+"px";

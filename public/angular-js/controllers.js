@@ -97,7 +97,6 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		// To prevent controller reloading
 		if(/^\/snippet$/.test($location.path()) && 
 			/^\/snippet\/[0-9]+$/.test($location.path()) ){
-			
 			$route.current = lastRoute;
 		}
 		
@@ -193,6 +192,6 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 
 function filterContent(content)
 {
-	content = content.replace(/\\n/g,"\n");	
+	// content = content.replace(/\\n/g,"\n");	
 	return content;
 }
