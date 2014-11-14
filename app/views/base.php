@@ -43,6 +43,7 @@
 		
 		<!-- Angularjs Application -->
 		<script type="text/javascript" src="/angular-js/app.js"></script>
+		<script type="text/javascript" src="/angular-js/directive.js"></script>
 		<script type="text/javascript" src="/angular-js/services.js"></script>
 		<script type="text/javascript" src="/angular-js/controllers.js"></script>
 		

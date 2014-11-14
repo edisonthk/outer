@@ -8,20 +8,8 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 				redirectTo:'/snippets',
 			}).
 			when('/snippets/:snippet?', {
-				templateUrl: '/html/snippet/',
 				controller: 'snippetListCtrl',
-				reloadOnSearch: false,
-			}).
-			when('/snippet/create', {
-				templateUrl: '/html/snippet/create',
-				controller: 'snippetModifyCtrl',
-				reloadOnSearch: false,
-			}).
-			when('/snippet/:snippet/edit', {
-				templateUrl: '/html/snippet/modify',
-				controller: 'snippetModifyCtrl',
-				reloadOnSearch: false,
 			});
 
-		$locationProvider.html5Mode(true).hashPrefix('!');
+		$locationProvider.html5Mode(false).hashPrefix('!');
 	}]);

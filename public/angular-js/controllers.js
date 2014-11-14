@@ -6,7 +6,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 	$scope.snippet_selected = -1;
 
-
+	console.log("fdsfs");
 
 	if(typeof $rootScope.snippets != "object"){
 		$rootScope.snippets = Snippet.query();	
@@ -98,6 +98,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 					article.content = filterContent(article.content);
 					$scope.article = article;
 				});
+
 			}
 		}
 	}

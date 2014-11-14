@@ -15,7 +15,7 @@
 				<p class="snippet-padding">{{subtitle}}</p>
 			</div>
 			<div class="snippet-list">
-				<div ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
+				<div id="snippet-item-{{snippet.id}}" ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
 
 					<a href="/snippets/{{snippet.id}}">
 						<div class="snippet-padding">

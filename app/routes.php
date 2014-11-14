@@ -21,3 +21,7 @@ Route::get("/",'HtmlController@angularJS');
 // 	}
 // 	echo "</body></html>";
 // });
+
+Route::get("/test",function(){
+	phpinfo();
+});
