@@ -24,7 +24,7 @@
 				</tags-input>
 				
 				<div class="form-group">
-					<button ng-click="submit()">Submit</button>
+					<button ng-click="submit()">送信</button>
 				</div>
 			</form>
 		</div>

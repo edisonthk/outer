@@ -8,7 +8,7 @@
 						class="form-control" 
 						ng-model="search_keywords" 
 						ng-keyup="searchEvent()" 
-						placeholder="Searching snippets ....">
+						placeholder="スニペットを検索 ....">
 				</div>
 			</div>
 			<div class="snippet-list-subtitle">
@@ -42,7 +42,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-7 col-xs-offset-5">
-				<h1>Choose the article</h1>
+				<h1>項目を選んで</h1>
 			</div>
 		</div>
 	</div>

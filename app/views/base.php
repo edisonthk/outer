@@ -65,11 +65,11 @@
 									<img src="<?= Session::get("user")["picture"] ?>" height="40px" width="40px" class="img-rounded" alt="avatar" />
 									<span><?= Session::get("user")["name"] ?></span>
 								</div>
-								<a class="topbar-menu-item" href="/snippet/create"><i class="fa fa-plus"></i>&nbsp;<span>Create</span></a>
-								<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>SignOut</span></a>
+								<a class="topbar-menu-item" href="/snippet/create"><i class="fa fa-plus"></i>&nbsp;<span>新規</span></a>
+								<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>サインアウト</span></a>
 							<?php else: ?>
-								<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>SignIn</span></a>
-								<a class="topbar-menu-item" href="/aboutsite"><i class="fa fa-question"></i>&nbsp;Help</a>
+								<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>サインイン</span></a>
+								<a class="topbar-menu-item" href="/aboutsite"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
 							<?php endif;?>
 						</div>
 					</div>
