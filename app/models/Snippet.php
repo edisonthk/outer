@@ -48,4 +48,33 @@ class Snippet extends Eloquent {
 		}
 		
 	}
+
+	public function getUpdatedAtAttribute($value)
+	{
+		return $this->convertToUserView($value);
+	}
+
+	private function convertToUserView($timestamp){
+	    $d1 = new DateTime($timestamp);
+	    $n = new DateTime("now");
+	    $diff = $d1->diff($n);
+
+	    if($diff->y > 0) { 
+	        return $diff->format("%y年前");
+	    } 
+	    if($diff->m > 0) { 
+	        return $diff->format("%m月前");
+	    } 
+	    if($diff->d > 0) { 
+	        return $diff->format("%d日前");
+	    } 
+	    if($diff->h > 0) { 
+	        return $diff->format("%h時間前");
+	    } 
+	    if($diff->i > 0) { 
+	        return $diff->format("%i分前");
+	    } 
+
+	    return "１分前";
+	}
 }

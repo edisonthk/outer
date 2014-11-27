@@ -158,13 +158,16 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 				tags: newTags
 			};
 			if(typeof $routeParams.snippet === "string"){
-				// update
+				// snippet update
 				Snippet.update({snippetId: $routeParams.snippet}, postData, function(){
 					// success
+					// スニペットの更新が成功
 					$scope.errorMessage = false;
 					$scope.success = true;
+					$rootScope.snippets = Snippet.query();	
 
 				}, function(e){
+					// スニペットの更新が失敗
 					errorMessage = [];
 					for(var key in e.data.error){
 						errorMessage.push(e.data.error[key]);
@@ -173,15 +176,18 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 					$scope.success = false;
 				});
 			}else{
-				// create
+				// snippet create
 				Snippet.create( {}, postData, function(result){
 					// success
+					// スニペットの新規が成功
 					$scope.success = true;
 					$scope.errorMessage = false;
+					$rootScope.snippets = Snippet.query();	
 					$location.path("/snippet/"+result.id+"/edit").replace();
 
 				}, function(e){
 					// error
+					// スニペットの新規が失敗
 					errorMessage = [];
 
 					if(typeof e.data.error === "object"){
