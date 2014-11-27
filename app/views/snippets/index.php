@@ -25,7 +25,7 @@
 								<div class="tags-group">
 									<span ng-repeat="tag in snippet.tags" class="tag">{{tag.name}}</span>
 								</div>
-								<div class="datetime">Updated at {{snippet.updated_at}} </div>
+								<div class="datetime"> {{snippet.updated_at}} に更新した</div>
 							</div>	
 						</div>
 					</a>		
