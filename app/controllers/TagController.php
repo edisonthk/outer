@@ -10,4 +10,5 @@ class TagController extends BaseController {
 
 		return Response::json(Tag::onlyName());
 	}
+	
 }

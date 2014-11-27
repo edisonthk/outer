@@ -14,7 +14,7 @@ class SnippetController extends BaseController {
 	public function index(){
 
 		$snippets = array();
-		foreach (Snippet::all() as $snippet) {
+		foreach (Snippet::orderBy('updated_at','desc')->get() as $snippet) {
 			$temp = $snippet->toArray();
 			$temp["tags"] = $snippet->tags()->getResults()->toArray();
 
