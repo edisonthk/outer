@@ -69,7 +69,7 @@
 								<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>サインアウト</span></a>
 							<?php else: ?>
 								<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>サインイン</span></a>
-								<a class="topbar-menu-item" href="/aboutsite"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
+								<a class="topbar-menu-item" href="/help"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
 							<?php endif;?>
 						</div>
 					</div>
