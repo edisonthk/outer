@@ -203,7 +203,7 @@ class SnippetController extends BaseController {
 				}
 			}else{
 				foreach($splitedkw as $t){
-					if($t != ' '){
+					if($t != null){
 						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
 							$temp = $snippet->toArray();
 							$temp["tags"] = $snippet->tags()->getResults()->toArray();
