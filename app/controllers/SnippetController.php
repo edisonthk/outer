@@ -179,13 +179,13 @@ class SnippetController extends BaseController {
 	{
 		if(Input::has("kw")){
 			$kw = Input::get("kw");
+			$splitedkw=preg_split("/[,:\s]/",$kw);
 			$snippets = array();
 			$tags = array();
 			$tags2 = array();
 			
-			if(substr($kw, 0, 4)=='tag:'){
-				$tagString=preg_split("/[,:\s]/",$kw);
-				foreach($tagString as $t){
+			if($splitedkw[0]=='tag'){
+				foreach($splitedkw as $t){
 					foreach (Tag::where("name","=",$t)->get() as $tag) {
 						array_push($tags, $tag); 
 					}
@@ -202,11 +202,12 @@ class SnippetController extends BaseController {
 					}
 				}
 			}else{
-				foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
-					$temp = $snippet->toArray();
-					$temp["tags"] = $snippet->tags()->getResults()->toArray();
-
-					array_push($snippets, $temp); 
+				foreach($splitedkw as $t){
+					foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
+						$temp = $snippet->toArray();
+						$temp["tags"] = $snippet->tags()->getResults()->toArray();
+						array_push($snippets, $temp); 
+					}
 				}
 			}
 			return Response::json($snippets);
