@@ -203,10 +203,14 @@ class SnippetController extends BaseController {
 				}
 			}else{
 				foreach($splitedkw as $t){
-					foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
-						$temp = $snippet->toArray();
-						$temp["tags"] = $snippet->tags()->getResults()->toArray();
-						array_push($snippets, $temp); 
+					if($t != ' '){
+						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
+							$temp = $snippet->toArray();
+							$temp["tags"] = $snippet->tags()->getResults()->toArray();
+							array_push($snippets, $temp); 
+						}
+					}else{
+						continue;
 					}
 				}
 			}
