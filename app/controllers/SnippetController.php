@@ -215,6 +215,7 @@ class SnippetController extends BaseController {
 					}
 				}
 			}
+			//重複の削除
 			$tmp = array();
 			$snippets_result = array();
 			foreach( $snippets as $key => $value ){
@@ -223,6 +224,7 @@ class SnippetController extends BaseController {
 					$snippets_result[] = $value;
 				}
 			}
+			//ソート
 			foreach($snippets_result as $key=>$value){
 				$updated_at[$key]=$value["updated_at"];    
 			}
