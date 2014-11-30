@@ -14,7 +14,7 @@ class SnippetController extends BaseController {
 	public function index(){
 
 		$snippets = array();
-		foreach (Snippet::orderBy('updated_at','desc')->get() as $snippet) {
+		foreach (Snippet::orderBy('updated_at','desc')->get() as $snippet) {		//条件付けのときは->get()が必要
 			$temp = $snippet->toArray();
 			$temp["tags"] = $snippet->tags()->getResults()->toArray();
 
@@ -182,14 +182,30 @@ class SnippetController extends BaseController {
 			$kw = Input::get("kw");
 			
 			$snippets = array();
-			foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
-			
-				$temp = $snippet->toArray();
-				$temp["tags"] = $snippet->tags()->getResults()->toArray();
+			$tags = array();
+			if(substr($kw, 0, 4)=='tag:'){
+				foreach (Tag::where("name","=",substr($kw, 4))->get() as $tag) {
+					$temp = $tag;
+					array_push($tags, $temp); 
+				}
+				
+					$temp_snippets=$tag->snippets()->getResults();
+				foreach ($temp_snippets as $snippet) {
+					$temp = $snippet->toArray();
+					$temp["tags"] = $snippet->tags()->getResults()->toArray();
+					array_push($snippets, $temp); 
+				}
+				return Response::json($snippets);
+			}else{
+				foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
+					$temp = $snippet->toArray();
+					$temp["tags"] = $snippet->tags()->getResults()->toArray();
 
-				array_push($snippets, $temp); 
-			}
+					array_push($snippets, $temp); 
+				}
 			return Response::json($snippets);
+			}
+			
 
 		}
 
