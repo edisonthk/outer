@@ -21,6 +21,9 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 				templateUrl: '/html/snippet/modify',
 				controller: 'snippetModifyCtrl',
 				reloadOnSearch: false,
+			}).
+			when('/help', {
+				templateUrl: '/html/help'
 			});
 
 		$locationProvider.html5Mode(true).hashPrefix('!');

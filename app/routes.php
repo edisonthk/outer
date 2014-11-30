@@ -9,6 +9,7 @@ Route::controller('/html','HtmlController');
 
 
 
+Route::get("/help",'HtmlController@angularJS');
 Route::get("/snippet/create",'HtmlController@angularJS');
 Route::get("/snippet/{snippet}/edit",'HtmlController@angularJS');
 Route::get("/snippets/{snippet?}",'HtmlController@angularJS');
