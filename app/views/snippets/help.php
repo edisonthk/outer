@@ -44,7 +44,9 @@
                 例えば、『B』などのボタンを押した後の文字列は太文字になる。
                 検索しやすくするようにタグもつけると良い
             </div>
-            <div class="right col-md-6"></div>
+            <div class="right col-md-6">
+                <img src="/img/help/add.png" alt="">
+            </div>
         </section>
         <section class="row">
             <div class="left col-md-6">
