@@ -14,7 +14,7 @@ class Tag extends Eloquent {
 	public $timestamps = true;
 	
 	public function snippets(){
-		return $this->belongsToMany('Snippet','snippet_tag','tag_id','snippet_id');	//‘½‘Ì‘½‚Ì‚Æ‚«‚ÉŽg‚¤
+		return $this->belongsToMany('Snippet','snippet_tag','tag_id','snippet_id');	//‘½‘Î‘½‚Ì‚Æ‚«‚ÉŽg‚¤
 	}
 
 	public static function onlyName($search = null){

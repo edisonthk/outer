@@ -178,24 +178,29 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
-
 			$kw = Input::get("kw");
-			
 			$snippets = array();
 			$tags = array();
+			$tags2 = array();
+			
 			if(substr($kw, 0, 4)=='tag:'){
-				foreach (Tag::where("name","=",substr($kw, 4))->get() as $tag) {
-					$temp = $tag;
-					array_push($tags, $temp); 
+				$tagString=preg_split("/[,:\s]/",$kw);
+				foreach($tagString as $t){
+					foreach (Tag::where("name","=",$t)->get() as $tag) {
+						array_push($tags, $tag); 
+					}
 				}
-				
+				foreach($tags as $tag){
 					$temp_snippets=$tag->snippets()->getResults();
-				foreach ($temp_snippets as $snippet) {
-					$temp = $snippet->toArray();
-					$temp["tags"] = $snippet->tags()->getResults()->toArray();
-					array_push($snippets, $temp); 
+					array_push($tags2,$temp_snippets);
 				}
-				return Response::json($snippets);
+				foreach($tags2 as $item){
+					foreach ($item as $snippet) {
+						$temp = $snippet->toArray();
+						$temp["tags"] = $snippet->tags()->getResults()->toArray();
+						array_push($snippets, $temp); 
+					}
+				}
 			}else{
 				foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
 					$temp = $snippet->toArray();
@@ -203,10 +208,8 @@ class SnippetController extends BaseController {
 
 					array_push($snippets, $temp); 
 				}
-			return Response::json($snippets);
 			}
-			
-
+			return Response::json($snippets);
 		}
 
 		App::abort(404);
