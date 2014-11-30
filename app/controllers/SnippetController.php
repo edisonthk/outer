@@ -184,7 +184,7 @@ class SnippetController extends BaseController {
 			$tags = array();
 			$tags2 = array();
 			
-			if($splitedkw[0]=='tag'){
+			if(substr($kw,0,4)=='tag:'){
 				foreach($splitedkw as $t){
 					foreach (Tag::where("name","=",$t)->get() as $tag) {
 						array_push($tags, $tag); 
