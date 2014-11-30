@@ -179,6 +179,7 @@ class SnippetController extends BaseController {
 	{
 		if(Input::has("kw")){
 			$kw = Input::get("kw");
+			$kw=mb_convert_kana($kw,"s");
 			$splitedkw=preg_split("/[,:\s]/",$kw);
 			$snippets = array();
 			$tags = array();
@@ -203,7 +204,7 @@ class SnippetController extends BaseController {
 				}
 			}else{
 				foreach($splitedkw as $t){
-					if($t != null){
+					if(($t != null) || ($t != " ")){
 						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
 							$temp = $snippet->toArray();
 							$temp["tags"] = $snippet->tags()->getResults()->toArray();
@@ -214,8 +215,15 @@ class SnippetController extends BaseController {
 					}
 				}
 			}
-
-			return Response::json($snippets);
+			$tmp = array();
+			$snippets_result = array();
+			foreach( $snippets as $key => $value ){
+				if( !in_array( $value['updated_at'], $tmp ) ) {
+					$tmp[] = $value['updated_at'];
+					$snippets_result[] = $value;
+				}
+			}
+			return Response::json($snippets_result);
 		}
 
 		App::abort(404);
