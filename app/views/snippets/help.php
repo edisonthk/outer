@@ -36,7 +36,6 @@
                 新規を押す
             </div>
             <div class="right col-md-6">
-                <img alt="" class="avatar" data-user="7471716" height="auto" src="https://avatars3.githubusercontent.com/u/7471718?v=3&amp;s=460" width="100%">
             </div>
         </section>
         <section class="row">
