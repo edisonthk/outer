@@ -186,7 +186,7 @@ class SnippetController extends BaseController {
 			
 			if(substr($kw,0,4)=='tag:'){
 				foreach($splitedkw as $t){
-					foreach (Tag::where("name","=",$t)->get() as $tag) {
+					foreach (Tag::where("name","=",$t)->orderBy('updated_at','desc')->get() as $tag) {
 						array_push($tags, $tag); 
 					}
 				}
@@ -203,13 +203,14 @@ class SnippetController extends BaseController {
 				}
 			}else{
 				foreach($splitedkw as $t){
-					foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
+					foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
 						$temp = $snippet->toArray();
 						$temp["tags"] = $snippet->tags()->getResults()->toArray();
 						array_push($snippets, $temp); 
 					}
 				}
 			}
+
 			return Response::json($snippets);
 		}
 
