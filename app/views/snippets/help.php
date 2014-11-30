@@ -2,53 +2,56 @@
     <article>
         <h3 id="explanation1">検索機能の使い方</h3>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="left col-md-6">
                 ページを開いたら<br>
                 <span class="decoration1">まず検索ワードを入力</span>
             </div>
-            <div class="right col-md-4">
-                <img alt="" class="avatar" data-user="7471718" height="auto" src="https://avatars3.githubusercontent.com/u/7471718?v=3&amp;s=460" width="100%">
+            <div class="right col-md-6">
+                <img src="/img/help/gif1.gif" alt="">
             </div>
-            
         </section>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="right col-md-6">
+                <img src="/img/help/gif2.gif" alt="">
+            </div>
+            <div class="left col-md-6">
                 検索されたものを選ぶときは<br>
                 <span class="decoration1">[数字]＋[Enter]</span>
             </div>
-            <div class="right col-md-4"></div>
         </section>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="left col-md-6">
                 <span class="decoration1">[ctrl]+[a]</span>でソースを選択
             </div>
-            <div class="right col-md-4"></div>
+            <div class="right col-md-6">
+                <img src="/img/help/gif3.gif" alt="">
+            </div>
         </section>
     </article>
 
     <article>
         <h3 id="explanation2">スニペットの追加方法</h3>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="left col-md-6">
                 新規を押す
             </div>
-            <div class="right col-md-4">
-                <img alt="" class="avatar" data-user="7471718" height="auto" src="https://avatars3.githubusercontent.com/u/7471718?v=3&amp;s=460" width="100%">
+            <div class="right col-md-6">
+                <img alt="" class="avatar" data-user="7471716" height="auto" src="https://avatars3.githubusercontent.com/u/7471718?v=3&amp;s=460" width="100%">
             </div>
         </section>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="left col-md-6">
                 タイトルとスニペットに関する記事を書く。
                 例えば、『B』などのボタンを押した後の文字列は太文字になる。
                 検索しやすくするようにタグもつけると良い
             </div>
-            <div class="right col-md-4"></div>
+            <div class="right col-md-6"></div>
         </section>
         <section class="row">
-            <div class="left col-md-8">
+            <div class="left col-md-6">
                 送信を押す！するとスニペットが追加されている！
             </div>
-            <div class="right col-md-4"></div>
+            <div class="right col-md-6"></div>
         </section>
     </article>
     <div class="func-list">
@@ -75,7 +78,8 @@
 
 
     .container {
-        width: 960;
+        width: 960px;
+        margin: 0 auto;
     }
 
     .decoration1 {
@@ -86,16 +90,22 @@
     .left {
         font-size: 24px;
         color: #444;
-        text-align: center;
+        text-align: right;
         box-sizing: border-box;
         padding-right: 40px;
         padding-top: 30px;
 
     }
+    .left:nth-child(2) {
+        text-align: left;
+    }
 
     .right img {
        width: auto;
-       max-height: 150px;
+       max-height: 350px;
+    }
+    .right:nth-child(1) {
+        text-align: right;
     }
 
     .func-list {
