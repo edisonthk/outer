@@ -1,4 +1,4 @@
-<div class="container">
+<div class="help container">
     <article>
         <section class="row title-section">
             <blockquote id="howtouse_codegarage">検索機能の使い方</blockquote>
@@ -128,7 +128,7 @@
     .offset3 p {
         margin-left: -10px;
     }
-    .container {
+    .help.container {
         width: 960px;
         margin: 0 auto;
     }
