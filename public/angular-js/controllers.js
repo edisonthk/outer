@@ -12,18 +12,59 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 	$scope.article = null;
 
-	var default_subtitle = 	"Snippets list";
+	var default_subtitle = 	"最新のスニペット一覧";
 	$scope.subtitle = default_subtitle;
-
-	
-
+	// 検索イベント
 	$scope.searchEvent = function(){
 
+		// BEGIN: subtitleの表示文字を構成
 		if(($scope.search_keywords+'').length > 0 && typeof $scope.search_keywords != "undefined"){
-			$scope.subtitle = "Searching for \""+$scope.search_keywords+"\"";
+			var tags = $scope.search_keywords.match(/\[(.*?)\]/g);
+			if(tags == null){
+				$scope.subtitle = "\""+$scope.search_keywords+"\"　を検索";	
+			}else{
+
+				
+				// 検索するタグが重複しています。
+				var duplicated_flag = false;
+				for(var i=0;i<tags.length && !duplicated_flag;i++){
+					for(var j=0;j<tags.length && !duplicated_flag;j++){
+						if(i != j){
+							if(tags[i] == tags[j]){
+								duplicated_flag = true;
+							}
+						}
+					}
+				}
+				if(duplicated_flag){
+					$scope.subtitle = "検索するタグが重複しています";
+				}else{
+					// 検索するタグ
+					var temp = "";
+					for(var i=0;i<tags.length;i++){
+						temp += tags[i].replace(/[\]\[]/g,"") + ",";
+					}
+					temp = temp.substring(0,temp.length-1);
+					console.log(temp);
+					temp += "タグ";
+
+					// 検索する言葉
+					var words = $scope.search_keywords.replace(/\[(.*?)\]/g,"");
+					if(words.length <= 0){
+						// 検索する言葉がありません
+						temp += "を検索";
+					}else{
+						temp += "と\""+words+"\"を検索";
+					}
+
+					$scope.subtitle = temp;
+
+				}
+			}
 		}else{
 			$scope.subtitle = default_subtitle;
 		}
+		// END: subtitleの表示文字を構成
 		
 
 		if(event.keyCode == 13){
@@ -43,7 +84,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 				$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
 					$rootScope.snippets = data;
 					$scope.last_searched_keywords = $scope.search_keywords;
-					$scope.search_keywords = "";
+					
 				});
 
 			}
