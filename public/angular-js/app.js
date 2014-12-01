@@ -23,7 +23,8 @@ codegarageApp.config(['$locationProvider','$routeProvider',
 				reloadOnSearch: false,
 			}).
 			when('/help', {
-				templateUrl: '/html/help'
+				templateUrl: '/html/help',
+				controller: 'snippetHelpCtrl',
 			});
 
 		$locationProvider.html5Mode(true).hashPrefix('!');

@@ -276,6 +276,13 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$windo
 	
 }]);
 
+snippetContollers.controller('snippetHelpCtrl', ['$rootScope','$scope',
+	function($rootScope, $scope){
+
+		
+
+	}]);
+
 function filterContent(content)
 {
 	// content = content.replace(/\\n/g,"\n");	
