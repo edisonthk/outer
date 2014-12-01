@@ -178,42 +178,42 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
+			//キーワードの整形
 			$kw=mb_convert_kana( Input::get("kw"),"s");
-			$splitedkw=preg_split("/[,:\s]/",$kw);
+			preg_match_all("|\[(.*?)\]|",$kw,$tagresult);
+			$snippetresult=array_values(array_filter(preg_split("/,|\s/",implode(",",preg_split("/\[(.*)\]/",$kw)))));
+			
 			$snippets = array();
 			$tags = array();
-			$tags2 = array();
+			$temptags = array();
 			
 			//タグ検索
-			foreach($splitedkw as $t){
+			foreach($tagresult[1] as $t){
 				foreach (Tag::where("name","=",$t)->get() as $tag) {
 					array_push($tags, $tag); 
 				}
 			}
 			foreach($tags as $tag){
 				$temp_snippets=$tag->snippets()->getResults();
-				array_push($tags2,$temp_snippets);
+				array_push($temptags,$temp_snippets);
 			}
-			foreach($tags2 as $item){
+			foreach($temptags as $item){
 				foreach ($item as $snippet) {
 					$temp = $snippet->toArray();
 					$temp["tags"] = $snippet->tags()->getResults()->toArray();
 					array_push($snippets, $temp); 
 				}
 			}
-			
-			if(substr($kw,0,4)!='tag:'){
-				//タイトル・コンテンツ検索
-				foreach($splitedkw as $t){
-					if($t != ''){
-						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
-							$temp = $snippet->toArray();
-							$temp["tags"] = $snippet->tags()->getResults()->toArray();
-							array_push($snippets, $temp); 
-						}
-					}else{
-						continue;
+			//タイトル・コンテンツ検索
+			foreach($snippetresult as $t){
+				if($t != ''){
+					foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
+						$temp = $snippet->toArray();
+						$temp["tags"] = $snippet->tags()->getResults()->toArray();
+						array_push($snippets, $temp); 
 					}
+				}else{
+					continue;
 				}
 			}
 			
