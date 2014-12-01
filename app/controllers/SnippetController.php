@@ -187,7 +187,7 @@ class SnippetController extends BaseController {
 			
 			if(substr($kw,0,4)=='tag:'){
 				foreach($splitedkw as $t){
-					foreach (Tag::where("name","=",$t)->orderBy('updated_at','desc')->get() as $tag) {
+					foreach (Tag::where("name","=",$t)->get() as $tag) {
 						array_push($tags, $tag); 
 					}
 				}
@@ -205,7 +205,7 @@ class SnippetController extends BaseController {
 			}else{
 				foreach($splitedkw as $t){
 					if(($t != null) || ($t != " ")){
-						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->orderBy('updated_at','desc')->get() as $snippet) {
+						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
 							$temp = $snippet->toArray();
 							$temp["tags"] = $snippet->tags()->getResults()->toArray();
 							array_push($snippets, $temp); 
@@ -215,14 +215,20 @@ class SnippetController extends BaseController {
 					}
 				}
 			}
+			//重複の削除
 			$tmp = array();
 			$snippets_result = array();
 			foreach( $snippets as $key => $value ){
-				if( !in_array( $value['updated_at'], $tmp ) ) {
-					$tmp[] = $value['updated_at'];
+				if( !in_array( $value['id'], $tmp ) ) {
+					$tmp[] = $value['id'];
 					$snippets_result[] = $value;
 				}
 			}
+			//ソート
+			foreach($snippets_result as $key=>$value){
+				$updated_at[$key]=$value["updated_at"];    
+			}
+			array_multisort($updated_at,SORT_ASC,SORT_NATURAL,$snippets_result);
 			return Response::json($snippets_result);
 		}
 
