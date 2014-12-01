@@ -144,9 +144,8 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$windo
 		$scope.$on('$viewContentLoaded', function(event) {
 		    $window.ga('send', 'pageview', { page: $location.path() });
 		});
-		
-		$scope.loadTags = function(query) {
 
+		$scope.loadTags = function(query) {
 			return $http.get('/json/tag/?q='+query);
 		};
 
