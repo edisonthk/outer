@@ -178,33 +178,34 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
-			$kw = Input::get("kw");
-			$kw=mb_convert_kana($kw,"s");
+			$kw=mb_convert_kana( Input::get("kw"),"s");
 			$splitedkw=preg_split("/[,:\s]/",$kw);
 			$snippets = array();
 			$tags = array();
 			$tags2 = array();
 			
-			if(substr($kw,0,4)=='tag:'){
+			//タグ検索
+			foreach($splitedkw as $t){
+				foreach (Tag::where("name","=",$t)->get() as $tag) {
+					array_push($tags, $tag); 
+				}
+			}
+			foreach($tags as $tag){
+				$temp_snippets=$tag->snippets()->getResults();
+				array_push($tags2,$temp_snippets);
+			}
+			foreach($tags2 as $item){
+				foreach ($item as $snippet) {
+					$temp = $snippet->toArray();
+					$temp["tags"] = $snippet->tags()->getResults()->toArray();
+					array_push($snippets, $temp); 
+				}
+			}
+			
+			if(substr($kw,0,4)!='tag:'){
+				//タイトル・コンテンツ検索
 				foreach($splitedkw as $t){
-					foreach (Tag::where("name","=",$t)->get() as $tag) {
-						array_push($tags, $tag); 
-					}
-				}
-				foreach($tags as $tag){
-					$temp_snippets=$tag->snippets()->getResults();
-					array_push($tags2,$temp_snippets);
-				}
-				foreach($tags2 as $item){
-					foreach ($item as $snippet) {
-						$temp = $snippet->toArray();
-						$temp["tags"] = $snippet->tags()->getResults()->toArray();
-						array_push($snippets, $temp); 
-					}
-				}
-			}else{
-				foreach($splitedkw as $t){
-					if(($t != null) || ($t != " ")){
+					if($t != ''){
 						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
 							$temp = $snippet->toArray();
 							$temp["tags"] = $snippet->tags()->getResults()->toArray();
@@ -215,6 +216,7 @@ class SnippetController extends BaseController {
 					}
 				}
 			}
+			
 			//重複の削除
 			$tmp = array();
 			$snippets_result = array();
@@ -225,6 +227,7 @@ class SnippetController extends BaseController {
 				}
 			}
 			//ソート
+			$updated_at=array();
 			foreach($snippets_result as $key=>$value){
 				$updated_at[$key]=$value["updated_at"];    
 			}
