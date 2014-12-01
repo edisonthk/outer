@@ -50,6 +50,17 @@
 
 	</head>
 	<body ng-app="codegarageApp">
+
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-44036434-6', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
 		
 		<!-- static part -->
 		<nav ng-class="{'dialog-open': dialogBox.show}">
@@ -69,8 +80,8 @@
 								<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>サインアウト</span></a>
 							<?php else: ?>
 								<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>サインイン</span></a>
-								<a class="topbar-menu-item" href="/aboutsite"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
 							<?php endif;?>
+							<a class="topbar-menu-item" href="/help"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
 						</div>
 					</div>
 				</div>

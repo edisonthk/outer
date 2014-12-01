@@ -178,35 +178,58 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
-
 			$kw = Input::get("kw");
-			
+			$kw=mb_convert_kana($kw,"s");
+			$splitedkw=preg_split("/[,:\s]/",$kw);
 			$snippets = array();
 			$tags = array();
-			if(substr($kw, 0, 4)=='tag:'){
-				foreach (Tag::where("name","=",substr($kw, 4))->get() as $tag) {
-					$temp = $tag;
-					array_push($tags, $temp); 
-				}
-				
-					$temp_snippets=$tag->snippets()->getResults();
-				foreach ($temp_snippets as $snippet) {
-					$temp = $snippet->toArray();
-					$temp["tags"] = $snippet->tags()->getResults()->toArray();
-					array_push($snippets, $temp); 
-				}
-				return Response::json($snippets);
-			}else{
-				foreach (Snippet::where("title","like","%".$kw."%")->orWhere("content","like","%".$kw."%")->get() as $snippet) {
-					$temp = $snippet->toArray();
-					$temp["tags"] = $snippet->tags()->getResults()->toArray();
-
-					array_push($snippets, $temp); 
-				}
-			return Response::json($snippets);
-			}
+			$tags2 = array();
 			
-
+			if(substr($kw,0,4)=='tag:'){
+				foreach($splitedkw as $t){
+					foreach (Tag::where("name","=",$t)->get() as $tag) {
+						array_push($tags, $tag); 
+					}
+				}
+				foreach($tags as $tag){
+					$temp_snippets=$tag->snippets()->getResults();
+					array_push($tags2,$temp_snippets);
+				}
+				foreach($tags2 as $item){
+					foreach ($item as $snippet) {
+						$temp = $snippet->toArray();
+						$temp["tags"] = $snippet->tags()->getResults()->toArray();
+						array_push($snippets, $temp); 
+					}
+				}
+			}else{
+				foreach($splitedkw as $t){
+					if(($t != null) || ($t != " ")){
+						foreach (Snippet::where("title","like","%".$t."%")->orWhere("content","like","%".$t."%")->get() as $snippet) {
+							$temp = $snippet->toArray();
+							$temp["tags"] = $snippet->tags()->getResults()->toArray();
+							array_push($snippets, $temp); 
+						}
+					}else{
+						continue;
+					}
+				}
+			}
+			//重複の削除
+			$tmp = array();
+			$snippets_result = array();
+			foreach( $snippets as $key => $value ){
+				if( !in_array( $value['id'], $tmp ) ) {
+					$tmp[] = $value['id'];
+					$snippets_result[] = $value;
+				}
+			}
+			//ソート
+			foreach($snippets_result as $key=>$value){
+				$updated_at[$key]=$value["updated_at"];    
+			}
+			array_multisort($updated_at,SORT_ASC,SORT_NATURAL,$snippets_result);
+			return Response::json($snippets_result);
 		}
 
 		App::abort(404);
