@@ -6,8 +6,6 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 	$scope.snippet_selected = -1;
 
-	console.log("fdsfs");
-
 	if(typeof $rootScope.snippets != "object"){
 		$rootScope.snippets = Snippet.query();	
 	}
@@ -129,15 +127,23 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		
     });
 
+    $scope.$on('$viewContentLoaded', function(event) {
+	    $window.ga('send', 'pageview', { page: $location.path() });
+	});
+
 }]);
 
 
-snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http','$routeParams','$location','Snippet',
-	function($rootScope, $scope, $http,$routeParams,$location,Snippet){
+snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
+	function($rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
 
 		// if(typeof $scope.article === "undefined" || typeof $scope.article.title === "undefined" || typeof $scope.article.content === "undefined" ){
 		// 	$scope.article = {title: "", content: "", tags: []};
 		// }
+
+		$scope.$on('$viewContentLoaded', function(event) {
+		    $window.ga('send', 'pageview', { page: $location.path() });
+		});
 		
 		$scope.loadTags = function(query) {
 
@@ -225,6 +231,8 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$http'
 			})
 
 		}
+
+
 	
 }]);
 
