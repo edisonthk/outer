@@ -1,4 +1,4 @@
-<div class="container">
+<div class="help container">
     <article>
         <section class="row title-section">
             <blockquote id="howtouse_codegarage">検索機能の使い方</blockquote>
@@ -9,12 +9,12 @@
                 <p>キーポードを直接検索したいキーワードを打っていただいて、最後にEnterキーを押せば検索するスニペットがリストアウトされます。</p>
             </div>
             <div class="right col-xs-offset-1 col-xs-5">
-                <img src="/img/help/gif1.gif" alt="">
+                <img src="/img/help/gif1.gif" alt="" width="370px" height="370px">
             </div>
         </section>
         <section class="row">
             <div class="right col-xs-5">
-                <img src="/img/help/gif2.gif" alt="">
+                <img src="/img/help/gif2.gif" alt="" width="370px" height="370px">
             </div>
             <div class="col-xs-6 col-xs-offset-1 offset2">
                 <h2 class="title"><i class="fa pull-left fa-quote-left"></i></span>次は選ぶ<i class="fa pull-right fa-quote-right"></i></span></h2>
@@ -35,7 +35,7 @@
                 </p>
             </div>
             <div class="right col-xs-5 col-xs-offset-1 ">
-                <img src="/img/help/gif3.gif" alt="">
+                <img src="/img/help/gif3.gif" alt="" width="370px" height="370px">
             </div>
         </section>
     </article>
@@ -52,7 +52,7 @@
                 </p>
             </div>
             <div class="right col-xs-5 col-xs-offset-1">
-                <img src="/img/help/click_new.gif" alt="">
+                <img src="/img/help/click_new.gif" alt="" width="370px" height="414px">
             </div>
         </section>
         <section class="row">
@@ -76,7 +76,7 @@
             </div>
             <div class="row">
                 <div class="col-xs-12">
-                    <img class="large middle-img" width="800px" src="/img/help/create_new_snippet.gif" alt="">
+                    <img class="large middle-img" width="800px" height="452px" src="/img/help/create_new_snippet.gif" alt="">
                 </div>
             </div>
         </section>
@@ -89,9 +89,6 @@
     </div>
 
 </div>
-<script type="text/javascript">
-            console.log(navigator.platform);
-            </script>
 <style>
     article {
         margin-top: 40px;
@@ -128,7 +125,7 @@
     .offset3 p {
         margin-left: -10px;
     }
-    .container {
+    .help.container {
         width: 960px;
         margin: 0 auto;
     }
