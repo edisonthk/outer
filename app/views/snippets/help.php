@@ -81,11 +81,25 @@
             </div>
         </section>
     </article>
+
+    <article>
+        <section class="row title-section">
+            <blockquote id="contact">開発者に連絡</blockquote>
+        </section>
+        <section class="row">
+            <div class="col-xs-12 offset4">
+                <p>CodeGarageの開発者　ヘン・リーウィーです。</p>
+                <p>質問や意見などがあれば私個人にメールしてください。</p>
+                <a class="mailto" href="mailto:edisonthk@gmail.com">edisonthk@gmail.com</a>
+            </div>
+        </section>
+    </article>
     
     <!-- リスト -->
     <div class="func-list">
         <div><a href="#howtouse_codegarage">検索機能の使い方</a></div>
         <div><a href="#add_snippet">スニペットの追加方法</a></div>
+        <div><a href="#contact">開発者に連絡</a></div>
     </div>
 
 </div>
@@ -125,6 +139,10 @@
     .offset3 p {
         margin-left: -10px;
     }
+    .offset4 {
+        margin-top: 30px;
+        margin-left: 30px;
+    }
     .help.container {
         width: 960px;
         margin: 0 auto;
@@ -161,6 +179,12 @@
         background: rgba(50, 50, 50, 0.9);
         padding: 10px;
         width: 250px;
+    }
+    .mailto {
+        font-size: 20px;
+    }
+    .mailto:hover {
+        text-decoration: underline;
     }
 
     .func-list > div {
