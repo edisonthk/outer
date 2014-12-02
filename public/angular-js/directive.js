@@ -217,9 +217,12 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$rootScope",functi
 
 
 					keyPressed = event.keyCode;
+
+					console.log(keyPressed);
 					
 					if( (keyPressed >= KeyEvent.KEY_0 && keyPressed <= KeyEvent.KEY_9) || 
-						( !(event.ctrlKey || event.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z ) ){
+						( !(event.ctrlKey || event.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z )
+						|| keyPressed == 219 || keyPressed == 221 ){
 						
 						element.find("input")[0].focus();
 						scope.inputActiveFlag = true; 
