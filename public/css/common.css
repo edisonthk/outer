@@ -479,3 +479,20 @@ dialog-box .dialog button.btn {
 	margin-right: 10px;
 	color: #fff;
 }
+.super-tiny {
+	font-size: 5px;
+}
+
+.ng-social {
+	display: inline;
+	margin-left: 0px;
+	list-style-type: none;
+}
+.ng-social li {
+	width: 40px;
+	display: inline-block;
+	font-size: 20px;
+}
+.ng-social-counter {
+	display: none;
+}

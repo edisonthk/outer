@@ -1,5 +1,5 @@
 
-var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','ngAnimate','ngTagsInput','ui.markdown','snippetContollers','snippetServices']);
+var codegarageApp = angular.module('codegarageApp',['ngRoute','ngSanitize','ngResource','ngAnimate','ngTagsInput','ngSocial','ui.markdown','snippetContollers','snippetServices']);
 
 codegarageApp.config(['$locationProvider','$routeProvider',
 	function($locationProvider,$routeProvider) {
