@@ -16,6 +16,7 @@ class SnippetController extends BaseController {
 		$snippets = array();
 		foreach (Snippet::orderBy('updated_at','desc')->get() as $snippet) {		//条件付けのときは->get()が必要
 			$temp = $snippet->toArray();
+			$temp["updated_at"] = $this->convertToUserView($temp["updated_at"]);
 			$temp["tags"] = $snippet->tags()->getResults()->toArray();
 
 			array_push($snippets, $temp); 
@@ -227,15 +228,51 @@ class SnippetController extends BaseController {
 				}
 			}
 			//ソート
-			$updated_at=array();
-			foreach($snippets_result as $key=>$value){
-				$updated_at[$key]=$value["updated_at"];    
+			// $updated_at=array();
+			// foreach($snippets_result as $key=>$value){
+			// 	$updated_at[$key]=$value["updated_at"];    
+			// }
+			usort($snippets_result, function($item1, $item2) {
+				$ts1 = strtotime($item1["updated_at"]);
+				$ts2 = strtotime($item2["updated_at"]);
+
+				return $ts2 - $ts1;
+			});
+
+			$new_snippet_result = [];
+			foreach ($snippets_result as $value) {
+				$value["updated_at"] = $this->convertToUserView($value["updated_at"]);
+				array_push($new_snippet_result, $value);
 			}
-			array_multisort($updated_at,SORT_ASC,SORT_NATURAL,$snippets_result);
-			return Response::json($snippets_result);
+			// array_multisort($updated_at,SORT_ASC,SORT_NATURAL,$snippets_result);
+			return Response::json($new_snippet_result);
 		}
 
 		App::abort(404);
+	}
+
+	private function convertToUserView($timestamp){
+	    $d1 = new DateTime($timestamp);
+	    $n = new DateTime("now");
+	    $diff = $d1->diff($n);
+
+	    if($diff->y > 0) { 
+	        return $diff->format("%y年前");
+	    } 
+	    if($diff->m > 0) { 
+	        return $diff->format("%m月前");
+	    } 
+	    if($diff->d > 0) { 
+	        return $diff->format("%d日前");
+	    } 
+	    if($diff->h > 0) { 
+	        return $diff->format("%h時間前");
+	    } 
+	    if($diff->i > 0) { 
+	        return $diff->format("%i分前");
+	    } 
+
+	    return "１分前";
 	}
 
 	private function validate($inputs)
