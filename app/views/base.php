@@ -90,11 +90,11 @@
 								 ng-social-buttons
 							     data-url="'http://codegarage.edisonthk.com/'"
 							     data-title="'CodeGarage'"
-							     data-description="'test2'"
+							     data-description="''"
 							     data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
-							    <li class="topbar-menu-item ng-social-facebook"><i class="fa fa-facebook"></i></li>
-							    <li class="topbar-menu-item ng-social-google-plus"><i class="fa fa-google-plus"></i></li>
-							    <li class="topbar-menu-item ng-social-twitter"><i class="fa fa-twitter"></i></li>
+							     <li class="topbar-menu-item ng-social-twitter right"><i class="fa fa-twitter"></i></li>
+							    <li class="topbar-menu-item ng-social-google-plus right"><i class="fa fa-google-plus"></i></li>
+							    <li class="topbar-menu-item ng-social-facebook right"><i class="fa fa-facebook"></i></li>
 							</ul>
 						</div>
 					</div>

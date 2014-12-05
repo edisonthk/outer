@@ -56,6 +56,13 @@ nav .topbar-menu-item {
 .topbar-menu-item .a{
 	vertical-align:bottom;
 }
+.topbar-menu-item.right {
+	border-left: 1px solid #555;
+	border-right: 0px;
+}
+.topbar-menu-item.right:first-child{
+	border-right: 1px solid #555;
+}
 .alert p{
 	color: inherit;
 }
@@ -482,7 +489,9 @@ dialog-box .dialog button.btn {
 .super-tiny {
 	font-size: 5px;
 }
-
+.right {
+	float: right;
+}
 .ng-social {
 	display: inline;
 	margin-left: 0px;
