@@ -94,6 +94,7 @@ return array(
 
 	'providers' => array(
 		'Edisonthk\GoogleOAuth\GoogleOAuthServiceProvider',
+		'Jenssegers\Agent\AgentServiceProvider',
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
@@ -150,6 +151,7 @@ return array(
 
 	'aliases' => array(
 		'GoogleOAuth'   => 'Edisonthk\GoogleOAuth\Facade\GoogleOAuth',
+		'UserAgent'            => 'Jenssegers\Agent\Facades\Agent',
 
 		'App'             => 'Illuminate\Support\Facades\App',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
