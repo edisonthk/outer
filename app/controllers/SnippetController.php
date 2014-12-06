@@ -21,7 +21,12 @@ class SnippetController extends BaseController {
 
 			array_push($snippets, $temp); 
 		}
-
+		//ファイル出力
+		$fileName = "/home/vagrant/Code/codegarage/app/storage/history/search.txt";
+		$date=date('Y/n/j/G:i:s');
+		$ip = $_SERVER["REMOTE_ADDR"];
+		file_put_contents($fileName,$ip.' ('.$date.')'.PHP_EOL,FILE_APPEND | LOCK_EX);
+		
 		return Response::json($snippets);
 	}	
 
@@ -79,17 +84,38 @@ class SnippetController extends BaseController {
 	{
 		//
 		$snippet= Snippet::find($id);
-
 		$result = $snippet->toArray();
 		$result["tags"] = $snippet->tags()->getResults()->toArray();
 		$result["creator_name"] = $snippet->getCreatorName();
-
 		unset($result["account_id"]);
 
 		// ユーザの編集権限
 		$result["editable"] = (Session::has("user") && Session::get("user")["account_id"] == $snippet->account_id);
+	
+/* 		//ファイル出力(スニペット)
+		$fileName = "/home/vagrant/Code/codegarage/app/storage/history/selectedsnippet.txt";
+		$ip = $_SERVER["REMOTE_ADDR"];
+		$date=date('Y/n/j/G:i:s');
+		$outputkw =  $date."  ".$ip." : ".$result["id"].":".$result["title"].PHP_EOL;
+		$lastline = array_reverse(file($fileName));
+		$newsnippet = substr($outputkw, -mb_strlen($result["id"].":".$result["title"]));
+		$lastsnippet = substr($lastline[0], -mb_strlen($result["id"].":".$result["title"]));
+		if($newsnippet != $lastsnippet){
+			file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX);
+		} */
 		
-
+		//ファイル出力
+		$fileName = "/home/vagrant/Code/codegarage/app/storage/history/search.txt";
+		$date=date('Y/n/j/G:i:s');
+		$outputHead =  "		> ".$result["id"].":".$result["title"];
+		$outputkw =  $outputHead.' ('.$date.')'.PHP_EOL;
+		$lastline = array_reverse(file($fileName));
+		$newsnippet = substr($outputkw, 0,mb_strlen($outputHead));
+		$lastsnippet = substr($lastline[0], 0,mb_strlen($outputHead));
+		if($newsnippet != $lastsnippet){
+			file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX);
+		}
+		
 		return Response::json($result);
 
 	}
@@ -179,14 +205,29 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
+			$snippets = array();
+			$tags = array();
+			$temptags = array();
+			
 			//キーワードの整形
 			$kw=mb_convert_kana( Input::get("kw"),"s");
 			preg_match_all("|\[(.*?)\]|",$kw,$tagresult);
 			$snippetresult=array_values(array_filter(preg_split("/,|\s/",implode(",",preg_split("/\[(.*)\]/",$kw)))));
 			
-			$snippets = array();
-			$tags = array();
-			$temptags = array();
+/* 		//ファイル出力(キーワード)
+			$fileName = "/home/vagrant/Code/codegarage/app/storage/history/searchedkw.txt";
+			$ip = $_SERVER["REMOTE_ADDR"];
+			$date=date('Y/n/j/G:i:s');
+			$outputkw =  $date."  ".$ip." : ".$kw.PHP_EOL;
+			file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX); */
+
+			//ファイル出力
+			$fileName = "/home/vagrant/Code/codegarage/app/storage/history/search.txt";
+			//$ip = $_SERVER["REMOTE_ADDR"].PHP_EOL;
+			$date=date('Y/n/j/G:i:s');
+			$outputkw =  "	> ".$kw.' ('.$date.')'.PHP_EOL;
+			//file_put_contents($fileName,$ip,FILE_APPEND | LOCK_EX);
+			file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX);
 			
 			//タグ検索
 			foreach($tagresult[1] as $t){
