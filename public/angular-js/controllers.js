@@ -119,6 +119,11 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		}
 	}
 
+	$scope.homeButtonClickedEvent = function() {
+		$rootScope.snippets = Snippet.query();
+		$scope.article = null;
+	}
+
 	
 	$scope.locationUpdate = function(){
 		
@@ -126,6 +131,10 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		var path = ($location.path() + '').split('/');
 		if(typeof path[1] == "string" && path[1] == "account"){
 			$window.location.href = $location.path();
+		}
+
+		if(path[1] === "snippets" && path.length <= 2){
+				
 		}
 		
 		if(typeof path[2] == "string"){
@@ -140,6 +149,8 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 
 			}
 		}
+
+
 	}
 
 	$scope.locationUpdate();
