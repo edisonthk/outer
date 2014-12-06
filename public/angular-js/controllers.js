@@ -84,7 +84,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 				$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
 					$rootScope.snippets = data;
 					$scope.last_searched_keywords = $scope.search_keywords;
-					
+					$scope.search_keywords = "";
 				});
 
 			}
