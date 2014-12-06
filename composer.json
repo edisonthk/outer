@@ -5,7 +5,8 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.2.*",
-		"edisonthk/google-oauth-laravel4": "dev-master"
+		"edisonthk/google-oauth-laravel4": "dev-master",
+		"jenssegers/agent": "2.*"
 	},
 	"autoload": {
 		"classmap": [

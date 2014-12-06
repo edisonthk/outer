@@ -21,7 +21,7 @@ class SnippetController extends BaseController {
 
 			array_push($snippets, $temp); 
 		}
-
+		
 		return Response::json($snippets);
 	}	
 
@@ -79,17 +79,14 @@ class SnippetController extends BaseController {
 	{
 		//
 		$snippet= Snippet::find($id);
-
 		$result = $snippet->toArray();
 		$result["tags"] = $snippet->tags()->getResults()->toArray();
 		$result["creator_name"] = $snippet->getCreatorName();
-
 		unset($result["account_id"]);
 
 		// ユーザの編集権限
 		$result["editable"] = (Session::has("user") && Session::get("user")["account_id"] == $snippet->account_id);
 		
-
 		return Response::json($result);
 
 	}
@@ -179,14 +176,23 @@ class SnippetController extends BaseController {
 	public function search()
 	{
 		if(Input::has("kw")){
+			$snippets = array();
+			$tags = array();
+			$temptags = array();
+			
 			//キーワードの整形
 			$kw=mb_convert_kana( Input::get("kw"),"s");
 			preg_match_all("|\[(.*?)\]|",$kw,$tagresult);
 			$snippetresult=array_values(array_filter(preg_split("/,|\s/",implode(",",preg_split("/\[(.*)\]/",$kw)))));
 			
-			$snippets = array();
-			$tags = array();
-			$temptags = array();
+/* 		//ファイル出力(キーワード)
+			$fileName = "/home/vagrant/Code/codegarage/app/storage/history/searchedkw.txt";
+			$ip = $_SERVER["REMOTE_ADDR"];
+			$date=date('Y/n/j/G:i:s');
+			$outputkw =  $date."  ".$ip." : ".$kw.PHP_EOL;
+			file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX); */
+
+			$this->recordKeywords(Input::get("kw"));
 			
 			//タグ検索
 			foreach($tagresult[1] as $t){
@@ -249,6 +255,16 @@ class SnippetController extends BaseController {
 		}
 
 		App::abort(404);
+	}
+
+	private function recordKeywords($kw) {
+		// ファイルの出力
+
+		//ファイル出力
+		$fileName = storage_path("history") . "/" .date('Y-m-d').".csv";
+		$date=date('Y-m-d H:i:s');
+		$outputkw =  $date.','.UserAgent::device().','.UserAgent::platform().','.UserAgent::browser().','.$kw.','.PHP_EOL;
+		file_put_contents($fileName,$outputkw,FILE_APPEND | LOCK_EX);
 	}
 
 	private function convertToUserView($timestamp){
