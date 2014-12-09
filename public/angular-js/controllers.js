@@ -74,19 +74,30 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 				});
 
 			}else if($scope.search_keywords.match(/^[0-9]+$/g)){
-				// only number
+				// 検索ボックスに数字のみ入力されているので、
+				// articleを選択
 				if(typeof $rootScope.snippets !== "undefined"){
 					var temp_snippet_selected = $rootScope.snippets[parseInt($scope.search_keywords)-1];
 
 					$location.path("/snippets/"+temp_snippet_selected.id);
 				}
 			}else{
-				$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
-					$rootScope.snippets = data;
-					$scope.last_searched_keywords = $scope.search_keywords;
-					$scope.search_keywords = "";
-				});
 
+				var temp = $scope.search_keywords.match(/[0-9]+$/);
+				if(null !== temp){
+					// 検索ボックスに最後の文字が数字なので、
+					// articleを選択
+					var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
+
+					$location.path("/snippets/"+snippet_selected_id.id);	
+				}else{
+					// 入力したキーワードを検索
+					$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
+						$rootScope.snippets = data;
+						$scope.last_searched_keywords = $scope.search_keywords;
+						// $scope.search_keywords = "";
+					});
+				}
 			}
 		}
 		// 

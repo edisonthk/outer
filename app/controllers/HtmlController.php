@@ -24,4 +24,8 @@ class HtmlController extends BaseController {
 			break;
 		}
 	}
+
+	public function landingPage() {
+		return View::make("landing-page");
+	}
 }
