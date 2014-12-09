@@ -5,6 +5,13 @@
 		<title>Codegarage</title>
 		<meta name="description" content="ソースコードの倉庫のことで、MBEDのC言語からAndroidのJava, ゲームのCPPなどソースコードであれば何でもありです。">
 		<meta name="keywords" content="CodeGarage,code,garage,コード,ガレージ,コードガレージ,スニペット,">
+
+		<link rel="icon" type="image/png" href="/img/icon@57x57.png" />
+		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/img/icon@114x114.png">
+		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/icon@72x72.png">
+		<link rel="apple-touch-icon-precomposed" href="/img/icon@57x57.png">
+
+
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/common.css">
@@ -88,10 +95,10 @@
 						<div class="col-xs-3">
 							<ul class="ng-social"
 								 ng-social-buttons
-							     data-url="'http://codegarage.edisonthk.com/'"
+							     data-url="location.absUrl()"
 							     data-title="'CodeGarage'"
-							     data-description="''"
-							     data-image="'http://s3.mistinfo.com/32/d8/32d8eab76f4c242f665bda66b5edc6c5.jpg'">
+							     data-description="'キーボードのみで検索可能なスニペットデータベース'"
+							     data-image="'http://codegarage.edisonthk.com/img/icon@114x114.jpg'">
 							     <li class="topbar-menu-item ng-social-twitter right"><i class="fa fa-twitter"></i></li>
 							    <li class="topbar-menu-item ng-social-google-plus right"><i class="fa fa-google-plus"></i></li>
 							    <li class="topbar-menu-item ng-social-facebook right"><i class="fa fa-facebook"></i></li>
