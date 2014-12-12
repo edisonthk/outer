@@ -160,105 +160,89 @@ codegarageApp.directive('markdownEditor', ["$window","$compile",function($window
     }
 }]);
 
-codegarageApp.directive("sideMenuScrollingEvent", ["$window","$rootScope",function($window, $rootScope) {
-	return {
-		restrict: 'A',
-		link: function(scope, element, attrs){
+// directive("docsSearchInput", ["$document", function (e) {
+// 	return function (t, n) {
+// 		var r = 27,
+// 			a = 191;
+// 		angular.element(e[0].body).on("keydown", function (e) {
+// 			var t = n[0];
+// 			e.keyCode == a && document.activeElement != t && (e.stopPropagation(), e.preventDefault(), t.focus())
+// 		}), n.on("keydown", function (e) {
+// 			e.keyCode == r && (e.stopPropagation(), e.preventDefault(), t.$apply(function () {
+// 				t.hideResults()
+// 			}))
+// 		})
+// 	}
 
-
-			var navHeight = document.getElementsByTagName("nav")[0].offsetHeight;
-			var menuElement = element[0];
+codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootScope",function(w,d,s) {
+	return function(scope,n) {
+		var navHeight = d[0].getElementsByTagName("nav")[0].offsetHeight;
+		
+		n[0].style.top = navHeight + "px";
+		// Handle height and offsetTop of the side menu at left hand side
+		angular.element(w).bind('scroll', function () {
 			
-			menuElement.style.top = navHeight + "px";
-			// Handle height and offsetTop of the side menu at left hand side
-			angular.element($window).bind('scroll', function () {
-				
-				var top  = window.pageYOffset || document.documentElement.scrollTop,
-		    		left = window.pageXOffset || document.documentElement.scrollLeft;
-
-		    	var menuTop = navHeight - top;
-
-		    	if(menuTop <= navHeight){
-
-		    		if(menuTop > 0){
-		    			menuElement.style.top = menuTop + "px";	
-		    			menuElement.style.height = (window.innerHeight-menuTop)+"px";
-		    		}else{
-		    			menuElement.style.top = 0;	
-		    			menuElement.style.height = window.innerHeight + "px";
-		    		}
-		    	}
-
-
-		    	
-			});
-
-			scope._current_pre_ele = -1;
-			scope.inputActiveFlag = false;
-
-			// $rootScope.installed handle all kinds of binding event that 
-			// only execute one time at the very begining
-			if(!$rootScope.installed){
-
-				$rootScope.selectText = function(element) {			  
-
-					var selection = window.getSelection();
-					var range = document.createRange();
-					range.selectNodeContents(element);
-					selection.removeAllRanges();
-					selection.addRange(range);
-					
-					var top = element.documentOffsetTop() - (window.innerHeight / 2 );
-					window.scrollTo( 0, top );
-				}
-
-				angular.element($window).on('keydown', function(event) {
-					
-
-
-					keyPressed = event.keyCode;
-
-					console.log(keyPressed);
-					
-					if( (keyPressed >= KeyEvent.KEY_0 && keyPressed <= KeyEvent.KEY_9) || 
-						( !(event.ctrlKey || event.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z )
-						|| keyPressed == 219 || keyPressed == 221 ){
-						
-						element.find("input")[0].focus();
-						scope.inputActiveFlag = true; 
-					}else if(keyPressed == KeyEvent.KEY_ESC){
-						element.find("input")[0].blur();
-						scope.inputActiveFlag = false;
-					}else if( (event.ctrlKey || event.metaKey) && !scope.inputActiveFlag && keyPressed == KeyEvent.KEY_A){
-						event.preventDefault();
-						element.find("input")[0].blur();
-						scope.inputActiveFlag = false;
-
-						var _body = document.getElementById("article");
-						var _elements = _body.getElementsByTagName("pre");
-
-						if(_elements.length > 0){
-							scope._current_pre_ele ++;
-							if(scope._current_pre_ele >= _elements.length){
-								scope._current_pre_ele = 0;
-							}		
-
-							$rootScope.selectText(_elements[scope._current_pre_ele]);
-						}
-					}
-				});
-
-			}
-			
-			// $rootScope.installed = true;
+			var top  = w.pageYOffset || d[0].documentElement.scrollTop,
+	    		left = w.pageXOffset || d[0].documentElement.scrollLeft;
+	    	var menuTop = navHeight - top;
+	    	if(menuTop <= navHeight){
+	    		if(menuTop > 0){
+	    			n[0].style.top = menuTop + "px";	
+	    			n[0].style.height = (window.innerHeight-menuTop)+"px";
+	    		}else{
+	    			n[0].style.top = 0;	
+	    			n[0].style.height = window.innerHeight + "px";
+	    		}
+	    	}
+		});
+		s.selectText = function(element) {			  
+			var selection = window.getSelection();
+			var range = document.createRange();
+			range.selectNodeContents(element);
+			selection.removeAllRanges();
+			selection.addRange(range);
+			var top = element.documentOffsetTop() - (window.innerHeight / 2 );
+			window.scrollTo( 0, top );
 		}
+
+		angular.element(w).on('keydown', function(e) {
+			keyPressed = e.keyCode;
+			console.log(keyPressed);
+			
+			if( (keyPressed >= KeyEvent.KEY_0 && keyPressed <= KeyEvent.KEY_9) || 
+				( !(e.ctrlKey || e.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z )
+				|| keyPressed == 219 || keyPressed == 221 ){
+				
+				n.find("input")[0].focus();
+				scope.inputActiveFlag = true; 
+			}else if(keyPressed == KeyEvent.KEY_ESC){
+				n.find("input")[0].blur();
+				scope.inputActiveFlag = false;
+			}else if( (e.ctrlKey || e.metaKey) && !scope.inputActiveFlag && keyPressed == KeyEvent.KEY_A){
+				e.preventDefault();
+				n.find("input")[0].blur();
+				scope.inputActiveFlag = false;
+
+				var _body = document.getElementById("article");
+				var _elements = _body.getElementsByTagName("pre");
+
+				if(_elements.length > 0){
+					scope._current_pre_ele ++;
+					if(scope._current_pre_ele >= _elements.length){
+						scope._current_pre_ele = 0;
+					}		
+
+					s.selectText(_elements[scope._current_pre_ele]);
+				}
+			}
+		});
+
 	}
-}])
+}]);
+
 function configElementSize(){
     var w  = window.innerWidth || document.documentElement.clientWidth,
     	h = window.innerHeight || document.documentElement.clientHeight;
-
-
 }
 
 

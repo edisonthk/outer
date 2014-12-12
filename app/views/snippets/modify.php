@@ -1,4 +1,4 @@
-<div snippetContollers id="editor-snippet" class="container">
+<div ng-controller="SnippetModifyCtrl" id="editor-snippet" class="container">
 	<div class="row">
 		<div class="col-xs-6">
 			<div ng-if="errorMessage" class="alert alert-danger">

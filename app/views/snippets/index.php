@@ -1,12 +1,12 @@
 
-<div snippetContollers side-menu-scrolling-event id="snippets" class="container" >
+<div side-menu-scrolling-event id="snippets" class="container" >
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
 			<div class="search-form form-group">
 				<div class="snippet-padding">
 					<input id="searchText" type="text" 
 						class="form-control" 
-						ng-model="search_keywords" 
+						ng-model="textbox.keywords" 
 						ng-keyup="searchEvent()" 
 						placeholder="スニペットを検索 ....">
 				</div>

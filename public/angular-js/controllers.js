@@ -1,13 +1,17 @@
-var snippetContollers = angular.module('snippetContollers', ['ngSanitize']);
+var snippetContollers = angular.module('SnippetContollers', ['ngSanitize']);
 
 
-snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
-	function($route, $rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
+snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
+	function($anchorScroll, $route, $rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
 
+	$scope.textbox = {
+		keywords: "",
+		tags: [],
+	}
 	$scope.snippet_selected = -1;
 
 	if(typeof $rootScope.snippets != "object"){
-		$rootScope.snippets = Snippet.query();	
+		$rootScope.snippets = Snippet.query();
 	}
 
 	$scope.article = null;
@@ -18,10 +22,10 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 	$scope.searchEvent = function(){
 
 		// BEGIN: subtitleの表示文字を構成
-		if(($scope.search_keywords+'').length > 0 && typeof $scope.search_keywords != "undefined"){
-			var tags = $scope.search_keywords.match(/\[(.*?)\]/g);
+		if(($scope.textbox.keywords+'').length > 0 && typeof $scope.textbox.keywords != "undefined"){
+			var tags = $scope.textbox.keywords.match(/\[(.*?)\]/g);
 			if(tags == null){
-				$scope.subtitle = "\""+$scope.search_keywords+"\"　を検索";	
+				$scope.subtitle = "\""+$scope.textbox.keywords+"\"　を検索";	
 			}else{
 
 				
@@ -49,7 +53,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 					temp += "タグ";
 
 					// 検索する言葉
-					var words = $scope.search_keywords.replace(/\[(.*?)\]/g,"");
+					var words = $scope.textbox.keywords.replace(/\[(.*?)\]/g,"");
 					if(words.length <= 0){
 						// 検索する言葉がありません
 						temp += "を検索";
@@ -68,39 +72,58 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		
 
 		if(event.keyCode == 13){
-			if(($scope.search_keywords+'').length == 0){
+			console.log($scope.textbox);
+			if(($scope.textbox.keywords+'').length == 0){
 				$http.get('/json/snippet').success(function(data) {
 					$rootScope.snippets = data;
 				});
 
-			}else if($scope.search_keywords.match(/^[0-9]+$/g)){
+			}else if($scope.textbox.keywords.match(/^[0-9]+$/g)){
 				// 検索ボックスに数字のみ入力されているので、
 				// articleを選択
 				if(typeof $rootScope.snippets !== "undefined"){
-					var temp_snippet_selected = $rootScope.snippets[parseInt($scope.search_keywords)-1];
-
+					var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
+					$scope.moveToSelectedSnippet(temp_snippet_selected.id);
 					$location.path("/snippets/"+temp_snippet_selected.id);
 				}
 			}else{
 
-				var temp = $scope.search_keywords.match(/[0-9]+$/);
+				var temp = $scope.textbox.keywords.match(/[0-9]+$/);
 				if(null !== temp){
 					// 検索ボックスに最後の文字が数字なので、
 					// articleを選択
 					var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
-
+					$scope.moveToSelectedSnippet(snippet_selected_id.id);
 					$location.path("/snippets/"+snippet_selected_id.id);	
 				}else{
 					// 入力したキーワードを検索
-					$http.get('/json/search?kw='+encodeURIComponent($scope.search_keywords)).success(function(data) {
+					$http.get('/json/search?kw='+encodeURIComponent($scope.textbox.keywords)).success(function(data) {
 						$rootScope.snippets = data;
-						$scope.last_searched_keywords = $scope.search_keywords;
-						// $scope.search_keywords = "";
+						$scope.last_searched_keywords = $scope.textbox.keywords;
+						// $scope.textbox.keywords = "";
 					});
 				}
 			}
 		}
 		// 
+	}
+
+	// According to HTML5 spec, angular provide a way to move to specific element by id and hash
+	// More detail on the way of moving element
+	// 
+	// https://docs.angularjs.org/api/ng/service/$anchorScroll
+	//
+	$scope.moveToSelectedSnippet = function(snippet_id) {
+		var newHash = 'snippet-item-' + snippet_id;
+	    if ($location.hash() !== newHash) {
+	        // set the $location.hash to `newHash` and
+	        // $anchorScroll will automatically scroll to it
+	        $location.hash(newHash);
+	    } else {
+	        // call $anchorScroll() explicitly,
+	        // since $location.hash hasn't changed
+	        $anchorScroll();
+	    }
 	}
 
 	$scope.deleteButtonClicked = function(article_clicked) {
@@ -117,6 +140,7 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 				Snippet.delete({snippetId: article_clicked.id}, {} , function(){
 					$rootScope.snippets = Snippet.query();	
 					$location.path("/snippets/").replace();
+					$scope.article = null;
 					$rootScope.dialogBox.show = false;
 				}, function(e){
 					console.log(e);
@@ -135,70 +159,121 @@ snippetContollers.controller('snippetListCtrl', ['$route','$rootScope','$scope',
 		$scope.article = null;
 	}
 
-	
-	$scope.locationUpdate = function(){
-		
+	$scope.$on("$includeContentLoaded", function () {
+		$window.ga('send', 'pageview', { page: $location.path() });
+	})
 
-		var path = ($location.path() + '').split('/');
+	// location update
+	$scope.$watch(function () {
+		return $location.path();
+	}, function (t) {
+
+		var path = t.split('/');
 		if(typeof path[1] == "string" && path[1] == "account"){
-			$window.location.href = $location.path();
-		}
+			$window.location = t;
+		}else if(path.length > 1 && path[1] === "snippets"){
+			// URL: /snippets/*
+			$scope.template = "/html/snippet/";
 
-		if(path[1] === "snippets" && path.length <= 2){
-				
-		}
-		
-		if(typeof path[2] == "string"){
-			var snippet_id = parseInt(path[2])
-			if(!isNaN(snippet_id)){
+			console.log($scope.article);
+
+			if(!isNaN(snippet_id = parseInt(path[2]))){
+				// URL: /snippets/20
 				$scope.subtitle = default_subtitle;
 				$scope.snippet_selected = snippet_id;
+				$scope.textbox.keywords = "";
 				Snippet.get({snippetId: snippet_id}, function(article) {
 					article.content = filterContent(article.content);
 					$scope.article = article;
-				});
+				});	
+			}else{
+				// URL: /snippets/
+				$rootScope.snippets = Snippet.query();
+			}	
+			
+		}else if(path[1] === "snippet"){
 
+			// URL: /snippet/*
+
+			if(path[2] === "create"){
+				// URL: /snippet/create/
+				$scope.template = "/html/snippet/create";
+
+				// empty article variable
+				$scope.article = {
+					title: "",
+					content: "",
+					tags: [],
+				};
+
+			}else if(path[2].match(/^[0-9]+/) && path[3] === "edit"){
+				$scope.template = "/html/snippet/modify";
 			}
+		}else if(path[1] === "help") {
+			// URL: /help
+			$scope.template = "/html/help";
 		}
 
+	})
+	
+	// $scope.locationUpdate = function(){
+		
 
-	}
+	// 	var path = ($location.path() + '').split('/');
+	// 	if(typeof path[1] == "string" && path[1] == "account"){
+	// 		$window.location.href = $location.path();
+	// 	}
 
-	$scope.locationUpdate();
+	// 	if(path[1] === "snippets" && path.length <= 2){
+				
+	// 	}
+		
+	// 	if(typeof path[2] == "string"){
+	// 		var snippet_id = parseInt(path[2])
+	// 		if(!isNaN(snippet_id)){
+	
 
-	$scope.loading = false;
-	$scope.$on('$routeChangeStart', function(next, current) { 
-	   $scope.article = null;
-	   $scope.loading = true;
+	// 		}
+	// 	}
 
-	}); 
 
-	// 
-	var lastRoute = $route.current;
-    $scope.$on('$locationChangeSuccess', function(event) {
+	// }
 
-    	// event when location Changed success
-    	$scope.locationUpdate();
-    	$scope.loading = false;
+	// $scope.locationUpdate();
+
+	// $scope.loading = false;
+	// $scope.$on('$routeChangeStart', function(next, current) { 
+	//    $scope.article = null;
+	//    $scope.loading = true;
+
+	// }); 
+
+	// // 
+	// var lastRoute = $route.current;
+ //    $scope.$on('$locationChangeSuccess', function(event) {
+
+ //    	// event when location Changed success
+ //    	$scope.locationUpdate();
+ //    	$scope.loading = false;
     	
 
-		// To prevent controller reloading
-		if(/^\/snippet$/.test($location.path()) && 
-			/^\/snippet\/[0-9]+$/.test($location.path()) ){
-			$route.current = lastRoute;
-		}
+	// 	// To prevent controller reloading
+	// 	if(/^\/snippet$/.test($location.path()) && 
+	// 		/^\/snippet\/[0-9]+$/.test($location.path()) ){
+	// 		$route.current = lastRoute;
+	// 	}
 		
-    });
+ //    });
 
-    $scope.$on('$viewContentLoaded', function(event) {
-	    $window.ga('send', 'pageview', { page: $location.path() });
-	});
+ //    $scope.$on('$viewContentLoaded', function(event) {
+	//     $window.ga('send', 'pageview', { page: $location.path() });
+	// });
 
 }]);
 
 
-snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
-	function($rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
+snippetContollers.controller('SnippetModifyCtrl', ['$rootScope','$scope','$window','$http','$location','Snippet',
+	function($rootScope, $scope, $window, $http,$location,Snippet){
 
 		// if(typeof $scope.article === "undefined" || typeof $scope.article.title === "undefined" || typeof $scope.article.content === "undefined" ){
 		// 	$scope.article = {title: "", content: "", tags: []};
@@ -207,6 +282,27 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$windo
 		$scope.$on('$viewContentLoaded', function(event) {
 		    $window.ga('send', 'pageview', { page: $location.path() });
 		});
+
+		// 
+		var snippetId = NaN;
+		var _temp = $location.path().split("/");
+		if(_temp[2] === "create"){
+			// URL: /snippet/create
+		}else if(_temp[2].match(/^[0-9]+$/)){
+			snippetId = parseInt(_temp[2]);
+			if(!isNaN(snippetId)){
+				Snippet.get({snippetId: snippetId}, function(article)
+				{
+					article.content = filterContent(article.content);
+					$scope.article = article;
+					var tags = [];
+					for(var i =0;i<article.tags.length;i++){
+						tags.push({"text":article.tags[i].name});
+					}
+					$scope.tags = tags;
+				})
+			}
+		}
 
 		$scope.loadTags = function(query) {
 			return $http.get('/json/tag/?q='+query);
@@ -225,9 +321,10 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$windo
 				content: $scope.article.content,
 				tags: newTags
 			};
-			if(typeof $routeParams.snippet === "string"){
+
+			if(!isNaN(snippetId)){
 				// snippet update
-				Snippet.update({snippetId: $routeParams.snippet}, postData, function(){
+				Snippet.update({snippetId: snippetId}, postData, function(){
 					// success
 					// スニペットの更新が成功
 					$scope.errorMessage = false;
@@ -274,36 +371,8 @@ snippetContollers.controller('snippetModifyCtrl', ['$rootScope','$scope','$windo
 					$scope.success = false;
 				});
 			}
-			
 		}
-		
-		if(typeof $routeParams.snippet === "string"){
-
-			Snippet.get({snippetId: $routeParams.snippet}, function(article)
-			{
-				article.content = filterContent(article.content);
-				
-				$scope.article = article;
-
-				var tags = [];
-				for(var i =0;i<article.tags.length;i++){
-					tags.push({"text":article.tags[i].name});
-				}
-				$scope.tags = tags;
-			})
-
-		}
-
-
-	
 }]);
-
-snippetContollers.controller('snippetHelpCtrl', ['$rootScope','$scope',
-	function($rootScope, $scope){
-
-		
-
-	}]);
 
 function filterContent(content)
 {
