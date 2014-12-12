@@ -11,6 +11,8 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/icon@72x72.png">
 		<link rel="apple-touch-icon-precomposed" href="/img/icon@57x57.png">
 
+		<base href="http://localhost:8000/">
+
 
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
@@ -77,29 +79,30 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-xs-4">
-							<a id="logo" href="/"><i class="fa fa-code fa-lg"></i>&nbsp;CodeGarage &nbsp;<span class="super-tiny">beta</span></a>
+							<a id="logo" href="/snippets"><i class="fa fa-code fa-lg"></i>&nbsp;CodeGarage &nbsp;<span class="super-tiny">beta</span></a>
 						</div>
-						<div class="col-xs-5">
-							<?php if(Session::has("user")): ?>
-								<div class="topbar-menu-item">
-									<img src="<?= Session::get("user")["picture"] ?>" height="40px" width="40px" class="img-rounded" alt="avatar" />
-									<span><?= Session::get("user")["name"] ?></span>
-								</div>
-								<a class="topbar-menu-item" href="/snippet/create"><i class="fa fa-plus"></i>&nbsp;<span>新規</span></a>
-								<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>サインアウト</span></a>
-							<?php else: ?>
-								<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>サインイン</span></a>
-							<?php endif;?>
-							<a class="topbar-menu-item" href="/help"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
-						</div>
-						<div class="col-xs-3">
+						<div class="col-xs-8">
+							<div style="float:left;">
+								<?php if(Session::has("user")): ?>
+									<div class="topbar-menu-item">
+										<img src="<?= Session::get("user")["picture"] ?>" height="40px" width="40px" class="img-rounded" alt="avatar" />
+										<span><?php //echo Session::get("user")["name"]; ?></span>
+									</div>
+									<a class="topbar-menu-item" href="/snippet/create"><i class="fa fa-plus"></i>&nbsp;<span>新規</span></a>
+									<a class="topbar-menu-item" href="/account/signout/"><i class="fa fa-sign-out"></i>&nbsp;<span>サインアウト</span></a>
+								<?php else: ?>
+									<a class="topbar-menu-item" href="/account/signin"><i class="fa fa-sign-in"></i>&nbsp;<span>サインイン</span></a>
+								<?php endif;?>
+								<a class="topbar-menu-item" href="/help"><i class="fa fa-question"></i>&nbsp;ヘルプ</a>
+							</div>
 							<ul class="ng-social"
+								 style="float:right;"
 								 ng-social-buttons
 							     data-url="location.absUrl()"
 							     data-title="'CodeGarage'"
 							     data-description="'キーボードのみで検索可能なスニペットデータベース'"
 							     data-image="'http://codegarage.edisonthk.com/img/icon@114x114.jpg'">
-							     <li class="topbar-menu-item ng-social-twitter right"><i class="fa fa-twitter"></i></li>
+							    <li class="topbar-menu-item ng-social-twitter right"><i class="fa fa-twitter"></i></li>
 							    <li class="topbar-menu-item ng-social-google-plus right"><i class="fa fa-google-plus"></i></li>
 							    <li class="topbar-menu-item ng-social-facebook right"><i class="fa fa-facebook"></i></li>
 							</ul>
@@ -112,7 +115,7 @@
 
 		<!-- dynamic part -->
 		<div class="wrapper" ng-class="{'dialog-open': dialogBox.show}">
-			<div class="table-cell" ng-view></div>
+			<div class="table-cell" ng-controller="SnippetContollers"><ng-include src="template"></ng-include></div>
 		</div>
 
 		<!-- dialog -->
