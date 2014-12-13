@@ -214,9 +214,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			// URL: /help
 			$scope.template = "/html/help";
 		}
-
 	})
-
 }]);
 
 

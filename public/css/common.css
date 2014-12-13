@@ -144,6 +144,9 @@ a:hover {
 	color:#ccc;
 	border:0;
 }
+.snippet-list {
+	overflow-y: scroll;
+}
 #snippets .snippet-list-subtitle {
 	width:100%;
 	border-bottom: 0;

@@ -2,7 +2,7 @@
 <div side-menu-scrolling-event id="snippets" class="container" >
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
-			<div>
+			<div class="search-wrapper-form">
 				<div class="search-form form-group">
 					<div class="snippet-padding">
 						<input id="searchText" type="text" 
@@ -17,25 +17,25 @@
 				</div>
 			</div>
 			<div>
-				<div>
-					<div class="snippet-list">
-						<div id="snippet-item-{{snippet.id}}" ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
-							<a href="/snippets/{{snippet.id}}">
-								<div class="snippet-padding">
-									<div class="title">
-										<p>{{$index + 1}}&nbsp;{{snippet.title}}</p>
-									</div>
-									<div class="meta clearfix">
-										<div class="tags-group">
-											<span ng-repeat="tag in snippet.tags" class="tag">{{tag.name}}</span>
-										</div>
-										<div class="datetime"> {{snippet.updated_at}} に更新した</div>
-									</div>	
+				
+				<div class="snippet-list">
+					<div id="snippet-item-{{snippet.id}}" ng-repeat="snippet in snippets" class="single-snippet" ng-class="{active: (snippet.id==snippet_selected)}">
+						<a href="/snippets/{{snippet.id}}">
+							<div class="snippet-padding">
+								<div class="title">
+									<p>{{$index + 1}}&nbsp;{{snippet.title}}</p>
 								</div>
-							</a>		
-						</div>
+								<div class="meta clearfix">
+									<div class="tags-group">
+										<span ng-repeat="tag in snippet.tags" class="tag">{{tag.name}}</span>
+									</div>
+									<div class="datetime"> {{snippet.updated_at}} に更新した</div>
+								</div>	
+							</div>
+						</a>		
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</div>

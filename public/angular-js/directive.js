@@ -178,6 +178,10 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 	return function(scope,n) {
 		var navHeight = d[0].getElementsByTagName("nav")[0].offsetHeight;
 		
+		var p = d[0].getElementsByClassName("search-wrapper-form")[0];
+		var sn = d[0].getElementsByClassName("snippet-list")[0];
+		sn.style.height = (p.parentNode.clientHeight - p.clientHeight) + "px";
+		
 		n[0].style.top = navHeight + "px";
 		// Handle height and offsetTop of the side menu at left hand side
 		angular.element(w).bind('scroll', function () {
@@ -215,7 +219,7 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 				n.find("input")[0].focus();
 			}else if(keyPressed == KeyEvent.KEY_ESC){
 				n.find("input")[0].blur();
-			}else if( (e.ctrlKey || e.metaKey) && keyPressed == KeyEvent.KEY_A){
+			}else if( (e.ctrlKey || e.metaKey)&& n.find("input")[0] !== document.activeElement && keyPressed == KeyEvent.KEY_A){
 				e.preventDefault();
 				n.find("input")[0].blur();
 
