@@ -207,21 +207,17 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 
 		angular.element(w).on('keydown', function(e) {
 			keyPressed = e.keyCode;
-			console.log(keyPressed);
 			
 			if( (keyPressed >= KeyEvent.KEY_0 && keyPressed <= KeyEvent.KEY_9) || 
 				( !(e.ctrlKey || e.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z )
 				|| keyPressed == 219 || keyPressed == 221 ){
 				
 				n.find("input")[0].focus();
-				scope.inputActiveFlag = true; 
 			}else if(keyPressed == KeyEvent.KEY_ESC){
 				n.find("input")[0].blur();
-				scope.inputActiveFlag = false;
-			}else if( (e.ctrlKey || e.metaKey) && !scope.inputActiveFlag && keyPressed == KeyEvent.KEY_A){
+			}else if( (e.ctrlKey || e.metaKey) && keyPressed == KeyEvent.KEY_A){
 				e.preventDefault();
 				n.find("input")[0].blur();
-				scope.inputActiveFlag = false;
 
 				var _body = document.getElementById("article");
 				var _elements = _body.getElementsByTagName("pre");

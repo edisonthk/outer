@@ -22,7 +22,7 @@ class AccountController extends BaseController {
 		GoogleOAuth::logout();
 		Session::forget("user");
 		
-        return Redirect::to("/");
+        return Redirect::to("/snippets");
 	}
 
 	public function getOauth2callback()

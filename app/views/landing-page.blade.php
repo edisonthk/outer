@@ -61,11 +61,11 @@ a:hover { color: white }
 					<div class="row">
 	
 						<div class="col-md-2 col-md-offset-3" style="vertical-align:middle;text-align: center;background-color:#008a62;height:50px;">
-							<a href="#" style="vertical-align:middle;">ログインして使う</a>
+							<a href="/account/signin" style="vertical-align:middle;">ログインして使う</a>
 						</div>
 	
 						<div class="col-md-2 col-md-offset-2" style="background-color:#008a62;height:50px;vertical-align: middle;text-align: center;">
-							<a href="#" style="vertical-align:middle;">ログインせず使う</a>
+							<a href="/snippets" style="vertical-align:middle;">ログインせず使う</a>
 						</div>
 
 						<div class="col-md-3" style="height:50px;"></div>

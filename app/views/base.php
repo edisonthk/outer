@@ -11,7 +11,7 @@
 		<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/img/icon@72x72.png">
 		<link rel="apple-touch-icon-precomposed" href="/img/icon@57x57.png">
 
-		<base href="http://localhost:8000/">
+		<base href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/">
 
 
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">

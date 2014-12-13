@@ -182,6 +182,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				$scope.subtitle = default_subtitle;
 				$scope.snippet_selected = snippet_id;
 				$scope.textbox.keywords = "";
+				$scope._current_pre_ele = 0;
 				Snippet.get({snippetId: snippet_id}, function(article) {
 					article.content = filterContent(article.content);
 					$scope.article = article;
@@ -215,59 +216,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		}
 
 	})
-	
-	// $scope.locationUpdate = function(){
-		
-
-	// 	var path = ($location.path() + '').split('/');
-	// 	if(typeof path[1] == "string" && path[1] == "account"){
-	// 		$window.location.href = $location.path();
-	// 	}
-
-	// 	if(path[1] === "snippets" && path.length <= 2){
-				
-	// 	}
-		
-	// 	if(typeof path[2] == "string"){
-	// 		var snippet_id = parseInt(path[2])
-	// 		if(!isNaN(snippet_id)){
-	
-
-	// 		}
-	// 	}
-
-
-	// }
-
-	// $scope.locationUpdate();
-
-	// $scope.loading = false;
-	// $scope.$on('$routeChangeStart', function(next, current) { 
-	//    $scope.article = null;
-	//    $scope.loading = true;
-
-	// }); 
-
-	// // 
-	// var lastRoute = $route.current;
- //    $scope.$on('$locationChangeSuccess', function(event) {
-
- //    	// event when location Changed success
- //    	$scope.locationUpdate();
- //    	$scope.loading = false;
-    	
-
-	// 	// To prevent controller reloading
-	// 	if(/^\/snippet$/.test($location.path()) && 
-	// 		/^\/snippet\/[0-9]+$/.test($location.path()) ){
-	// 		$route.current = lastRoute;
-	// 	}
-		
- //    });
-
- //    $scope.$on('$viewContentLoaded', function(event) {
-	//     $window.ga('send', 'pageview', { page: $location.path() });
-	// });
 
 }]);
 
