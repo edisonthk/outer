@@ -10,7 +10,7 @@ class HtmlController extends BaseController {
 			return View::make("responsive.base");
 		}
 		
-		return View::make("responsive.base");
+		return View::make("base");
 	}
 
 	public function getHelp(){
