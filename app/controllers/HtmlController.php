@@ -3,6 +3,13 @@
 class HtmlController extends BaseController {
 
 	public function angularJS(){
+
+		// responsive view
+		// READ ONLY site
+		if(UserAgent::isMobile() || UserAgent::isTablet()){
+			return View::make("responsive.base");
+		}
+		
 		return View::make("base");
 	}
 
@@ -25,7 +32,21 @@ class HtmlController extends BaseController {
 		}
 	}
 
+	// responsive page
+	// Don't need to create mobile or tablet page for landing-page
 	public function landingPage() {
 		return View::make("landing-page");
+	}
+
+	// responsive
+	// page required in responsive page
+	public function getResponsive($request) {
+		if($request == "sidebar"){
+			return View::make("responsive.sidebar");
+		}else if($request == "snippet"){
+			return View::make("responsive.snippet");
+		}else if($request == "notavailable"){
+			return View::make("responsive.notavailable");
+		}
 	}
 }

@@ -6,10 +6,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
  
 	<!-- CSS の組み込み -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
-	<link href="css/bootstrap-responsive.min.css" rel="stylesheet">
-	
-	<SCRIPT language="JavaScript">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/css/landing-page.css">
+
+	<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+
+	<!-- https://github.com/jcobb/basic-jquery-slider -->
+	<script type="text/javascript" src="/js/bjqs-1.3.js"></script>
+	<script language="JavaScript">
 <!--
 // 画像を一定間隔で入れ替える
 // img0.jpg,img1.jpgなどの数字が続いたファイルを複数用意します。
@@ -23,62 +28,60 @@ function changeImage() {
   document.img.src = nme + cnt + "." + exp;
 }
 //-->
-</SCRIPT>
+</script>
 	
   </head>
-  <body style="margin-top: 0;margin-left: 0;margin-right: 0;margin-bottom: 0;background-color:#000000;font-family:Meiryo UI;text-align:center;"><!--d9534f-->
-
-<style type="text/css">
-
-span{color:#008a62;}
-
-a:link { color: white } 
-a:visited { color: white } 
-a:hover { color: white } 
-
-</style>
-    
-  <script src="http://code.jquery.com/jquery.js"></script>
-	<script src="js/bootstrap.min.js"></script>
+  <body>
 
 <div class="container">
-	<div class="row"><img src="img/pic1.png"></div>
-	<div class="row">
-		<div class="col-md-3 col-md-offset-2"> <img src="img/pic2.png"></div>
-		<div style="height:80px;"></div>
-		<div class="col-md-7 " style="font-size:2.2em;color:white;text-align:left;"><span>&lt;/&gt;</span>CodeGarage</div>
-		<div style="height:120px;color:white;text-align:left;">  キ ー ボ ー ドに 最 適 化 し た コ ー ド 検 索 サ イ ト</div>
+	<div class="row row-1"><img class="f" src="img/pic1.png"></div>
+	<div class="row row-2">
+		<div class="col-xs-3 col-xs-offset-2"> <img class="e" src="img/pic2.png"></div>
+		
+
+		<div class="col-xs-7 logo"><p style="font-size:2.2em;color:white;text-align:left;"><span>&lt;/&gt;</span>CodeGarage</p>
+			<p class="description" style="color:white;text-align:left;font-size:1.0em;">キーボードに最適化したコード検索サイト</p>
+		</div>
+
 	</div>
 
-	<div class="row">
-		<div class="col-md-12" style="height:400px;background-color:#000000;margin: 0 auto;">
-
-		<div style="color:white;font-size:2em;height:150px;">次の３種類のショートカットを試してください。</div>
-			<br>
-				<div class="row" style="height:200px;margin:0 auto;"><img src="img/Enter.png"></div>
-
-				<div class="container" style="color:white;position:absolute;">
-					<div class="row">
-	
-						<div class="col-md-2 col-md-offset-3" style="vertical-align:middle;text-align: center;background-color:#008a62;height:50px;">
-							<a href="/account/signin" style="vertical-align:middle;">ログインして使う</a>
-						</div>
-	
-						<div class="col-md-2 col-md-offset-2" style="background-color:#008a62;height:50px;vertical-align: middle;text-align: center;">
-							<a href="/snippets" style="vertical-align:middle;">ログインせず使う</a>
-						</div>
-
-						<div class="col-md-3" style="height:50px;"></div>
-					</div>
-				</div>
+	<div class="row row-3">
+		<div class="col-md-12">
+			<div style="color:white;font-size:2em;">次の３種類のショートカットを試してください。</div>
+		</div>
+	</div>
+	<div class="row row-4">
+		<div id="shortcut">
+			<ul class="bjqs">
+	          @if(UserAgent::is('OS X'))
+	          	<li><img src="/img/key2.png"></li><!-- Cmd + A-->
+	          @else
+	          	<li><img src="/img/key1.png"></li><!-- Control + A-->
+	          @endif
+	          <li><img src="/img/key3.png"></li>
+	          <li><img src="/img/key4.png"></li>
+	        </ul>
+	    </div>
+	</div>
+	<div class="row row-5">
+		<div class="col-xs-12">
+			<a class="btn" href="/account/signin">ログインして使う</a>
+			<a class="btn" href="/snippets">ログインせず使う</a>
 		</div>
 	</div>
 	
-	<div class="col-md-12" style="height:100px;background-color:#000000;margin: 0 auto;"></div>
 </div>
 
 <script type="text/javascript">
-console.log("hello");
+
+        jQuery('#shortcut').bjqs({
+            height      : 68,
+            width       : 461,
+            responsive : true,
+            showcontrols: false, // hide next and prev controls by set false
+            animspeed: 3000 // the delay between each slide
+          });
+        
 </script>
 
 	</body>
