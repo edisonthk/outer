@@ -35,3 +35,9 @@ h1, h2, h3, h4, h5, h6 {
 .full .h-middle {
 	text-align: center;
 }
+.app-name a {
+	color: white;
+}
+.app-name a:hover {
+	text-decoration: none;
+}

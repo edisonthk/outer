@@ -1,5 +1,5 @@
 <div class="scrollable">
-  <h1 class="scrollable-header app-name"><i class="fa fa-code"></i>CodeGarage</h1>  
+  <h1 class="app-name"><a href="/snippets"><i class="fa fa-code"></i>CodeGarage</a></h1>  
   <div class="search-form">
   	<form ng-submit="submit_keywords_event()">
   		<div class="form-group">
