@@ -1,3 +1,7 @@
+<div ui-content-for="title">
+  <span></span>
+</div>
+
 <div class="full">
 	<div class="v-middle">
 		<div class="h-middle">
