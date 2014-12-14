@@ -37,7 +37,7 @@
           <ul class="ng-social"
 			 ng-social-buttons
 		     data-url="location.absUrl()"
-		     data-title="'CodeGarage'"
+		     data-title="'CodeGarage - ' + article.title"
 		     data-description="'キーボードのみで検索可能なスニペットデータベース'"
 		     data-image="'http://codegarage.edisonthk.com/img/icon@114x114.jpg'">
 		    <li class="topbar-menu-item ng-social-twitter right"><img src="/img/twitter.png"></li>
