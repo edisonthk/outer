@@ -2,7 +2,10 @@
 <html lang="ja">
   <head>
 	<meta charset="utf-8">
-	<title>Twitter Bootstrap</title>
+	<title>Codegarage</title>
+	<meta name="description" content="ソースコードの倉庫のことで、MBEDのC言語からAndroidのJava, ゲームのCPPなどソースコードであれば何でもありです。">
+	<meta name="keywords" content="CodeGarage,code,garage,コード,ガレージ,コードガレージ,スニペット,">
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
  
 	<!-- CSS の組み込み -->
@@ -14,21 +17,6 @@
 
 	<!-- https://github.com/jcobb/basic-jquery-slider -->
 	<script type="text/javascript" src="/js/bjqs-1.3.js"></script>
-	<script language="JavaScript">
-<!--
-// 画像を一定間隔で入れ替える
-// img0.jpg,img1.jpgなどの数字が続いたファイルを複数用意します。
-num = 5; // 入れ替える画像の枚数(最初の画像も含める)
-nme = "img/img" // 画像のディレクトリとファイル名の数字と拡張子より前の部分
-exp = "jpg" // 拡張子
-cnt = 0;
-function changeImage() {
-  cnt++;
-  cnt %= num;
-  document.img.src = nme + cnt + "." + exp;
-}
-//-->
-</script>
 	
   </head>
   <body>
