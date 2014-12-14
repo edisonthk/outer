@@ -22,6 +22,10 @@
 	    <link rel="stylesheet" href="/css/mobile-angular-ui-base.min.css" />
 	    <link rel="stylesheet" href="/css/mobile-angular-ui-desktop.min.css" />
 
+
+	    <link rel="stylesheet" type="text/css" href="/plugins/codemirror/codemirror.css">
+		<link rel="stylesheet" type="text/css" href="/plugins/prettify/prettify.css">
+
 		<link rel="stylesheet" type="text/css" href="/css/responsive-common.css">
 		
 
@@ -59,6 +63,17 @@
 	</head>
 	<body ng-app="CodegarageApp" ng-controller="SnippetController">
 
+		<script>
+		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		  ga('create', 'UA-44036434-6', 'auto');
+		  ga('send', 'pageview');
+
+		</script>
+
 		<!-- Sidebars -->
 	 	<div class="sidebar sidebar-left"
 	 		ng-include="'/html/responsive/sidebar'" >
@@ -79,8 +94,7 @@
 		    <!-- App body -->
 
 		    <div class='app-body'>
-		      	<div class='app-content'>
-		      		<div ng-include="appbody_template"></div>
+		      	<div class='app-content' ng-include="appbody_template">
 		      	</div>
 		    </div>
 		</div><!-- ~ .app -->

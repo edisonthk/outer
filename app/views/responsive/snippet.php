@@ -7,7 +7,7 @@
   		<div class="section section-break">
 			<div class="gray-bg article-block" >
 				<div class="snippet-tools clearfix">
-					<i class="fa fa-edit fa-lg"></i>&nbsp;<span>Created by {{article.creator_name}}</span>
+					<i class="fa fa-edit fa-lg"></i>&nbsp;<span>作者&nbsp;{{article.creator_name}}</span>
 				</div>
 				
 				<div class="article-tag">

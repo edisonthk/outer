@@ -10,7 +10,7 @@ class HtmlController extends BaseController {
 			return View::make("responsive.base");
 		}
 		
-		return View::make("base");
+		return View::make("responsive.base");
 	}
 
 	public function getHelp(){
@@ -47,6 +47,8 @@ class HtmlController extends BaseController {
 			return View::make("responsive.snippet");
 		}else if($request == "notavailable"){
 			return View::make("responsive.notavailable");
+		}else if($request == "about"){
+			return View::make("responsive.about");
 		}
 	}
 }
