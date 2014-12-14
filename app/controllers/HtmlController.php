@@ -10,6 +10,9 @@ class HtmlController extends BaseController {
 			return View::make("responsive.base");
 		}
 		
+		if(Config::get("app.debug")){
+			return View::make("responsive.base");
+		}
 		return View::make("base");
 	}
 

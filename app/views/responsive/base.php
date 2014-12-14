@@ -85,21 +85,11 @@
 		    	<div class="navbar-brand navbar-brand-center" ui-yield-to="title"></div>
 		        <div class="btn-group pull-left">
 		          	<div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle">
-		            	<i class="fa fa-code fa-2x"></i>
+		            	<i class="fa fa-bars"></i> Menu
 		          	</div>
 		        </div>
 		        <div class="btn-group pull-right">
-		        	<ul class="ng-social"
-						 style="float:right;"
-						 ng-social-buttons
-					     data-url="location.absUrl()"
-					     data-title="'CodeGarage'"
-					     data-description="'キーボードのみで検索可能なスニペットデータベース'"
-					     data-image="'http://codegarage.edisonthk.com/img/icon@114x114.jpg'">
-					    <li class="topbar-menu-item ng-social-twitter right"><i class="fa fa-twitter"></i></li>
-					    <li class="topbar-menu-item ng-social-google-plus right"><i class="fa fa-google-plus"></i></li>
-					    <li class="topbar-menu-item ng-social-facebook right"><i class="fa fa-facebook"></i></li>
-					</ul>
+		        	<a ui-turn-on="modal1" class="btn" ><i class="fa fa-share-alt"></i>&nbsp;</a>
 		        </div>
 		    </div>
 		    

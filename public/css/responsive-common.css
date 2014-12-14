@@ -47,11 +47,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 .ng-social li.topbar-menu-item {
 	display: inline-block;
-	padding: 15px 15px 15px 0px;
 	font-size: 18px;
-	line-height: 20px;
-	height: 50px;
+	
+}
+.ng-social li.topbar-menu-item img{
+	width: 70px;
+	
 }
 .ng-social-counter {
 	display: none;
+}
+.sidebar-toggle .fa, .pull-right .fa{
+	font-size: 19px;
 }
