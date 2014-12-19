@@ -9,10 +9,20 @@ class ExampleTest extends TestCase {
 	 */
 	public function testBasicExample()
 	{
-		$crawler = $this->client->request('GET', '/');
+		
+		$response = $this->call('GET', 'user/profile');
 
 		// to check either the variable is true.
-		$this->assertTrue($this->client->getResponse()->isOk());
+		$this->assertTrue($response->isOk());
+
+
+		$response = $this->call('GET', '/');
+		$this->assertTrue($response->isOk());
+
+		$response = $this->call('GET', '/snippets');
+		$this->assertTrue($response->isOk());
+
+		
 	}
 
 }
