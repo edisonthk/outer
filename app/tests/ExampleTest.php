@@ -18,9 +18,10 @@ class ExampleTest extends TestCase {
 	}
 
 	private function checkingGET($url){
-		$response = $this->call('GET', $url);
-		// to check either the variable is true.
-		$this->assertTrue($response->isOk());
+
+		$crawler = $this->client->request('GET', $url);
+
+		$this->assertTrue($this->client->getResponse()->isOk());
 
 		echo $url."\n";
 	}
