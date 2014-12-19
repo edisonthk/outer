@@ -3,15 +3,6 @@
 	<div class="row">
 		<div class="col-xs-4 gray-bg">
 			<div class="search-wrapper-form">
-				<div class="search-form form-group">
-					<div class="snippet-padding">
-						<input id="searchText" type="text" 
-							class="form-control" 
-							ng-model="textbox.keywords" 
-							ng-keyup="searchEvent()" 
-							placeholder="スニペットを検索 ....">
-					</div>
-				</div>
 				<div class="snippet-list-subtitle">
 					<p class="snippet-padding">{{subtitle}}</p>
 				</div>
@@ -77,8 +68,12 @@
 				</div>
 				<div class="article-content" article-block ng-bind-markdown="article.content"></div>
 			</div>
-		</div>
+	 	</div>
 	</div>
 </div>
 
-
+<form ng-submit="searchEvent()" ng-if="textbox.focus">
+	<search-form  class="search-form form-group">
+		<autocomplete class="form-control" ng-model="textbox.keywords" data="textbox.candidate" on-type="onTypeEvent" placeholder="スニペットを検索 ...."></autocomplete>
+	</search-form>
+</form>

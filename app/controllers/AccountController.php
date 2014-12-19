@@ -1,6 +1,11 @@
 <?php
 
 class AccountController extends BaseController {
+
+	const COOKIE_ALREADY_LOGIN_KEY = "already_login";
+	const COOKIE_ALREADY_LOGIN_VALUE = "1";
+	const COOKIE_ALREADY_LOGIN_TIME = 10080; // unit in minutes, 1440 * 7 = 10080 = one week
+
 				//method+URI
 	public function getSignin()
 	{
@@ -61,6 +66,7 @@ class AccountController extends BaseController {
         }
         
         $result["account_id"] = $account->id;
+        Cookie::queue(self::COOKIE_ALREADY_LOGIN_KEY,self::COOKIE_ALREADY_LOGIN_VALUE, self::COOKIE_ALREADY_LOGIN_TIME);
         Session::put('user', $result);
         return Redirect::to('/snippets');
 	}

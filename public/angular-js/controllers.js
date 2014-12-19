@@ -1,10 +1,23 @@
 var snippetContollers = angular.module('SnippetContollers', ['ngSanitize']);
 
 
-snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','$routeParams','$location','Snippet',
-	function($anchorScroll, $route, $rootScope, $scope, $window, $http,$routeParams,$location,Snippet){
+snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','ipCookie','$routeParams','$location','Snippet',
+	function($anchorScroll, $route, $rootScope, $scope, $window, $http,ipCookie, $routeParams,$location,Snippet){
+
+	$scope.cookie_options = {
+		expires: 7,
+		expirationUnit: 'days',
+	};
+	
+
+	var candidate = [];
+	if(ipCookie('candidate')){
+		candidate = ipCookie('candidate');
+	}
 
 	$scope.textbox = {
+		candidate: candidate,
+		focus: false,
 		keywords: "",
 		tags: [],
 	}
@@ -16,96 +29,129 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 
 	$scope.article = null;
 
+
 	var default_subtitle = 	"最新のスニペット一覧";
 	$scope.subtitle = default_subtitle;
+
 	// 検索イベント
-	$scope.searchEvent = function(){
+	$scope.searchEvent = function() {
+		// 検索テキストボックスを非表示
+		$scope.textbox.focus = false;
 
-		// BEGIN: subtitleの表示文字を構成
-		if(($scope.textbox.keywords+'').length > 0 && typeof $scope.textbox.keywords != "undefined"){
-			var tags = $scope.textbox.keywords.match(/\[(.*?)\]/g);
-			if(tags == null){
-				$scope.subtitle = "\""+$scope.textbox.keywords+"\"　を検索";	
-			}else{
+		//
+		if(($scope.textbox.keywords+'').length == 0){
+			$http.get('/json/snippet').success(function(data) {
+				$rootScope.snippets = data;
+			});
 
-				
-				// 検索するタグが重複しています。
-				var duplicated_flag = false;
-				for(var i=0;i<tags.length && !duplicated_flag;i++){
-					for(var j=0;j<tags.length && !duplicated_flag;j++){
-						if(i != j){
-							if(tags[i] == tags[j]){
-								duplicated_flag = true;
-							}
-						}
-					}
-				}
-				if(duplicated_flag){
-					$scope.subtitle = "検索するタグが重複しています";
-				}else{
-					// 検索するタグ
-					var temp = "";
-					for(var i=0;i<tags.length;i++){
-						temp += tags[i].replace(/[\]\[]/g,"") + ",";
-					}
-					temp = temp.substring(0,temp.length-1);
-					console.log(temp);
-					temp += "タグ";
-
-					// 検索する言葉
-					var words = $scope.textbox.keywords.replace(/\[(.*?)\]/g,"");
-					if(words.length <= 0){
-						// 検索する言葉がありません
-						temp += "を検索";
-					}else{
-						temp += "と\""+words+"\"を検索";
-					}
-
-					$scope.subtitle = temp;
-
-				}
+		}else if($scope.textbox.keywords.match(/^[0-9]+$/g)){
+			// 検索ボックスに数字のみ入力されているので、
+			// articleを選択
+			if(typeof $rootScope.snippets !== "undefined"){
+				var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
+				$scope.moveToSelectedSnippet(temp_snippet_selected.id);
+				$location.path("/snippets/"+temp_snippet_selected.id);
 			}
 		}else{
-			$scope.subtitle = default_subtitle;
-		}
-		// END: subtitleの表示文字を構成
-		
 
-		if(event.keyCode == 13){
-			console.log($scope.textbox);
-			if(($scope.textbox.keywords+'').length == 0){
-				$http.get('/json/snippet').success(function(data) {
-					$rootScope.snippets = data;
-				});
-
-			}else if($scope.textbox.keywords.match(/^[0-9]+$/g)){
-				// 検索ボックスに数字のみ入力されているので、
+			var temp = $scope.textbox.keywords.match(/[0-9]+$/);
+			if(null !== temp){
+				// 検索ボックスに最後の文字が数字なので、
 				// articleを選択
-				if(typeof $rootScope.snippets !== "undefined"){
-					var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
-					$scope.moveToSelectedSnippet(temp_snippet_selected.id);
-					$location.path("/snippets/"+temp_snippet_selected.id);
-				}
+				var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
+				$scope.moveToSelectedSnippet(snippet_selected_id.id);
+				$location.path("/snippets/"+snippet_selected_id.id);	
 			}else{
-
-				var temp = $scope.textbox.keywords.match(/[0-9]+$/);
-				if(null !== temp){
-					// 検索ボックスに最後の文字が数字なので、
-					// articleを選択
-					var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
-					$scope.moveToSelectedSnippet(snippet_selected_id.id);
-					$location.path("/snippets/"+snippet_selected_id.id);	
-				}else{
-					// 入力したキーワードを検索
-					$http.get('/json/search?kw='+encodeURIComponent($scope.textbox.keywords)).success(function(data) {
-						$rootScope.snippets = data;
-						$scope.last_searched_keywords = $scope.textbox.keywords;
-						// $scope.textbox.keywords = "";
-					});
+				// checking if duplicated 
+				var duplicated_flag = false;
+				for(var i = 0; i < candidate.length;i++){
+					if(candidate[i] == $scope.textbox.keywords){
+						duplicated_flag = true;
+						break;
+					}
 				}
+
+				if(!duplicated_flag){
+					// append into candidate
+					// if candidate size is bigger then 5, shift to upper and remove the oldest one.
+					if(candidate.length >= 5){
+						for(var i=candidate.length - 1;i > 0; i--){
+							candidate[i] = candidate[i - 1];
+						}
+						candidate[0] = $scope.textbox.keywords;
+						console.log(candidate);
+					}else{
+						// else, append keywords into candidate
+						candidate.push($scope.textbox.keywords);
+					}
+					ipCookie('candidate',JSON.stringify(candidate), $scope.cookie_options);
+				}
+				
+
+				// 入力したキーワードを検索
+				$http.get('/json/search?kw='+encodeURIComponent($scope.textbox.keywords)).success(function(data) {
+					$rootScope.snippets = data;
+					$scope.last_searched_keywords = $scope.textbox.keywords;
+					// $scope.textbox.keywords = "";
+				});
 			}
 		}
-		// 
+	}
+
+	// キーアップするたびにイベントが発生します
+	$scope.onTypeEvent = function(){
+
+
+
+		// BEGIN: subtitleの表示文字を構成
+		// if(($scope.textbox.keywords+'').length > 0 && typeof $scope.textbox.keywords != "undefined"){
+		// 	var tags = $scope.textbox.keywords.match(/\[(.*?)\]/g);
+		// 	if(tags == null){
+		// 		$scope.subtitle = "\""+$scope.textbox.keywords+"\"　を検索";	
+		// 	}else{
+
+				
+		// 		// 検索するタグが重複しています。
+		// 		var duplicated_flag = false;
+		// 		for(var i=0;i<tags.length && !duplicated_flag;i++){
+		// 			for(var j=0;j<tags.length && !duplicated_flag;j++){
+		// 				if(i != j){
+		// 					if(tags[i] == tags[j]){
+		// 						duplicated_flag = true;
+		// 					}
+		// 				}
+		// 			}
+		// 		}
+		// 		if(duplicated_flag){
+		// 			$scope.subtitle = "検索するタグが重複しています";
+		// 		}else{
+		// 			// 検索するタグ
+		// 			var temp = "";
+		// 			for(var i=0;i<tags.length;i++){
+		// 				temp += tags[i].replace(/[\]\[]/g,"") + ",";
+		// 			}
+		// 			temp = temp.substring(0,temp.length-1);
+		// 			console.log(temp);
+		// 			temp += "タグ";
+
+		// 			// 検索する言葉
+		// 			var words = $scope.textbox.keywords.replace(/\[(.*?)\]/g,"");
+		// 			if(words.length <= 0){
+		// 				// 検索する言葉がありません
+		// 				temp += "を検索";
+		// 			}else{
+		// 				temp += "と\""+words+"\"を検索";
+		// 			}
+
+		// 			$scope.subtitle = temp;
+
+		// 		}
+		// 	}
+		// }else{
+		// 	$scope.subtitle = default_subtitle;
+		// }
+		// // END: subtitleの表示文字を構成
+		
 	}
 
 	// According to HTML5 spec, angular provide a way to move to specific element by id and hash
@@ -174,8 +220,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		}else if(path.length > 1 && path[1] === "snippets"){
 			// URL: /snippets/*
 			$scope.template = "/html/snippet/";
-
-			console.log($scope.article);
 
 			if(!isNaN(snippet_id = parseInt(path[2]))){
 				// URL: /snippets/20

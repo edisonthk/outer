@@ -160,22 +160,39 @@ codegarageApp.directive('markdownEditor', ["$window","$compile",function($window
     }
 }]);
 
-// directive("docsSearchInput", ["$document", function (e) {
-// 	return function (t, n) {
-// 		var r = 27,
-// 			a = 191;
-// 		angular.element(e[0].body).on("keydown", function (e) {
-// 			var t = n[0];
-// 			e.keyCode == a && document.activeElement != t && (e.stopPropagation(), e.preventDefault(), t.focus())
-// 		}), n.on("keydown", function (e) {
-// 			e.keyCode == r && (e.stopPropagation(), e.preventDefault(), t.$apply(function () {
-// 				t.hideResults()
-// 			}))
-// 		})
-// 	}
+
+codegarageApp.directive("searchForm", ["$window", function(w) {
+
+	return {
+		restrict: 'E',
+		link: function(scope,element,attrs) {
+
+			var resize = function() {
+				var h = window.innerHeight;
+				var w = window.innerWidth;
+				var _ch = element[0].clientHeight;
+				var _cw = element[0].clientWidth;
+
+				element[0].style.top = ((h * 0.65) - (_ch / 2))+ "px";
+				element[0].style.left = ((w / 2) - (_cw / 2)) + "px";	
+			}
+
+			resize();
+			angular.element(w).bind('resize', function () {
+				resize();
+			});
+
+			scope.$watch(function(){
+				return scope.textbox.focus;
+			}, function(new_value, old_value) {
+				element.find("input")[0].focus();
+			});
+		}
+	}
+}]);
 
 codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootScope",function(w,d,s) {
-	return function(scope,n) {
+	return function(scope,n,attrs) {
 		var navHeight = d[0].getElementsByTagName("nav")[0].offsetHeight;
 		
 		var p = d[0].getElementsByClassName("search-wrapper-form")[0];
@@ -184,8 +201,8 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 		
 		n[0].style.top = navHeight + "px";
 		// Handle height and offsetTop of the side menu at left hand side
-		angular.element(w).bind('scroll', function () {
-			
+
+		var resizeEvent = function() {
 			var top  = w.pageYOffset || d[0].documentElement.scrollTop,
 	    		left = w.pageXOffset || d[0].documentElement.scrollLeft;
 	    	var menuTop = navHeight - top;
@@ -198,6 +215,15 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 	    			n[0].style.height = window.innerHeight + "px";
 	    		}
 	    	}
+
+	    	sn.style.height = (p.parentNode.clientHeight - p.clientHeight) + "px";
+		}
+
+		angular.element(w).bind('scroll', function () {
+			resizeEvent();
+		});
+		angular.element(w).bind('resize', function() {			
+			resizeEvent();
 		});
 		s.selectText = function(element) {			  
 			var selection = window.getSelection();
@@ -211,30 +237,35 @@ codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootS
 
 		angular.element(w).on('keydown', function(e) {
 			keyPressed = e.keyCode;
-			
+
 			if( (keyPressed >= KeyEvent.KEY_0 && keyPressed <= KeyEvent.KEY_9) || 
 				( !(e.ctrlKey || e.metaKey) && keyPressed >= KeyEvent.KEY_A && keyPressed <= KeyEvent.KEY_Z )
 				|| keyPressed == 219 || keyPressed == 221 ){
-				
-				n.find("input")[0].focus();
+
+				scope.textbox.focus = true;
 			}else if(keyPressed == KeyEvent.KEY_ESC){
-				n.find("input")[0].blur();
-			}else if( (e.ctrlKey || e.metaKey)&& n.find("input")[0] !== document.activeElement && keyPressed == KeyEvent.KEY_A){
+				
+				scope.textbox.focus = false;
+			}else if( (e.ctrlKey || e.metaKey)&& !scope.textbox.focus && keyPressed == KeyEvent.KEY_A){
 				e.preventDefault();
-				n.find("input")[0].blur();
-
+				
 				var _body = document.getElementById("article");
-				var _elements = _body.getElementsByTagName("pre");
-
-				if(_elements.length > 0){
-					scope._current_pre_ele ++;
-					if(scope._current_pre_ele >= _elements.length){
-						scope._current_pre_ele = 0;
-					}		
-
-					s.selectText(_elements[scope._current_pre_ele]);
+				if(_body){
+					var _elements = _body.getElementsByTagName("pre");
+					if(_elements){
+						if(_elements.length > 0){
+							scope._current_pre_ele ++;
+							if(scope._current_pre_ele >= _elements.length){
+								scope._current_pre_ele = 0;
+							}
+							s.selectText(_elements[scope._current_pre_ele]);
+						}	
+					}
 				}
+				
 			}
+			
+			scope.$apply(attrs.onKeydown);
 		});
 
 	}

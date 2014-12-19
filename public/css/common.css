@@ -117,11 +117,34 @@ a:hover {
 	left: 0px;
 	width: 100%;
 }
-#snippets .search-form {
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin-bottom: 0;
 
+.search-form .form-control{
+	background-color: #333;
+	border:0;
+	display: block;
+	height: auto;
+	padding: 0;
+}
+.search-form ul {
+	padding: 0;
+}
+.search-form ul li {
+	color:#333;
+	font-size: 16px;
+}
+.search-form .form-control input[type=text]{
+	padding: 10px;
+	background-color: #333;
+	color:#ccc;
+	font-size: 28px;
+}
+.search-form {
+	min-width: 400px;
+	height: auto;
+	position: fixed;
+}
+.search-form .search-form-wrapper {
+	margin: 0 auto;
 }
 #snippets .row{
 	height: 100%;
@@ -133,17 +156,12 @@ a:hover {
 	padding-left: 0;
 	padding-right: 0;
 	height: 100%;
-	overflow-y: scroll;
 }
 
 #snippets .snippet-padding{
 	padding:5px 10px;
 }
-#snippets .search-form input[type=text]{
-	background-color: #333;
-	color:#ccc;
-	border:0;
-}
+
 .snippet-list {
 	overflow-y: scroll;
 }

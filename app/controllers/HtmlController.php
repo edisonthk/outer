@@ -10,9 +10,9 @@ class HtmlController extends BaseController {
 			return View::make("responsive.base");
 		}
 		
-		if(Config::get("app.debug")){
-			return View::make("responsive.base");
-		}
+		// if(Config::get("app.debug")){
+		// 	return View::make("responsive.base");
+		// }
 		return View::make("base");
 	}
 
@@ -38,6 +38,16 @@ class HtmlController extends BaseController {
 	// responsive page
 	// Don't need to create mobile or tablet page for landing-page
 	public function landingPage() {
+
+		if(!empty(Cookie::get(AccountController::COOKIE_ALREADY_LOGIN_KEY))){
+			Cookie::queue(AccountController::COOKIE_ALREADY_LOGIN_KEY,
+				AccountController::COOKIE_ALREADY_LOGIN_VALUE, 
+				AccountController::COOKIE_ALREADY_LOGIN_TIME);
+
+
+			return Redirect::to("/snippets");
+		}
+
 		return View::make("landing-page");
 	}
 

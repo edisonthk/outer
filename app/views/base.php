@@ -18,6 +18,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/common.css">
 		<link rel="stylesheet" type="text/css" href="/css/anim.css">
+		<link rel="stylesheet" type="text/css" href="/css/allmighty-autocomplete.css">
 
 
 		<!-- jQuery -->
@@ -29,7 +30,9 @@
 		<script type="text/javascript" src="/angular-libs/angular-sanitize.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-resource.min.js"></script>
 		<script type="text/javascript" src="/angular-libs/angular-animate.min.js"></script>
+		<script type="text/javascript" src="/angular-libs/angular-cookie.min.js"></script> <!-- https://github.com/ivpusic/angular-cookie -->
 		<script type="text/javascript" src="/angular-libs/angular-social.min.js"></script> <!-- https://github.com/esvit/angular-social -->
+		<script type="text/javascript" src="/angular-libs/allmighty-autocomplete.js"></script> <!-- https://github.com/JustGoscha/allmighty-autocomplete -->
 
 		<!-- Plugins -->
 		<link rel="stylesheet" type="text/css" href="/plugins/ngTagsInput/ng-tags-input.min.css">
