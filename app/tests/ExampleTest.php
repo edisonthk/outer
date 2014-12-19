@@ -11,7 +11,7 @@ class ExampleTest extends TestCase {
 	{
 		
 
-		$this->checkingGET('user/profile');
+		
 		$this->checkingGET('/');
 		$this->checkingGET('/snippets');
 		
