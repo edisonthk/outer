@@ -49,6 +49,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			// articleを選択
 			if(typeof $rootScope.snippets !== "undefined"){
 				var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
+				$scope.textbox.keywords = "";
 				$scope.moveToSelectedSnippet(temp_snippet_selected.id);
 				$location.path("/snippets/"+temp_snippet_selected.id);
 			}
@@ -59,6 +60,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				// 検索ボックスに最後の文字が数字なので、
 				// articleを選択
 				var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
+				$scope.textbox.keywords = "";
 				$scope.moveToSelectedSnippet(snippet_selected_id.id);
 				$location.path("/snippets/"+snippet_selected_id.id);	
 			}else{

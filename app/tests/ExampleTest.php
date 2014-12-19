@@ -10,19 +10,19 @@ class ExampleTest extends TestCase {
 	public function testBasicExample()
 	{
 		
-		$response = $this->call('GET', 'user/profile');
 
+		$this->checkingGET('user/profile');
+		$this->checkingGET('/');
+		$this->checkingGET('/snippets');
+		
+	}
+
+	private function checkingGET($url){
+		$response = $this->call('GET', $url);
 		// to check either the variable is true.
 		$this->assertTrue($response->isOk());
 
-
-		$response = $this->call('GET', '/');
-		$this->assertTrue($response->isOk());
-
-		$response = $this->call('GET', '/snippets');
-		$this->assertTrue($response->isOk());
-
-		
+		echo $url."\n";
 	}
 
 }
