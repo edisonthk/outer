@@ -39,7 +39,9 @@ class HtmlController extends BaseController {
 	// Don't need to create mobile or tablet page for landing-page
 	public function landingPage() {
 
-		if(!empty(Cookie::get(AccountController::COOKIE_ALREADY_LOGIN_KEY))){
+		$cookie = Cookie::get(AccountController::COOKIE_ALREADY_LOGIN_KEY);
+
+		if(!empty($cookie)){
 			Cookie::queue(AccountController::COOKIE_ALREADY_LOGIN_KEY,
 				AccountController::COOKIE_ALREADY_LOGIN_VALUE, 
 				AccountController::COOKIE_ALREADY_LOGIN_TIME);
