@@ -1,8 +1,8 @@
 var snippetContollers = angular.module('SnippetContollers', ['ngSanitize']);
 
 
-snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','ipCookie','$routeParams','$location','Snippet',
-	function($anchorScroll, $route, $rootScope, $scope, $window, $http,ipCookie, $routeParams,$location,Snippet){
+snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','ipCookie','$routeParams','$location','$timeout','Snippet',
+	function($anchorScroll, $route, $rootScope, $scope, $window, $http,ipCookie, $routeParams,$location,$timeout, Snippet){
 
 	$scope.cookie_options = {
 		expires: 7,
@@ -10,10 +10,10 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 	};
 	
 
-	var candidate = [];
-	if(ipCookie('candidate')){
-		candidate = ipCookie('candidate');
-	}
+	var candidate = ['b','a','c'];
+	// if(ipCookie('candidate')){
+	// 	candidate = ipCookie('candidate');
+	// }
 
 	$scope.textbox = {
 		candidate: candidate,
@@ -21,6 +21,8 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		keywords: "",
 		tags: [],
 	}
+
+	console.log($scope.textbox.candidate);
 	$scope.snippet_selected = -1;
 
 	if(typeof $rootScope.snippets != "object"){
@@ -32,6 +34,9 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 
 	var default_subtitle = 	"最新のスニペット一覧";
 	$scope.subtitle = default_subtitle;
+
+
+
 
 	// 検索イベント
 	$scope.searchEvent = function() {
@@ -49,7 +54,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			// articleを選択
 			if(typeof $rootScope.snippets !== "undefined"){
 				var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
-				$scope.textbox.keywords = "";
 				$scope.moveToSelectedSnippet(temp_snippet_selected.id);
 				$location.path("/snippets/"+temp_snippet_selected.id);
 			}
@@ -60,35 +64,46 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				// 検索ボックスに最後の文字が数字なので、
 				// articleを選択
 				var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
-				$scope.textbox.keywords = "";
 				$scope.moveToSelectedSnippet(snippet_selected_id.id);
 				$location.path("/snippets/"+snippet_selected_id.id);	
 			}else{
 				// checking if duplicated 
-				var duplicated_flag = false;
-				for(var i = 0; i < candidate.length;i++){
+				var push_flag = ($scope.textbox.keywords.length > 0);
+				console.log($scope.textbox.keywords );
+				
+				for(var i = 0; i < candidate.length && !push_flag;i++){
+
 					if(candidate[i] == $scope.textbox.keywords){
-						duplicated_flag = true;
+						console.log("bbbbbbb");
+						push_flag = false;
 						break;
 					}
 				}
 
-				if(!duplicated_flag){
+				if(push_flag){
 					// append into candidate
 					// if candidate size is bigger then 5, shift to upper and remove the oldest one.
 					if(candidate.length >= 5){
-						for(var i=candidate.length - 1;i > 0; i--){
-							candidate[i] = candidate[i - 1];
+						for(var i=1;i < candidate.length; i++){
+							candidate[i - 1] = candidate[i];
 						}
 						candidate[0] = $scope.textbox.keywords;
 						console.log(candidate);
 					}else{
 						// else, append keywords into candidate
 						candidate.push($scope.textbox.keywords);
+						// // reverse
+						// for (var i = candidate.length - 1; i > 0; i--) {
+						// 	var temp = candidate[i];
+						// 	candidate[i] = candidate[i - 1];
+						// 	candidate[i - 1] = temp;
+						// };
 					}
+
+					$scope.textbox.candidate = candidate;
 					ipCookie('candidate',JSON.stringify(candidate), $scope.cookie_options);
 				}
-				
+
 
 				// 入力したキーワードを検索
 				$http.get('/json/search?kw='+encodeURIComponent($scope.textbox.keywords)).success(function(data) {
@@ -98,6 +113,8 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				});
 			}
 		}
+
+		$scope.textbox.keywords = "";
 	}
 
 	// キーアップするたびにイベントが発生します

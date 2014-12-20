@@ -74,6 +74,6 @@
 
 <form ng-submit="searchEvent()" ng-if="textbox.focus">
 	<search-form  class="search-form form-group">
-		<autocomplete class="form-control" ng-model="textbox.keywords" data="textbox.candidate" on-type="onTypeEvent" placeholder="スニペットを検索 ...."></autocomplete>
+		<autocomplete class="form-control" ng-model="textbox.keywords" data="textbox.candidate" on-type="onTypeEvent" attr-placeholder="スニペットを検索 ...."></autocomplete>
 	</search-form>
 </form>
