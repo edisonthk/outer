@@ -191,6 +191,15 @@ codegarageApp.directive("searchForm", ["$window", function(w) {
 	}
 }]);
 
+codegarageApp.directive("autocomplete", function(){
+	return function(scope,element,attrs){
+		var _i = element[0].getElementsByTagName("input")[0];
+		_i.addEventListener('blur',function(){
+			scope.textbox.focus = false;
+		});
+	}
+});
+
 codegarageApp.directive("sideMenuScrollingEvent", ["$window","$document","$rootScope",function(w,d,s) {
 	return function(scope,n,attrs) {
 		var navHeight = d[0].getElementsByTagName("nav")[0].offsetHeight;

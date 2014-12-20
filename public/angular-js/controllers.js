@@ -10,10 +10,10 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 	};
 	
 
-	var candidate = ['b','a','c'];
-	// if(ipCookie('candidate')){
-	// 	candidate = ipCookie('candidate');
-	// }
+	var candidate = [];
+	if(ipCookie('candidate')){
+		candidate = ipCookie('candidate');
+	}
 
 	$scope.textbox = {
 		candidate: candidate,
@@ -22,7 +22,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		tags: [],
 	}
 
-	console.log($scope.textbox.candidate);
 	$scope.snippet_selected = -1;
 
 	if(typeof $rootScope.snippets != "object"){
