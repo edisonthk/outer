@@ -17,7 +17,7 @@ class ExampleTest extends TestCase {
 		
 	}
 
-	private function checkingGET($url){
+	public function checkingGET($url){
 
 		$this->call('GET', $url);
 
