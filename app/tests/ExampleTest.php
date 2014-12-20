@@ -19,9 +19,9 @@ class ExampleTest extends TestCase {
 
 	private function checkingGET($url){
 
-		$crawler = $this->client->request('GET', $url);
+		$this->call('GET', $url);
 
-		$this->assertTrue($this->client->getResponse()->isOk());
+    	$this->assertResponseOk();
 
 		echo $url."\n";
 	}
