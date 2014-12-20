@@ -13,17 +13,15 @@ class ExampleTest extends TestCase {
 
 		
 		$this->checkingGET('/');
-		$this->checkingGET('/snippets');
-		
+		$this->checkingGET('/html/snippet');
+		$this->checkingGET('/html/snippet/create');
+
+		$this->checkingGET('/snippet/create');
 	}
 
 	public function checkingGET($url){
-
 		$this->call('GET', $url);
-
     	$this->assertResponseOk();
-
-		echo $url."\n";
 	}
 
 }
