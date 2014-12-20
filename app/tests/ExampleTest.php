@@ -15,8 +15,6 @@ class ExampleTest extends TestCase {
 		$this->checkingGET('/');
 		$this->checkingGET('/html/snippet');
 		$this->checkingGET('/html/snippet/create');
-
-		$this->checkingGET('/snippet/create');
 	}
 
 	public function checkingGET($url){
