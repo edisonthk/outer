@@ -70,7 +70,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				for(var i = 0; i < candidate.length && !push_flag;i++){
 
 					if(candidate[i] == $scope.textbox.keywords){
-						console.log("bbbbbbb");
 						push_flag = false;
 						break;
 					}
@@ -109,9 +108,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				});
 			}
 		}
-
-		console.log("fdsf");
-
 		$scope.textbox.keywords = "";
 	}
 
@@ -190,9 +186,17 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		}
 
 		try{
+			if(selected_id > $rootScope.snippets.length){
+				console.log($rootScope.snippets.length);
+				selected_id = $rootScope.snippets.length;
+			}
 			var snippet_id = ($rootScope.snippets[selected_id-1]).id;
-			var hash_snippet_id = 1;
-			if(selected_id - 4 >= 1){
+			var hash_snippet_id = snippet_id;
+			if(selected_id - 4 < 1){
+				hash_snippet_id = $rootScope.snippets[0].id;
+			}else if(selected_id + 4 > $rootScope.snippets.length){
+				hash_snippet_id = $rootScope.snippets[$rootScope.snippets.length - 1].id;
+			}else{
 				hash_snippet_id = $rootScope.snippets[selected_id - 4].id;
 			}
 			
