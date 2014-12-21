@@ -197,6 +197,9 @@ codegarageApp.directive("autocomplete", function(){
 		_i.addEventListener('blur',function(){
 			scope.textbox.focus = false;
 		});
+		_i.addEventListener('keyup',function(){
+			scope.onKeyUpEvent(this.value);
+		});
 	}
 });
 

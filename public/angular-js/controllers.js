@@ -1,8 +1,8 @@
 var snippetContollers = angular.module('SnippetContollers', ['ngSanitize']);
 
 
-snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','ipCookie','$routeParams','$location','$timeout','Snippet',
-	function($anchorScroll, $route, $rootScope, $scope, $window, $http,ipCookie, $routeParams,$location,$timeout, Snippet){
+snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$rootScope','$scope','$window','$http','ipCookie','$routeParams','$location','$timeout','$cacheFactory','Snippet',
+	function($anchorScroll, $route, $rootScope, $scope, $window, $http,ipCookie, $routeParams,$location,$timeout,$cacheFactory, Snippet){
 
 	$scope.cookie_options = {
 		expires: 7,
@@ -52,9 +52,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			// 検索ボックスに数字のみ入力されているので、
 			// articleを選択
 			if(typeof $rootScope.snippets !== "undefined"){
-				var temp_snippet_selected = $rootScope.snippets[parseInt($scope.textbox.keywords)-1];
-				$scope.moveToSelectedSnippet(temp_snippet_selected.id);
-				$location.path("/snippets/"+temp_snippet_selected.id);
+				$scope.moveToSelectedSnippet($scope.textbox.keywords);
 			}
 		}else{
 
@@ -62,9 +60,8 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			if(null !== temp){
 				// 検索ボックスに最後の文字が数字なので、
 				// articleを選択
-				var snippet_selected_id = $rootScope.snippets[parseInt(temp[0])-1];
-				$scope.moveToSelectedSnippet(snippet_selected_id.id);
-				$location.path("/snippets/"+snippet_selected_id.id);	
+				
+				$scope.moveToSelectedSnippet(temp[0]);
 			}else{
 				// checking if duplicated 
 				var push_flag = ($scope.textbox.keywords.length > 0);
@@ -113,13 +110,21 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 			}
 		}
 
+		console.log("fdsf");
+
 		$scope.textbox.keywords = "";
 	}
 
+	$scope.onKeyUpEvent = function(kw){
+		if(kw.match(/^[0-9]+$/g)){
+			$scope.moveToSelectedSnippet(kw);
+		}
+	}
+
 	// キーアップするたびにイベントが発生します
-	$scope.onTypeEvent = function(){
-
-
+	$scope.onTypeEvent = function(kw){
+		
+		
 
 		// BEGIN: subtitleの表示文字を構成
 		// if(($scope.textbox.keywords+'').length > 0 && typeof $scope.textbox.keywords != "undefined"){
@@ -177,17 +182,39 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 	// 
 	// https://docs.angularjs.org/api/ng/service/$anchorScroll
 	//
-	$scope.moveToSelectedSnippet = function(snippet_id) {
-		var newHash = 'snippet-item-' + snippet_id;
-	    if ($location.hash() !== newHash) {
-	        // set the $location.hash to `newHash` and
-	        // $anchorScroll will automatically scroll to it
-	        $location.hash(newHash);
-	    } else {
-	        // call $anchorScroll() explicitly,
-	        // since $location.hash hasn't changed
-	        $anchorScroll();
-	    }
+	$scope.moveToSelectedSnippet = function(selected_id) {
+
+		var selected_id = parseInt(selected_id);
+		if(isNaN(selected_id)){
+			return ;
+		}
+
+		try{
+			var snippet_id = ($rootScope.snippets[selected_id-1]).id;
+			var hash_snippet_id = 1;
+			if(selected_id - 4 >= 1){
+				hash_snippet_id = $rootScope.snippets[selected_id - 4].id;
+			}
+			
+
+			var newHash = 'snippet-item-' + (hash_snippet_id);
+		    if ($location.hash() !== newHash) {
+		        // set the $location.hash to `newHash` and
+		        // $anchorScroll will automatically scroll to it
+		        $location.hash(newHash);
+		    } else {
+		        // call $anchorScroll() explicitly,
+		        // since $location.hash hasn't changed
+		        $anchorScroll();
+		    }
+
+		    $location.path("/snippets/"+snippet_id).replace();
+		    clearTimeout($scope.timeout_id);
+		    $scope.timeout_id = setTimeout(function(){
+		    	$scope.$apply();
+		    },700);
+
+		}catch(err){}
 	}
 
 	$scope.deleteButtonClicked = function(article_clicked) {
@@ -243,7 +270,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 				// URL: /snippets/20
 				$scope.subtitle = default_subtitle;
 				$scope.snippet_selected = snippet_id;
-				$scope.textbox.keywords = "";
 				$scope._current_pre_ele = 0;
 				Snippet.get({snippetId: snippet_id}, function(article) {
 					article.content = filterContent(article.content);

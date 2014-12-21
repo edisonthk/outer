@@ -9,9 +9,6 @@ class ExampleTest extends TestCase {
 	 */
 	public function testBasicExample()
 	{
-		
-
-		
 		$this->checkingGET('/');
 		$this->checkingGET('/html/snippet');
 		$this->checkingGET('/html/snippet/create');
