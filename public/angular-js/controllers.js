@@ -58,17 +58,14 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 
 			var temp = $scope.textbox.keywords.match(/[0-9]+$/);
 			if(null !== temp){
+
 				// 検索ボックスに最後の文字が数字なので、
 				// articleを選択
-				
 				$scope.moveToSelectedSnippet(temp[0]);
 			}else{
 				// checking if duplicated 
 				var push_flag = ($scope.textbox.keywords.length > 0);
-				console.log($scope.textbox.keywords );
-				
 				for(var i = 0; i < candidate.length && !push_flag;i++){
-
 					if(candidate[i] == $scope.textbox.keywords){
 						push_flag = false;
 						break;
@@ -83,7 +80,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 							candidate[i - 1] = candidate[i];
 						}
 						candidate[0] = $scope.textbox.keywords;
-						console.log(candidate);
 					}else{
 						// else, append keywords into candidate
 						candidate.push($scope.textbox.keywords);
@@ -187,7 +183,6 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 
 		try{
 			if(selected_id > $rootScope.snippets.length){
-				console.log($rootScope.snippets.length);
 				selected_id = $rootScope.snippets.length;
 			}
 			var snippet_id = ($rootScope.snippets[selected_id-1]).id;
@@ -216,7 +211,7 @@ snippetContollers.controller('SnippetContollers', ['$anchorScroll','$route','$ro
 		    clearTimeout($scope.timeout_id);
 		    $scope.timeout_id = setTimeout(function(){
 		    	$scope.$apply();
-		    },700);
+		    },1500);
 
 		}catch(err){}
 	}

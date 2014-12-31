@@ -24,5 +24,5 @@ Route::get("/",'HtmlController@landingPage');
 // });
 
 Route::get("/test",function(){
-	phpinfo();
+	var_dump(!preg_match("|https?:\/\/www|","https://telur"));
 });

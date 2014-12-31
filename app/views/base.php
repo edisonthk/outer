@@ -13,6 +13,20 @@
 
 		<base href="http://<?php echo $_SERVER['HTTP_HOST']; ?>/">
 
+		<!-- Open Graph Protocol -->
+		<!-- Google Plus && Facebook -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="CodeGarage" />
+		<meta property="og:url" content="http://edisonthk.codegarage.com/" />
+		<meta property="og:image" content="http://codegarage.edisonthk.com/img/icon@114x114.png" />
+		<meta property="og:description" content="キーボードだけで検索、選択ができるスニペットの共有サイト" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content="CodeGarage" />
+		<meta name="twitter:description" content="キーボードだけで検索、選択ができるスニペットの共有サイト" />
+		<meta name="twitter:image" content="http://codegarage.edisonthk.com/img/icon@114x114.png" />
+		<meta name="twitter:url" content="http://edisonthk.codegarage.com/" />
+
 
 		<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/css/font-awesome.min.css">
