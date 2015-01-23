@@ -1,0 +1,175 @@
+* {
+	font-family:Meiryo UI;
+}
+
+body, html {
+	margin: 0;
+	padding: 0;
+	background-color:#212121;
+}
+body {
+	text-align:center;
+}
+
+span{color:#008a62;}
+
+img.f {
+	width: 70%;
+}
+img.e {
+	width: 50%;
+}
+
+a:link { color: white } 
+a:visited { color: white } 
+a:hover { color: white } 
+
+.row-1 {
+	margin-top: 20px;
+}
+.row-2 {
+	position: relative;
+	top:-20px;
+}
+.row-2 .logo {
+	position: relative;
+	margin-top: 50px;
+	left:-60px;
+}
+.row-2 .logo .description {
+	letter-spacing: 7px;
+}
+.row-3 {
+	height: 100px;
+}
+.row-4 {
+	height: 130px;
+}
+.row-5 {
+	height: 150px;
+}
+
+.btn {
+	vertical-align:middle;
+	text-align: center;
+	background-color:#008a62;
+	font-size: 20px;
+	padding: 10px 10px;
+}
+.btn:first-child{
+	margin-right: 100px;
+}
+
+/* Large desktop */
+@media (min-width: 1200px) { 
+	.row-2 {
+		margin-bottom: 40px;
+	}
+	.row-2 .logo {
+		font-size: 140%;
+	}
+
+	.btn {
+		font-size: 20px;
+	}
+	.row-2 .logo .description {
+		letter-spacing: 10px;
+	}
+}
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { 
+	.row-2 .logo {
+		margin-top: 35px;
+	}
+
+	.btn {
+		font-size: 17px;
+	}
+}
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { 
+	img.f {
+		width: 90%;
+	}
+	.row-2 .col-xs-offset-2 {
+		margin-left: 40px;
+	}
+	.row-2 .logo {
+		left: -20px;
+	}
+	.row-2 .logo .description {
+		letter-spacing: 4px;
+	}
+	.btn {
+		font-size: 17px;
+	}
+	.btn:first-child{
+		margin-right: 60px;
+	}
+	img.e {
+		width: 70%;
+		position: relative;
+		top:0px;
+	}
+}
+
+@media (max-width: 	650px) { 
+	img.e {
+		width: 80%;
+		position: relative;
+		top:20px;
+	}
+}
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) {  
+	img.f {
+		width: 90%;
+	}
+	img.e {
+		position: relative;
+		top: 30px;
+		width: 90%;	
+	}
+	.row-2 {
+		top:-40px;
+	}
+	.row-2 .col-xs-offset-2 {
+		margin-left: 20px;
+	}
+	.row-2 .logo {
+		left:-20px;
+	}
+	.row-2 .logo .description {
+		letter-spacing: 2px;
+	}
+	.btn {
+		font-size: 15px;
+	}
+	.btn:first-child{
+		margin-right: 10px;
+	}
+}
+
+
+
+/* Basic jQuery Slider essential styles */
+
+ul.bjqs{position:relative; list-style:none;padding:0;margin:0;overflow:hidden; display:none;}
+li.bjqs-slide{position:absolute; display:none;}
+ul.bjqs-controls{list-style:none;margin:0;padding:0;z-index:9999;}
+ul.bjqs-controls.v-centered li a{position:absolute;}
+ul.bjqs-controls.v-centered li.bjqs-next a{right:0;}
+ul.bjqs-controls.v-centered li.bjqs-prev a{left:0;}
+ol.bjqs-markers{list-style: none; padding: 0; margin: 0; width:100%;}
+ol.bjqs-markers.h-centered{text-align: center;}
+ol.bjqs-markers li{display:inline;margin-right: 7px;}
+ol.bjqs-markers li a{display:inline-block;}
+p.bjqs-caption{display:block;width:96%;margin:0;padding:2%;position:absolute;bottom:0;}
+
+
+#shortcut {
+	margin: 0 auto;
+}
